@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Order confirmed — Born on Asphalt</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Caveat:wght@500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/style.css?v=5" />
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <span class="logo-main">Born on Asphalt</span>
+      <span class="logo-sub">Est. on the quarter mile</span>
+    </a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="sheet-wrap">
+    <div class="carbon-shadow"></div>
+    <div class="sheet">
+      <div class="sheet-top">
+        <div class="doc-id">
+          DOC NO. <b>BOA-ORDER</b><br/>
+          FORM TYPE: ORDER CONFIRMATION
+        </div>
+        <div class="stamp">PAID</div>
+      </div>
+      <h1 style="font-size:38px;">Order confirmed</h1>
+      <p class="tagline">Your build sheet has been filed. A confirmation email is on its way.</p>
+      <p style="font-size:12.5px; color:var(--ink-faded); line-height:1.7;">
+        Reference: <span id="sessionRef">—</span><br/>
+        Your order is now being sent to production. You'll get a tracking number by email once it ships.
+      </p>
+      <div class="hero-cta">
+        <a href="index.html#shop" class="btn">Continue shopping</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const paymentIntentId = params.get('payment_intent');
+  if(paymentIntentId){
+    document.getElementById('sessionRef').textContent = paymentIntentId;
+  }
+  // Order succeeded — clear the local cart.
+  localStorage.removeItem('boa_cart');
+</script>
+
+</body>
+</html>

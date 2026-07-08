@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Shipping & Returns — Born on Asphalt</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Caveat:wght@500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/style.css?v=5" />
+</head>
+<body>
+
+<div class="announce">Free shipping on orders $85+ · US domestic only</div>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <span class="logo-main">Born on Asphalt</span>
+      <span class="logo-sub">Est. on the quarter mile</span>
+    </a>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html#shop">Shop</a>
+      <a href="about.html">About</a>
+      <a href="faq.html">FAQ</a>
+      <a href="shipping.html">Shipping</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="nav-actions">
+      <button class="nav-icon-btn" id="accountIconBtn" aria-label="Account">☰ ACCOUNT</button>
+      <button class="nav-icon-btn" id="cartIconBtn" aria-label="Cart">CART <span class="cart-count" id="cartCount">0</span></button>
+      <button class="burger" id="burgerBtn" aria-label="Menu">≡</button>
+    </div>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <div class="container">
+    <div class="section-label">// Document BOA-SHIP</div>
+    <h1>Shipping & returns</h1>
+  </div>
+</div>
+
+<div class="page-body">
+  <div class="container" style="max-width:760px;">
+    <div class="legal-block">
+      <h2>Shipping</h2>
+      <p>We currently ship US domestic only. Shipping is a flat $4.75 per order — and free on orders of $85 or more, calculated automatically in your cart before checkout.</p>
+      <p>Each item is printed on demand through Printful. Production typically takes 2–5 business days, followed by 3–5 business days in transit. You'll receive a tracking number by email once your order ships.</p>
+    </div>
+    <div class="legal-block">
+      <h2>Returns & exchanges</h2>
+      <p>Because every shirt is printed to order, we're not able to accept returns for reasons of taste or fit once printing has started. If your item arrives damaged, misprinted, or the wrong size due to our error, contact us within 14 days of delivery and we'll replace it at no cost.</p>
+      <p>To start a claim, use the Contact page with your order number and a photo of the issue.</p>
+    </div>
+    <div class="legal-block">
+      <h2>Order tracking</h2>
+      <p>Once your order ships, you'll get a confirmation email with a tracking link. If you created an account, tracking is also available in your order history.</p>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>Born on Asphalt</h4>
+        <p>Apparel for Ford, Mopar and GM builders. Printed on demand, shipped from the US. Comfort Colors 1717, garment-dyed heavyweight.</p>
+        <div class="payment-icons"><span>Stripe</span><span>PayPal</span><span>Visa</span><span>Mastercard</span></div>
+      </div>
+      <div class="footer-col">
+        <h4>Shop</h4>
+        <a href="index.html#shop">All designs</a>
+        <a href="index.html#shop">Ford</a>
+        <a href="index.html#shop">Mopar</a>
+        <a href="index.html#shop">GM</a>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <a href="faq.html">FAQ</a>
+        <a href="shipping.html">Shipping & returns</a>
+        <a href="contact.html">Contact us</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="about.html">Our story</a>
+        <a href="contact.html">Get in touch</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Born on Asphalt. All rights reserved.</span>
+      <span>bornonasphalt.com</span>
+    </div>
+  </div>
+</footer>
+
+<div class="overlay" id="productModal"><div class="modal"><button class="modal-close" data-close-modal="productModal">✕</button><div id="pdBody"></div></div></div>
+
+<div class="overlay" id="accountModal">
+  <div class="modal">
+    <button class="modal-close" data-close-modal="accountModal">✕</button>
+    <div class="section-label">// Driver record</div>
+    <h2>Your account</h2>
+    <div class="tab-row">
+      <button class="tab-btn active" data-tab="signInPanel">Sign in</button>
+      <button class="tab-btn" data-tab="signUpPanel">Create account</button>
+    </div>
+    <div class="tab-panel active" id="signInPanel">
+      <form id="signInForm">
+        <div class="form-field"><label>Email</label><input type="email" required placeholder="you@email.com" /></div>
+        <div class="form-field"><label>Password</label><input type="password" required placeholder="••••••••" /></div>
+        <button type="submit" class="btn" style="width:100%;">Sign in</button>
+      </form>
+    </div>
+    <div class="tab-panel" id="signUpPanel">
+      <form id="signUpForm">
+        <div class="form-field"><label>Name</label><input type="text" required placeholder="Full name" /></div>
+        <div class="form-field"><label>Email</label><input type="email" required placeholder="you@email.com" /></div>
+        <div class="form-field"><label>Password</label><input type="password" required placeholder="Minimum 8 characters" /></div>
+        <button type="submit" class="btn" style="width:100%;">Create account</button>
+      </form>
+    </div>
+    <p class="modal-note">Accounts require a backend service — this is a front-end placeholder. See README-integrations.md.</p>
+  </div>
+</div>
+
+<div class="overlay" id="checkoutModal">
+  <div class="modal">
+    <button class="modal-close" data-close-modal="checkoutModal">✕</button>
+    <div class="section-label">// Final line item</div>
+    <h2>Checkout</h2>
+    <div id="checkoutSummary" style="margin-bottom:18px;"></div>
+    <div class="form-field">
+      <label>Email</label>
+      <input type="email" id="checkoutEmail" placeholder="you@email.com" />
+    </div>
+    <div class="form-field">
+      <label>Full name</label>
+      <input type="text" id="checkoutFullName" placeholder="Full name" />
+    </div>
+    <div class="form-field">
+      <label>Shipping address</label>
+      <input type="text" id="checkoutAddress1" placeholder="Street address" />
+    </div>
+    <div style="display:flex; gap:10px;">
+      <div class="form-field" style="flex:1;"><label>City</label><input type="text" id="checkoutCity" /></div>
+      <div class="form-field" style="flex:0 0 70px;"><label>State</label><input type="text" id="checkoutState" maxlength="2" placeholder="NY" /></div>
+      <div class="form-field" style="flex:1;"><label>ZIP</label><input type="text" id="checkoutZip" /></div>
+    </div>
+    <div class="form-field">
+      <label>Payment</label>
+      <div id="paymentElementContainer" style="padding:12px; border:1px solid var(--line); background:var(--paper-dim); min-height:44px;">
+        <p style="font-size:12px; color:var(--ink-faded); margin:0;">Loading payment form...</p>
+      </div>
+    </div>
+    <p id="checkoutPayError" style="display:none; color:var(--stamp-red); font-size:12px; margin-bottom:10px;"></p>
+    <button class="btn" id="stripePayBtn" style="width:100%; margin-bottom:10px;">Pay <span id="payBtnAmount"></span></button>
+    <div id="paypalButtonContainer" style="margin-top:10px; min-height:45px;"></div>
+    <p class="modal-note">Card payment via Stripe and PayPal are both fully connected.</p>
+  </div>
+</div>
+
+<div class="drawer-overlay" id="drawerOverlay"></div>
+<div class="drawer" id="cartDrawer">
+  <div class="drawer-head"><h3>Build sheet</h3><button class="modal-close" id="drawerCloseBtn" style="position:static;">✕</button></div>
+  <div class="drawer-items" id="drawerItems"></div>
+  <div class="drawer-foot">
+    <p id="freeShippingNote" style="font-size:10.5px; color:var(--ink-faded); margin:0 0 12px;"></p>
+    <div class="subtotal-row" style="font-size:13px;"><span>Subtotal</span><span id="subtotalAmount">$0.00</span></div>
+    <div class="subtotal-row" style="font-size:13px;"><span>Shipping</span><span id="shippingAmount">$0.00</span></div>
+    <div class="subtotal-row"><span>Total</span><span id="cartTotalAmount">$0.00</span></div>
+    <button class="btn" style="width:100%; margin-bottom:10px;" id="checkoutBtn">Checkout</button>
+    <a href="index.html#shop" class="btn ghost" style="width:100%; display:block; text-align:center;">Continue shopping</a>
+  </div>
+</div>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script src="js/products.js?v=7"></script>
+<script src="js/main.js?v=15"></script>
+</body>
+</html>

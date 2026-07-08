@@ -1,0 +1,159 @@
+/* ============================================================
+   Born on Asphalt — Reviews
+   À coller à la fin de style.css (puis incrémenter ?v=)
+   ============================================================ */
+
+/* ---- Étoiles ---- */
+.boa-stars { display:inline-flex; gap:2px; line-height:1; }
+.boa-star  { font-size:18px; color:var(--paper-dim); transition:color .1s; }
+.boa-star.filled, .boa-star.hover, .boa-star.selected { color:var(--rust); }
+
+/* Étoiles interactives */
+.boa-stars-input        { display:flex; gap:4px; cursor:pointer; }
+.boa-star-label         { display:flex; }
+.boa-star-label input   { display:none; }
+.boa-stars-input .boa-star { font-size:28px; }
+
+/* ---- Résumé produit ---- */
+.boa-reviews-summary     { display:flex; gap:32px; align-items:flex-start; flex-wrap:wrap; margin-bottom:24px; }
+.boa-reviews-summary-avg { display:flex; flex-direction:column; align-items:center; gap:4px; min-width:90px; }
+.boa-avg-score           { font-family:var(--font-head); font-size:48px; color:var(--ink); line-height:1; }
+.boa-reviews-count       { font-family:var(--font-mono); font-size:11px; color:var(--paper-dim); text-transform:uppercase; letter-spacing:.04em; }
+
+.boa-rating-bars         { flex:1; display:flex; flex-direction:column; gap:6px; min-width:160px; }
+.boa-rating-bar-row      { display:flex; align-items:center; gap:8px; }
+.boa-rating-bar-label    { font-family:var(--font-mono); font-size:11px; color:var(--paper-dim); width:20px; text-align:right; }
+.boa-rating-bar-track    { flex:1; height:6px; background:var(--paper-dark); border-radius:3px; overflow:hidden; }
+.boa-rating-bar-fill     { height:100%; background:var(--rust); border-radius:3px; transition:width .4s ease; }
+.boa-rating-bar-count    { font-family:var(--font-mono); font-size:11px; color:var(--paper-dim); width:20px; }
+
+/* ---- Cards de review ---- */
+.boa-review-card, .boa-featured-review-card {
+  background:var(--paper);
+  border:1px solid var(--rule);
+  padding:20px 24px;
+  margin-bottom:12px;
+}
+.boa-featured-review-card { flex:1; min-width:220px; max-width:300px; }
+
+.boa-review-header  { display:flex; align-items:center; gap:10px; margin-bottom:8px; }
+.boa-review-title   { font-family:var(--font-head); font-size:15px; color:var(--ink); margin-bottom:6px; }
+.boa-review-body    { font-family:var(--font-mono); font-size:13px; color:var(--ink-dim); line-height:1.6; margin:0 0 12px; }
+.boa-review-meta    { display:flex; flex-wrap:wrap; gap:12px; align-items:center; }
+.boa-review-author  { font-family:var(--font-mono); font-size:12px; font-weight:600; color:var(--ink); }
+.boa-review-color   { font-family:var(--font-mono); font-size:11px; color:var(--paper-dim); text-transform:uppercase; letter-spacing:.04em; }
+.boa-review-date    { font-family:var(--font-mono); font-size:11px; color:var(--paper-dim); }
+
+.boa-verified-badge {
+  font-family:var(--font-mono); font-size:10px; text-transform:uppercase;
+  letter-spacing:.06em; color:var(--rust); border:1px solid var(--rust);
+  padding:2px 6px;
+}
+
+/* ---- Formulaire ---- */
+.boa-review-form-wrap   { border-top:1px solid var(--rule); padding-top:28px; margin-top:28px; }
+.boa-review-form-title  { font-family:var(--font-head); font-size:18px; text-transform:uppercase; color:var(--ink); margin-bottom:20px; letter-spacing:.04em; }
+.boa-review-form        { display:flex; flex-direction:column; gap:16px; }
+.boa-form-row           { display:flex; flex-direction:column; gap:6px; }
+.boa-form-row label     { font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-dim); }
+.boa-form-hint          { font-size:10px; color:var(--paper-dim); text-transform:none; letter-spacing:0; }
+
+.boa-review-form input[type="text"],
+.boa-review-form input[type="email"],
+.boa-review-form textarea {
+  background:var(--paper);
+  border:1px solid var(--rule);
+  color:var(--ink);
+  font-family:var(--font-mono);
+  font-size:13px;
+  padding:10px 12px;
+  width:100%;
+  box-sizing:border-box;
+  resize:vertical;
+  outline:none;
+  transition:border-color .15s;
+}
+.boa-review-form input:focus,
+.boa-review-form textarea:focus { border-color:var(--rust); }
+
+.boa-review-submit-btn {
+  background:var(--ink);
+  color:var(--paper);
+  font-family:var(--font-head);
+  font-size:13px;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  border:none;
+  padding:12px 28px;
+  cursor:pointer;
+  transition:background .15s;
+  align-self:flex-start;
+}
+.boa-review-submit-btn:hover    { background:var(--rust); }
+.boa-review-submit-btn:disabled { opacity:.5; cursor:not-allowed; }
+
+.boa-review-feedback       { font-family:var(--font-mono); font-size:12px; padding:8px 12px; margin-top:8px; }
+.boa-review-feedback.error { background:#3b0000; color:#ff8080; border:1px solid #7a0000; }
+.boa-review-feedback.success { background:#0a2a0a; color:#80d080; border:1px solid #1a4a1a; }
+
+.boa-review-thanks        { text-align:center; padding:32px; }
+.boa-review-thanks-icon   { font-size:40px; color:var(--rust); margin-bottom:12px; }
+.boa-review-thanks p      { font-family:var(--font-mono); color:var(--ink-dim); font-size:14px; }
+.boa-verified-note        { color:var(--rust) !important; font-size:12px !important; margin-top:4px !important; }
+
+/* ---- Section home ---- */
+.boa-reviews-section        { padding:60px 0; border-top:1px solid var(--rule); }
+.boa-global-score-wrap      { display:flex; align-items:center; gap:10px; margin-bottom:32px; }
+.boa-global-avg             { font-family:var(--font-head); font-size:22px; color:var(--ink); }
+.boa-global-count           { font-family:var(--font-mono); font-size:12px; color:var(--paper-dim); text-transform:uppercase; }
+#boa-featured-reviews       { display:flex; gap:16px; flex-wrap:wrap; }
+
+.boa-reviews-empty          { font-family:var(--font-mono); font-size:13px; color:var(--paper-dim); display:flex; align-items:center; gap:10px; }
+
+/* ---- Responsive ---- */
+@media (max-width:600px) {
+  .boa-reviews-summary  { flex-direction:column; }
+  .boa-avg-score        { font-size:36px; }
+  #boa-featured-reviews { flex-direction:column; }
+  .boa-featured-review-card { max-width:100%; }
+}
+
+/* ---- Photos dans les reviews ---- */
+.boa-review-photos       { display:flex; gap:8px; flex-wrap:wrap; margin:12px 0; }
+.boa-review-thumb        { width:80px; height:80px; object-fit:cover; cursor:pointer;
+                           border:1px solid var(--rule); transition:opacity .15s; }
+.boa-review-thumb:hover  { opacity:.8; }
+
+/* ---- Zone d'upload ---- */
+.boa-photo-upload-area   { display:flex; align-items:flex-start; gap:12px; flex-wrap:wrap; }
+.boa-photo-add-btn       { display:inline-flex; align-items:center; justify-content:center;
+                           width:80px; height:80px; border:1px dashed var(--rule);
+                           font-family:var(--font-mono); font-size:11px; color:var(--paper-dim);
+                           cursor:pointer; text-align:center; transition:border-color .15s, color .15s; }
+.boa-photo-add-btn:hover { border-color:var(--rust); color:var(--rust); }
+.boa-photo-previews      { display:flex; gap:8px; flex-wrap:wrap; }
+.boa-photo-preview       { position:relative; }
+.boa-photo-preview img   { width:80px; height:80px; object-fit:cover; border:1px solid var(--rule); display:block; }
+.boa-photo-remove        { position:absolute; top:2px; right:2px; background:rgba(0,0,0,.7);
+                           color:#fff; border:none; width:18px; height:18px; font-size:10px;
+                           cursor:pointer; display:flex; align-items:center; justify-content:center; padding:0; }
+.boa-upload-status       { font-family:var(--font-mono); font-size:11px; color:var(--paper-dim);
+                           margin-top:6px; width:100%; }
+
+/* ---- Lightbox ---- */
+.boa-lightbox-overlay    { position:fixed; inset:0; background:rgba(0,0,0,.92);
+                           display:flex; align-items:center; justify-content:center;
+                           z-index:1000; cursor:pointer; }
+.boa-lightbox            { position:relative; cursor:default; max-width:90vw; max-height:90vh;
+                           display:flex; align-items:center; gap:16px; }
+.boa-lightbox-img        { max-width:80vw; max-height:85vh; object-fit:contain; display:block; }
+.boa-lightbox-close      { position:absolute; top:-40px; right:0; background:none; border:none;
+                           color:#fff; font-size:24px; cursor:pointer; line-height:1; }
+.boa-lightbox-prev,
+.boa-lightbox-next       { background:none; border:none; color:#fff; font-size:48px;
+                           cursor:pointer; line-height:1; padding:0 8px; opacity:.7;
+                           transition:opacity .15s; }
+.boa-lightbox-prev:hover,
+.boa-lightbox-next:hover { opacity:1; }
+.boa-lightbox-counter    { position:absolute; bottom:-32px; left:50%; transform:translateX(-50%);
+                           font-family:var(--font-mono); font-size:12px; color:rgba(255,255,255,.6); }
