@@ -52,7 +52,7 @@
 
 /* ---- Formulaire ---- */
 .boa-review-form-wrap   { border-top:1px solid var(--rule); padding-top:28px; margin-top:28px; }
-.boa-review-form-title  { font-family:var(--font-head); font-size:18px; text-transform:uppercase; color:var(--ink); margin-bottom:20px; letter-spacing:.04em; }
+.boa-review-form-title  { font-family:var(--font-head); font-size:18px; text-transform:uppercase; color:var(--paper); margin-bottom:20px; letter-spacing:.04em; }
 .boa-review-form        { display:flex; flex-direction:column; gap:16px; }
 .boa-form-row           { display:flex; flex-direction:column; gap:6px; }
 .boa-form-row label     { font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-dim); }

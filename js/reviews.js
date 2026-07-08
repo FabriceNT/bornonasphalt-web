@@ -124,11 +124,11 @@ function boaRenderReviewForm(productId, color, size, formContainer) {
           <label>Your rating *</label>
           <div class="boa-stars-input">${boaStars(0, true, 'rating')}</div>
         </div>
-        <div class="boa-form-row">
+        <div class="boa-form-row" id="boa-rev-email-row">
           <label for="boa-rev-email">Email * <span class="boa-form-hint">(verifies your purchase — never displayed)</span></label>
           <input type="email" id="boa-rev-email" placeholder="you@example.com" required />
         </div>
-        <div class="boa-form-row">
+        <div class="boa-form-row" id="boa-rev-name-row">
           <label for="boa-rev-name">Display name</label>
           <input type="text" id="boa-rev-name" placeholder="Mike T." maxlength="80" />
         </div>
@@ -342,4 +342,20 @@ async function boaLoadFeaturedReviews() {
       thumbs.forEach((t, i) => t.addEventListener('click', () => boaOpenLightbox(photos, i)));
     });
   } catch { /* silencieux */ }
+}
+
+function boaUpdateReviewFormUser(user) {
+  if (!user) return;
+  const emailInput = document.getElementById('boa-rev-email');
+  const nameInput  = document.getElementById('boa-rev-name');
+  const emailRow   = document.getElementById('boa-rev-email-row');
+  const nameRow    = document.getElementById('boa-rev-name-row');
+  if (emailInput && user.email) {
+    emailInput.value = user.email;
+    if (emailRow) emailRow.style.display = 'none';
+  }
+  if (nameInput && user.name) {
+    nameInput.value = user.name;
+    if (nameRow) nameRow.style.display = 'none';
+  }
 }
