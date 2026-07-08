@@ -19,18 +19,42 @@ function boa_send_order_confirmation(
     // ---- Lignes du panier ----
     $itemRows = '';
     foreach ($cart as $item) {
-        $qty    = (int)($item['qty'] ?? 1);
-        $title  = htmlspecialchars($item['title'] ?? $item['id']);
-        $price  = boa_price_cents_for_size($item['size'] ?? '') * $qty;
+        $qty    = (int)($item['qty']   ?? 1);
+        $color  = $item['color']       ?? '';
+        $size   = $item['size']        ?? '';
+        $price  = boa_price_cents_for_size($size) * $qty;
+
+        // Récupère le titre et l'image depuis le catalogue PHP
+        $product = function_exists('boa_find_product') ? boa_find_product($item['id'] ?? '') : null;
+        $title   = $product
+            ? htmlspecialchars($product['title'] . " ({$color}, {$size})")
+            : htmlspecialchars(($item['title'] ?? $item['id']) . " ({$color}, {$size})");
+
+        $imgUrl  = '';
+        if ($product) {
+            $images = $product['images'] ?? [];
+            $imgUrl = $images[$color] ?? ($product['image'] ?? '');
+        }
+        $imgTag = $imgUrl
+            ? "<img src=\"{$imgUrl}\" width=\"56\" height=\"70\"
+               style=\"object-fit:cover;border:1px solid #B8AF95;display:block;\" alt=\"\" />"
+            : '';
+
         $itemRows .= "
-        <tr>
-          <td style='padding:8px 0; border-bottom:1px dotted #B8AF95; font-family:monospace; font-size:13px; color:#1B1812;'>
+    <tr>
+      <td style='padding:10px 0; border-bottom:1px dotted #B8AF95; vertical-align:middle;'>
+        <table cellpadding='0' cellspacing='0' border='0'><tr>
+          <td style='padding-right:14px; vertical-align:middle;'>{$imgTag}</td>
+          <td style='font-family:monospace; font-size:13px; color:#1B1812; vertical-align:middle;'>
             {$title} × {$qty}
           </td>
-          <td style='padding:8px 0; border-bottom:1px dotted #B8AF95; font-family:monospace; font-size:13px; color:#1B1812; text-align:right;'>
-            \$" . number_format($price / 100, 2) . "
-          </td>
-        </tr>";
+        </tr></table>
+      </td>
+      <td style='padding:10px 0; border-bottom:1px dotted #B8AF95; font-family:monospace;
+                 font-size:13px; color:#1B1812; text-align:right; vertical-align:middle;'>
+        \$" . number_format($price / 100, 2) . "
+      </td>
+    </tr>";
     }
 
     $shippingLabel = $shippingCents === 0 ? 'Free' : '$' . number_format($shippingCents / 100, 2);
