@@ -6,7 +6,8 @@
 <title>Product — Born on Asphalt</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Caveat:wght@500;600&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="css/style.css?v=6" />
+<link rel="stylesheet" href="css/style.css?v=7" />
+<link rel="stylesheet" href="css/reviews.css?v=1" />
 </head>
 <body>
 
@@ -36,6 +37,15 @@
 <div class="page-body">
   <div class="container" id="productDetailContainer" style="max-width:1000px;">
     <!-- filled by js/main.js: initProductPage() -->
+  </div>
+
+  <!-- Reviews Section -->
+  <div class="container" style="max-width:1000px; margin-top: 56px;">
+    <div class="section-label">// Customer telemetry</div>
+    <h2 class="section-title" style="margin-bottom: 24px;">Customer Reviews</h2>
+    <div id="boa-product-review-summary"></div>
+    <div id="boa-product-review-form"></div>
+    <div id="boa-product-review-list"></div>
   </div>
 </div>
 
@@ -153,6 +163,7 @@
 
 <script src="https://js.stripe.com/v3/"></script>
 <script src="js/products.js?v=7"></script>
+<script src="js/reviews.js?v=1"></script>
 <script src="js/main.js?v=16"></script>
 </body>
 </html>

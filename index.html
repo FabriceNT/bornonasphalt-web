@@ -7,7 +7,8 @@
 <meta name="description" content="Apparel for those who built it, drove it, and never forgot it. Ford, Mopar, GM — printed on demand, shipped from the US." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Caveat:wght@500;600&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="css/style.css?v=6" />
+<link rel="stylesheet" href="css/style.css?v=7" />
+<link rel="stylesheet" href="css/reviews.css?v=1" />
 </head>
 <body>
 
@@ -102,6 +103,26 @@
       <div class="stat"><b>3</b><span>Tribes</span></div>
       <div class="stat"><b>V8</b><span>Non-negotiable</span></div>
       <div class="stat"><b>US</b><span>Made & shipped</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== REVIEWS ===================== -->
+<section class="section boa-reviews-section">
+  <div class="container">
+    <div class="section-label">// Customer telemetry</div>
+    <h2 class="section-title" style="margin-bottom: 24px;">Reviews</h2>
+
+    <!-- Score global des avis -->
+    <div class="boa-global-score-wrap">
+      <div id="boa-global-score">
+        <!-- Rempli dynamiquement par boaLoadFeaturedReviews() -->
+      </div>
+    </div>
+
+    <!-- Grille des reviews à la Une -->
+    <div id="boa-featured-reviews">
+      <!-- Rempli dynamiquement par boaLoadFeaturedReviews() -->
     </div>
   </div>
 </section>
@@ -273,6 +294,7 @@
 
 <script src="https://js.stripe.com/v3/"></script>
 <script src="js/products.js?v=7"></script>
+<script src="js/reviews.js?v=1"></script>
 <script src="js/main.js?v=16"></script>
 </body>
 </html>

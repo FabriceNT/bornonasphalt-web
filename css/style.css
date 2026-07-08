@@ -842,3 +842,17 @@ footer {
   color: var(--paper-dim);
   letter-spacing: 0.05em;
 }
+
+/* ---------- Reviews integration variables and overrides ---------- */
+:root {
+  --font-head: 'Oswald', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+  --rust: var(--stamp-red);
+  --rule: var(--line-dark);
+  --paper-dark: var(--paper-carbon);
+  --ink-dim: var(--ink-faded);
+}
+
+.boa-global-avg, .boa-avg-score {
+  color: var(--paper) !important;
+}
