@@ -173,9 +173,46 @@ function initProductPage(){
   pdState = { id, color: p.comingSoon ? null : p.colors[0], size: null, qty: 1 };
   document.title = `${p.title} — Born on Asphalt`;
   renderProductDetail(p);
+  initRelatedProducts(p.id, p.tribe);
   if (typeof boaLoadProductReviews === 'function') {
     boaLoadProductReviews(id, pdState.color, pdState.size);
   }
+}
+
+function initRelatedProducts(currentId, currentTribe) {
+  const grid = document.getElementById('relatedProductsGrid');
+  if (!grid || typeof PRODUCTS === 'undefined') return;
+
+  // 1. Même tribu d'abord, produit courant exclu
+  const sameTribe = PRODUCTS.filter(p => p.id !== currentId && p.tribe === currentTribe);
+  // 2. Autres produits pour compléter
+  const others    = PRODUCTS.filter(p => p.id !== currentId && p.tribe !== currentTribe);
+
+  // Mélange déterministe : shuffle basé sur l'id courant pour stabilité
+  const seed = currentId.split('').reduce((a, c) => a + c.charCodeAt(0), 0);
+  const shuffle = (arr) => arr
+    .map((v, i) => ({ v, k: (seed * (i + 1) * 2654435761) % 4294967296 }))
+    .sort((a, b) => a.k - b.k)
+    .map(x => x.v);
+
+  const pool = [...shuffle(sameTribe), ...shuffle(others)].slice(0, 4);
+
+  grid.innerHTML = pool.map(p => {
+    const img = p.images?.[p.colors?.[0]] || p.image;
+    return `
+    <div class="product-card" onclick="location.href='product.html?id=${p.id}'">
+      <div class="product-swatch">
+        ${img ? `<img src="${img}" alt="${p.title}" loading="lazy" />` : `<span>${p.id}</span>`}
+      </div>
+      <div class="product-body">
+        <div class="pcode">${p.id} — ${p.series || ''}</div>
+        <h3>${p.title}</h3>
+        <div class="price-row">
+          <span class="price">From $${p.price.toFixed(2)}</span>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
 }
 
 function renderProductDetail(p){
