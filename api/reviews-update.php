@@ -22,6 +22,18 @@ $rating   = (int)($input['rating']    ?? 0);
 $title    = mb_substr(strip_tags(trim($input['title'] ?? '')), 0, 120);
 $body     = mb_substr(strip_tags(trim($input['body']  ?? '')), 0, 2000);
 
+$photosRaw = $input['photos'] ?? [];
+$photos = [];
+if (is_array($photosRaw)) {
+  foreach (array_slice($photosRaw, 0, 3) as $p) {
+    $p = trim($p);
+    if (preg_match('#^/uploads/reviews/[a-f0-9]{24}\.(jpg|png|webp)$#', $p)) {
+      if (file_exists(dirname(__DIR__) . $p)) $photos[] = $p;
+    }
+  }
+}
+$photosJson = empty($photos) ? null : json_encode($photos);
+
 if (!$reviewId || $rating < 1 || $rating > 5 || strlen($body) < 10) {
   http_response_code(422);
   echo json_encode(['error' => 'review_id, rating (1-5) et body (min 10 chars) requis.']);
@@ -47,9 +59,9 @@ try {
 
   // Update — repasse approved à 0 pour re-modération
   $upd = $db->prepare(
-    'UPDATE reviews SET rating = ?, title = ?, body = ?, approved = 0 WHERE id = ?'
+    'UPDATE reviews SET rating = ?, title = ?, body = ?, photos = ?, approved = 0 WHERE id = ?'
   );
-  $upd->execute([$rating, $title, $body, $reviewId]);
+  $upd->execute([$rating, $title, $body, $photosJson, $reviewId]);
 
   echo json_encode(['success' => true, 'message' => 'Review updated and pending re-approval.']);
 

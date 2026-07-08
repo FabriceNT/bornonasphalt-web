@@ -148,6 +148,15 @@ function boaRenderMyReview(review, productId, container) {
         <div class="boa-form-actions">
           <button type="button" class="boa-review-submit-btn" id="boaSaveReviewBtn">Save Changes</button>
         </div>
+        <div class="boa-form-row">
+          <label>Photos <span class="boa-form-hint">(optional — max 3, JPEG/PNG/WebP, 8 MB each)</span></label>
+          <div class="boa-photo-upload-area" id="boaEditPhotoArea">
+            <label class="boa-photo-add-btn" for="boaEditPhotoInput">+ Add Photo</label>
+            <input type="file" id="boaEditPhotoInput" accept="image/jpeg,image/png,image/webp" multiple hidden />
+            <div class="boa-photo-previews" id="boaEditPhotoPreviews"></div>
+          </div>
+          <div class="boa-upload-status" id="boaEditUploadStatus"></div>
+        </div>
         <div id="boa-edit-feedback" class="boa-review-feedback" hidden></div>
       </div>`;
 
@@ -172,6 +181,70 @@ function boaRenderMyReview(review, productId, container) {
         el.classList.toggle('selected', +el.dataset.val <= selectedRating));
     });
 
+    // Upload photos — pré-charger les photos existantes
+    const uploadedPaths = review.photos ? [...review.photos] : [];
+    const previewsEl   = document.getElementById('boaEditPhotoPreviews');
+    const statusEl     = document.getElementById('boaEditUploadStatus');
+    const fileInput    = document.getElementById('boaEditPhotoInput');
+    const addBtn       = document.querySelector('label[for="boaEditPhotoInput"]');
+
+    const refreshAddBtn = () => {
+      addBtn.style.display = uploadedPaths.length >= 3 ? 'none' : 'inline-flex';
+    };
+
+    // Afficher les miniatures des photos existantes
+    uploadedPaths.forEach((path, idx) => {
+      const wrap = document.createElement('div');
+      wrap.className = 'boa-photo-preview-wrap';
+      wrap.innerHTML = `<img src="${path}" class="boa-photo-preview-thumb" />
+        <button class="boa-photo-remove-btn" data-idx="${idx}">✕</button>`;
+      wrap.querySelector('.boa-photo-remove-btn').addEventListener('click', () => {
+        uploadedPaths.splice(idx, 1);
+        wrap.remove();
+        refreshAddBtn();
+      });
+      previewsEl.appendChild(wrap);
+    });
+    refreshAddBtn();
+
+    fileInput.addEventListener('change', async () => {
+      const files = Array.from(fileInput.files);
+      fileInput.value = '';
+      for (const file of files) {
+        if (uploadedPaths.length >= 3) break;
+        statusEl.textContent = 'Uploading…';
+        const fd = new FormData();
+        fd.append('photo', file);
+        try {
+          const r = await fetch('/api/reviews-upload.php', {
+            method: 'POST', credentials: 'include', body: fd,
+          });
+          const d = await r.json();
+          if (d.path) {
+            uploadedPaths.push(d.path);
+            const wrap = document.createElement('div');
+            wrap.className = 'boa-photo-preview-wrap';
+            const currentIdx = uploadedPaths.length - 1;
+            wrap.innerHTML = `<img src="${d.path}" class="boa-photo-preview-thumb" />
+              <button class="boa-photo-remove-btn">✕</button>`;
+            wrap.querySelector('.boa-photo-remove-btn').addEventListener('click', () => {
+              const i = uploadedPaths.indexOf(d.path);
+              if (i > -1) uploadedPaths.splice(i, 1);
+              wrap.remove();
+              refreshAddBtn();
+            });
+            previewsEl.appendChild(wrap);
+            statusEl.textContent = '';
+          } else {
+            statusEl.textContent = d.error || 'Upload failed.';
+          }
+        } catch {
+          statusEl.textContent = 'Upload error.';
+        }
+        refreshAddBtn();
+      }
+    });
+
     document.getElementById('boaSaveReviewBtn').addEventListener('click', async () => {
       const body = document.getElementById('boa-edit-body').value.trim();
       const feedback = document.getElementById('boa-edit-feedback');
@@ -188,6 +261,7 @@ function boaRenderMyReview(review, productId, container) {
             rating:    selectedRating,
             title:     document.getElementById('boa-edit-title').value.trim(),
             body,
+            photos:    [...uploadedPaths],   // NOUVEAU
           }),
         });
         const data = await res.json();
