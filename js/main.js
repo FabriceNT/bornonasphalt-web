@@ -35,6 +35,7 @@ localStorage.setItem('boa_cart', JSON.stringify(cart));
 
 let activeTribe = 'all';
 let currentUser = null;
+window._boaUserPromise = new Promise(resolve => { window._boaUserResolve = resolve; });
 let currentPage = 1;
 const PRODUCTS_PER_PAGE = 20;
 
@@ -436,6 +437,7 @@ async function initAuth(){
     const data = await res.json();
     currentUser = data.user || null;
     window._boaUser = currentUser;
+    if (window._boaUserResolve) window._boaUserResolve(currentUser);
   } catch(err){
     console.error('Session check failed:', err);
     currentUser = null;

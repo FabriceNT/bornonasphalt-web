@@ -436,8 +436,6 @@ function boaRenderReviewForm(productId, color, size, formContainer) {
     }
   });
 
-  // Pre-fill if user already authenticated
-  if (window._boaUser) boaUpdateReviewFormUser(window._boaUser);
 }
 
 function showFeedback(el, msg, type) {
@@ -463,10 +461,12 @@ async function boaLoadProductReviews(productId, color, size) {
   } catch { /* silencieux */ }
 
   if (formEl) {
+    const user = window._boaUserPromise ? await window._boaUserPromise : null;
     if (data && data.my_review) {
       boaRenderMyReview(data.my_review, productId, formEl);
     } else {
       boaRenderReviewForm(productId, color || '', size || '', formEl);
+      if (user) boaUpdateReviewFormUser(user);
     }
   }
 }
