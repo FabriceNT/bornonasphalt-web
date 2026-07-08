@@ -49,6 +49,9 @@ document.addEventListener('DOMContentLoaded', () => {
   initCheckoutButtons();
   initProductPage();
   initAuth();
+  if (typeof boaLoadFeaturedReviews === 'function') {
+    boaLoadFeaturedReviews();
+  }
 });
 
 /* ===================== PRODUCT GRID ===================== */
@@ -169,6 +172,9 @@ function initProductPage(){
   pdState = { id, color: p.comingSoon ? null : p.colors[0], size: null, qty: 1 };
   document.title = `${p.title} — Born on Asphalt`;
   renderProductDetail(p);
+  if (typeof boaLoadProductReviews === 'function') {
+    boaLoadProductReviews(id, pdState.color, pdState.size);
+  }
 }
 
 function renderProductDetail(p){
