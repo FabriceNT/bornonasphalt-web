@@ -35,6 +35,8 @@ localStorage.setItem('boa_cart', JSON.stringify(cart));
 
 let activeTribe = 'all';
 let currentUser = null;
+let currentPage = 1;
+const PRODUCTS_PER_PAGE = 20;
 
 /* ===================== INIT ===================== */
 document.addEventListener('DOMContentLoaded', () => {
@@ -54,7 +56,16 @@ function renderProducts(){
   const grid = document.getElementById('productGrid');
   if(!grid) return;
   const items = activeTribe === 'all' ? PRODUCTS : PRODUCTS.filter(p => p.tribe === activeTribe);
-  grid.innerHTML = items.map(p => {
+
+  const totalPages = Math.max(1, Math.ceil(items.length / PRODUCTS_PER_PAGE));
+  if (currentPage > totalPages) {
+    currentPage = totalPages;
+  }
+
+  const startIndex = (currentPage - 1) * PRODUCTS_PER_PAGE;
+  const paginatedItems = items.slice(startIndex, startIndex + PRODUCTS_PER_PAGE);
+
+  grid.innerHTML = paginatedItems.map(p => {
     const cardImg = p.images?.[p.colors?.[0]] || p.image;
     return `
     <div class="product-card" data-id="${p.id}" onclick="location.href='product.html?id=${p.id}'">
@@ -73,6 +84,59 @@ function renderProducts(){
     </div>
   `;
   }).join('');
+
+  renderPaginationControls(items.length);
+}
+
+function renderPaginationControls(totalItems) {
+  const grid = document.getElementById('productGrid');
+  if(!grid) return;
+
+  let paginationContainer = document.getElementById('paginationControls');
+  const totalPages = Math.ceil(totalItems / PRODUCTS_PER_PAGE);
+
+  if (totalPages <= 1) {
+    if (paginationContainer) {
+      paginationContainer.remove();
+    }
+    return;
+  }
+
+  if (!paginationContainer) {
+    paginationContainer = document.createElement('div');
+    paginationContainer.id = 'paginationControls';
+    paginationContainer.className = 'pagination-controls';
+    grid.after(paginationContainer);
+  }
+
+  paginationContainer.innerHTML = `
+    <button class="pagination-btn" id="prevPageBtn" ${currentPage === 1 ? 'disabled' : ''}>← Previous</button>
+    <span class="pagination-info">Page ${currentPage} / ${totalPages}</span>
+    <button class="pagination-btn" id="nextPageBtn" ${currentPage === totalPages ? 'disabled' : ''}>Next →</button>
+  `;
+
+  paginationContainer.querySelector('#prevPageBtn').addEventListener('click', () => {
+    if (currentPage > 1) {
+      currentPage--;
+      renderProducts();
+      scrollToShop();
+    }
+  });
+
+  paginationContainer.querySelector('#nextPageBtn').addEventListener('click', () => {
+    if (currentPage < totalPages) {
+      currentPage++;
+      renderProducts();
+      scrollToShop();
+    }
+  });
+}
+
+function scrollToShop() {
+  const shopSection = document.getElementById('shop');
+  if (shopSection) {
+    shopSection.scrollIntoView({ behavior: 'smooth' });
+  }
 }
 
 function initFilters(){
@@ -82,6 +146,7 @@ function initFilters(){
       buttons.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       activeTribe = btn.dataset.tribe;
+      currentPage = 1;
       renderProducts();
     });
   });
