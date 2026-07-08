@@ -14,6 +14,7 @@ require_once __DIR__ . '/lib/paypal.php';
 require_once __DIR__ . '/lib/printful.php';
 require_once __DIR__ . '/lib/printify.php';
 require_once __DIR__ . '/lib/fulfillment.php';
+require_once __DIR__ . '/lib/mailer.php';
 
 header('Content-Type: application/json');
 boa_send_cors_headers();
@@ -115,6 +116,24 @@ try {
         ]);
     } catch (Exception $e) {
         error_log('Could not save PayPal order to database: ' . $e->getMessage());
+    }
+
+    // Confirmation email
+    try {
+        if (!empty($shipping['email'])) {
+            boa_send_order_confirmation(
+                $shipping['email'],
+                $shipping['name'],
+                substr($orderId, 0, 12),
+                $cart,
+                $shipping,
+                $subtotalCents,
+                $shippingCents,
+                $subtotalCents + $shippingCents
+            );
+        }
+    } catch (Exception $e) {
+        error_log('Order confirmation email failed: ' . $e->getMessage());
     }
 
     echo json_encode(['ok' => true]);

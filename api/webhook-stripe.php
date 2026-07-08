@@ -10,6 +10,7 @@ require_once __DIR__ . '/lib/stripe.php';
 require_once __DIR__ . '/lib/printful.php';
 require_once __DIR__ . '/lib/printify.php';
 require_once __DIR__ . '/lib/fulfillment.php';
+require_once __DIR__ . '/lib/mailer.php';
 
 // Catches PHP fatal errors (TypeError, Error, etc.) that catch(Exception)
 // can't — writes file/line/message to order-errors.log so you can see it
@@ -149,6 +150,24 @@ try {
         ]);
     } catch (Exception $e) {
         error_log('Could not save order to database: ' . $e->getMessage());
+    }
+
+    // Confirmation email
+    try {
+        if (!empty($shipping['email'])) {
+            boa_send_order_confirmation(
+                $shipping['email'],
+                $shipping['name'],
+                substr($paymentIntentId, 0, 12),
+                $cart,
+                $shipping,
+                $subtotalCents,
+                $shippingCents,
+                $totalCents
+            );
+        }
+    } catch (Exception $e) {
+        error_log('Order confirmation email failed: ' . $e->getMessage());
     }
 
     http_response_code(200);
