@@ -115,6 +115,100 @@ function boaRenderReviews(reviews, container) {
 
 // ---- Formulaire avec upload photos ----
 
+function boaRenderMyReview(review, productId, container) {
+  const stars = boaStars(review.rating);
+  container.innerHTML = `
+    <div class="boa-review-form-wrap" id="boaMyReviewWrap">
+      <h3 class="boa-review-form-title">Your Review</h3>
+      <div class="boa-review-card" style="margin-bottom:16px;">
+        <div class="boa-review-header">${stars}</div>
+        ${review.title ? `<div class="boa-review-title">${review.title}</div>` : ''}
+        <p class="boa-review-body">${review.body}</p>
+      </div>
+      <button class="boa-review-submit-btn" id="boaEditReviewBtn">Edit My Review</button>
+      <div id="boaEditReviewFormArea"></div>
+    </div>`;
+
+  document.getElementById('boaEditReviewBtn').addEventListener('click', () => {
+    const area = document.getElementById('boaEditReviewFormArea');
+    area.innerHTML = `
+      <div style="margin-top:20px;">
+        <div class="boa-form-row">
+          <label>Your rating *</label>
+          <div class="boa-stars-input" id="boaEditStars">${boaStars(review.rating, true, 'edit_rating')}</div>
+        </div>
+        <div class="boa-form-row">
+          <label for="boa-edit-title">Review title</label>
+          <input type="text" id="boa-edit-title" value="${review.title || ''}" maxlength="120" />
+        </div>
+        <div class="boa-form-row">
+          <label for="boa-edit-body">Your review *</label>
+          <textarea id="boa-edit-body" rows="4" minlength="10">${review.body}</textarea>
+        </div>
+        <div class="boa-form-actions">
+          <button type="button" class="boa-review-submit-btn" id="boaSaveReviewBtn">Save Changes</button>
+        </div>
+        <div id="boa-edit-feedback" class="boa-review-feedback" hidden></div>
+      </div>`;
+
+    // Étoiles interactives
+    const starsWrap = document.getElementById('boaEditStars');
+    let selectedRating = review.rating;
+    starsWrap.querySelectorAll('.boa-star').forEach(el => {
+      if (+el.dataset.val <= selectedRating) el.classList.add('selected');
+    });
+    starsWrap.addEventListener('mouseover', e => {
+      const s = e.target.closest('.boa-star'); if (!s) return;
+      const val = +s.dataset.val;
+      starsWrap.querySelectorAll('.boa-star').forEach(el =>
+        el.classList.toggle('hover', +el.dataset.val <= val));
+    });
+    starsWrap.addEventListener('mouseleave', () =>
+      starsWrap.querySelectorAll('.boa-star').forEach(el => el.classList.remove('hover')));
+    starsWrap.addEventListener('change', () => {
+      const checked = starsWrap.querySelector('input[name="edit_rating"]:checked');
+      selectedRating = checked ? +checked.value : selectedRating;
+      starsWrap.querySelectorAll('.boa-star').forEach(el =>
+        el.classList.toggle('selected', +el.dataset.val <= selectedRating));
+    });
+
+    document.getElementById('boaSaveReviewBtn').addEventListener('click', async () => {
+      const body = document.getElementById('boa-edit-body').value.trim();
+      const feedback = document.getElementById('boa-edit-feedback');
+      if (body.length < 10) {
+        showFeedback(feedback, 'Review must be at least 10 characters.', 'error'); return;
+      }
+      const btn = document.getElementById('boaSaveReviewBtn');
+      btn.disabled = true; btn.textContent = 'Saving…';
+      try {
+        const res = await fetch('/api/reviews-update.php', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' }, credentials: 'include',
+          body: JSON.stringify({
+            review_id: review.id,
+            rating:    selectedRating,
+            title:     document.getElementById('boa-edit-title').value.trim(),
+            body,
+          }),
+        });
+        const data = await res.json();
+        if (data.success) {
+          document.getElementById('boaMyReviewWrap').innerHTML = `
+            <div class="boa-review-thanks">
+              <div class="boa-review-thanks-icon">✓</div>
+              <p>${data.message}</p>
+            </div>`;
+        } else {
+          showFeedback(feedback, data.error || 'Could not update review.', 'error');
+          btn.disabled = false; btn.textContent = 'Save Changes';
+        }
+      } catch {
+        showFeedback(feedback, 'Network error. Please try again.', 'error');
+        btn.disabled = false; btn.textContent = 'Save Changes';
+      }
+    });
+  });
+}
+
 function boaRenderReviewForm(productId, color, size, formContainer) {
   formContainer.innerHTML = `
     <div class="boa-review-form-wrap">
@@ -286,14 +380,21 @@ async function boaLoadProductReviews(productId, color, size) {
   const formEl    = document.getElementById('boa-product-review-form');
   if (!summaryEl) return;
 
+  let data = null;
   try {
     const res  = await fetch(`/api/reviews-get.php?product_id=${encodeURIComponent(productId)}`);
-    const data = await res.json();
+    data = await res.json();
     boaRenderProductSummary(data.summary, summaryEl);
     if (listEl) boaRenderReviews(data.reviews, listEl);
   } catch { /* silencieux */ }
 
-  if (formEl) boaRenderReviewForm(productId, color || '', size || '', formEl);
+  if (formEl) {
+    if (data && data.my_review) {
+      boaRenderMyReview(data.my_review, productId, formEl);
+    } else {
+      boaRenderReviewForm(productId, color || '', size || '', formEl);
+    }
+  }
 }
 
 // ---- Chargement reviews home ----

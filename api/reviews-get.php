@@ -4,6 +4,7 @@
 // GET /api/reviews-get.php?summary=1
 
 require_once __DIR__ . '/config.php';
+boa_start_session();
 
 boa_send_cors_headers();
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') { http_response_code(204); exit; }
@@ -68,6 +69,23 @@ try {
     $reviewsStmt->bindValue(2, $limit,     PDO::PARAM_INT);
     $reviewsStmt->execute();
 
+    $myReview = null;
+    if (!empty($_SESSION['user_id'])) {
+      $db2 = boa_db();
+      $uStmt = $db2->prepare('SELECT email FROM users WHERE id = ?');
+      $uStmt->execute([$_SESSION['user_id']]);
+      $uRow = $uStmt->fetch();
+      if ($uRow) {
+        $mStmt = $db2->prepare(
+          'SELECT id, rating, title, body, color, size, photos, created_at
+           FROM reviews WHERE product_id = ? AND email = ? LIMIT 1'
+        );
+        $mStmt->execute([$productId, $uRow['email']]);
+        $mRow = $mStmt->fetch();
+        if ($mRow) $myReview = decode_photos($mRow);
+      }
+    }
+
     echo json_encode([
         'summary' => [
             'total'     => (int)$s['total'],
@@ -75,6 +93,7 @@ try {
             'breakdown' => [5=>(int)$s['r5'],4=>(int)$s['r4'],3=>(int)$s['r3'],2=>(int)$s['r2'],1=>(int)$s['r1']],
         ],
         'reviews' => array_map('decode_photos', $reviewsStmt->fetchAll()),
+        'my_review' => $myReview,
     ]);
 
 } catch (Exception $e) {
