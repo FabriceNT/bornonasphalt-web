@@ -435,9 +435,7 @@ async function initAuth(){
     const res = await fetch(AUTH_ME_ENDPOINT, { credentials: 'include' });
     const data = await res.json();
     currentUser = data.user || null;
-    if (currentUser && typeof boaUpdateReviewFormUser === 'function') {
-      boaUpdateReviewFormUser(currentUser);
-    }
+    window._boaUser = currentUser;
   } catch(err){
     console.error('Session check failed:', err);
     currentUser = null;

@@ -40,7 +40,8 @@ try {
              ORDER BY verified DESC, rating DESC, created_at DESC
              LIMIT ?'
         );
-        $stmt->execute([$limit]);
+        $stmt->bindValue(1, $limit, PDO::PARAM_INT);
+        $stmt->execute();
         echo json_encode(['reviews' => array_map('decode_photos', $stmt->fetchAll())]);
         exit;
     }
@@ -63,7 +64,9 @@ try {
          FROM reviews WHERE product_id=? AND approved=1
          ORDER BY verified DESC, rating DESC, created_at DESC LIMIT ?'
     );
-    $reviewsStmt->execute([$productId, $limit]);
+    $reviewsStmt->bindValue(1, $productId, PDO::PARAM_STR);
+    $reviewsStmt->bindValue(2, $limit,     PDO::PARAM_INT);
+    $reviewsStmt->execute();
 
     echo json_encode([
         'summary' => [

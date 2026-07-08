@@ -267,6 +267,9 @@ function boaRenderReviewForm(productId, color, size, formContainer) {
       btn.disabled = false; btn.textContent = 'Submit Review';
     }
   });
+
+  // Pre-fill if user already authenticated
+  if (window._boaUser) boaUpdateReviewFormUser(window._boaUser);
 }
 
 function showFeedback(el, msg, type) {
