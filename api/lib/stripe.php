@@ -180,3 +180,31 @@ function boa_stripe_verify_webhook(string $payload, string $sigHeader, string $s
     }
     return $event;
 }
+
+function boa_stripe_create_promo_code(string $code): array {
+    // Crée d'abord le coupon (10%, usage unique, expire dans 60 jours)
+    // puis le promotion code associé avec le code lisible choisi.
+
+    // Vérifie si le promo code existe déjà (idempotence)
+    $existing = boa_stripe_request('GET', '/v1/promotion_codes?code=' . urlencode($code) . '&limit=1');
+    if (!empty($existing['data'])) {
+        return $existing['data'][0];
+    }
+
+    // Crée le coupon
+    $coupon = boa_stripe_request('POST', '/v1/coupons', [
+        'percent_off'       => '10',
+        'duration'          => 'once',
+        'redeem_by'         => (string)(time() + 60 * 86400), // 60 jours
+        'max_redemptions'   => '1',
+    ]);
+
+    // Crée le promotion code lisible
+    $promo = boa_stripe_request('POST', '/v1/promotion_codes', [
+        'coupon'            => $coupon['id'],
+        'code'              => $code,
+        'max_redemptions'   => '1',
+    ]);
+
+    return $promo;
+}
