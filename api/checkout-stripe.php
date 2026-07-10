@@ -31,6 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 $input = json_decode(file_get_contents('php://input'), true);
 $cart = $input['cart'] ?? null;
 $email = $input['email'] ?? null;
+$promoCode = strtoupper(trim($input['promo_code'] ?? ''));
 
 if (!is_array($cart) || count($cart) === 0) {
     http_response_code(400);
@@ -69,6 +70,27 @@ try {
     $shippingCents = boa_shipping_cents($subtotalCents);
     $totalCents = $subtotalCents + $shippingCents;
 
+    $discountCents = 0;
+    $validatedPromoCode = null;
+    if (!empty($promoCode)) {
+        $db = boa_db();
+        $promoStmt = $db->prepare('
+            SELECT id, promo_code 
+            FROM newsletter_subscribers 
+            WHERE promo_code = ? 
+              AND used_at IS NULL 
+              AND expires_at > NOW()
+              AND unsubscribed_at IS NULL
+        ');
+        $promoStmt->execute([$promoCode]);
+        $promoRow = $promoStmt->fetch();
+        if ($promoRow) {
+            $discountCents = (int) round($subtotalCents * 0.10);
+            $totalCents = max(0, $totalCents - $discountCents);
+            $validatedPromoCode = $promoRow['promo_code'];
+        }
+    }
+
     // If signed in, resolve (or create) their Stripe Customer so their card
     // can be saved and reoffered. Guests just pay, no account needed.
     $stripeCustomerId = null;
@@ -103,8 +125,14 @@ try {
     }
 
     $paymentIntent = null;
+    $extraMeta = [];
+    if ($validatedPromoCode) {
+        $extraMeta['promo_code']     = $validatedPromoCode;
+        $extraMeta['discount_cents'] = (string) $discountCents;
+    }
+
     try {
-        $paymentIntent = boa_stripe_create_payment_intent($totalCents, json_encode($metadataCart), $stripeCustomerId, $email);
+        $paymentIntent = boa_stripe_create_payment_intent($totalCents, json_encode($metadataCart), $stripeCustomerId, $email, $extraMeta);
     } catch (Exception $e) {
         // Same "customer was deleted on Stripe's side" recovery as before.
         if ($stripeCustomerId && str_contains($e->getMessage(), 'No such customer')) {
@@ -112,7 +140,7 @@ try {
             $stripeCustomerId = $customer['id'];
             boa_db()->prepare('UPDATE users SET stripe_customer_id = ? WHERE id = ?')
                      ->execute([$stripeCustomerId, $_SESSION['user_id']]);
-            $paymentIntent = boa_stripe_create_payment_intent($totalCents, json_encode($metadataCart), $stripeCustomerId, $email);
+            $paymentIntent = boa_stripe_create_payment_intent($totalCents, json_encode($metadataCart), $stripeCustomerId, $email, $extraMeta);
         } else {
             throw $e;
         }
@@ -121,6 +149,7 @@ try {
     echo json_encode([
         'client_secret' => $paymentIntent['client_secret'],
         'customer_session_client_secret' => $customerSessionClientSecret,
+        'discount_cents' => $discountCents,
         'amount_cents' => $totalCents,
     ]);
 } catch (Throwable $e) {

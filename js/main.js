@@ -34,6 +34,7 @@ cart = cart.map(c => {
 localStorage.setItem('boa_cart', JSON.stringify(cart));
 
 let activeTribe = 'all';
+let appliedPromo = null; // { code, discountCents }
 let currentUser = null;
 window._boaUserPromise = new Promise(resolve => { window._boaUserResolve = resolve; });
 let currentPage = 1;
@@ -465,7 +466,16 @@ async function prefillCheckoutAddress(){
   }
 }
 function openModal(id){ document.getElementById(id).classList.add('open'); }
-window.closeModal = function(id){ document.getElementById(id).classList.remove('open'); }
+window.closeModal = function(id){
+  document.getElementById(id).classList.remove('open');
+  if (id === 'checkoutModal') {
+    appliedPromo = null;
+    const promoMsg = document.getElementById('promoMessage');
+    if (promoMsg) promoMsg.textContent = '';
+    const promoInput = document.getElementById('promoCodeInput');
+    if (promoInput) promoInput.value = '';
+  }
+}
 
 /* ===================== AUTH ===================== */
 async function initAuth(){
@@ -876,9 +886,67 @@ function renderCheckoutSummary(){
     <div class="option-line"><span class="desc">${c.title} (${c.color}, ${c.size}) × ${c.qty}</span><span>$${(c.price*c.qty).toFixed(2)}</span></div>
   `).join('') + `
     <div class="option-line"><span class="desc">Subtotal</span><span>$${subtotal.toFixed(2)}</span></div>
+    <div class="option-line" id="checkoutDiscount" style="display:none;"><span class="desc">Discount (10%)</span><span></span></div>
     <div class="option-line"><span class="desc">Shipping (US)</span><span>${shipping === 0 ? 'Free' : '$' + shipping.toFixed(2)}</span></div>
-    <div class="option-line" style="font-weight:600;"><span class="desc">Total</span><span>$${total.toFixed(2)}</span></div>
+    <div class="option-line" style="font-weight:600;"><span class="desc">Total</span><span id="checkoutTotal">$${total.toFixed(2)}</span></div>
+
+    <div id="promoSection" style="margin:16px 0;">
+      <div style="display:flex;gap:8px;">
+        <input type="text" id="promoCodeInput" placeholder="Promo code" 
+               style="flex:1;padding:10px;background:#1a1a1a;border:1px solid #333;
+                      color:#e8e0d0;font-family:'IBM Plex Mono',monospace;
+                      font-size:0.85rem;text-transform:uppercase;letter-spacing:0.05em;" />
+        <button type="button" id="promoApplyBtn"
+                style="padding:10px 16px;background:#8B0000;color:#fff;border:none;
+                       cursor:pointer;font-family:'IBM Plex Mono',monospace;
+                       font-size:0.8rem;letter-spacing:0.1em;white-space:nowrap;">
+          APPLY
+        </button>
+      </div>
+      <div id="promoMessage" style="font-size:0.8rem;margin-top:6px;min-height:18px;
+                                    font-family:'IBM Plex Mono',monospace;"></div>
+    </div>
   `;
+
+  document.getElementById('promoApplyBtn')?.addEventListener('click', async () => {
+    const code = document.getElementById('promoCodeInput')?.value?.trim();
+    const msg  = document.getElementById('promoMessage');
+    if (!code) return;
+
+    const btn = document.getElementById('promoApplyBtn');
+    btn.disabled = true;
+    btn.textContent = '...';
+
+    try {
+      const res  = await fetch('/api/promo-validate.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code })
+      });
+      const data = await res.json();
+
+      if (data.valid) {
+        appliedPromo = { code: data.code, discountPercent: data.discount_percent };
+        msg.style.color = '#4caf50';
+        msg.textContent = `✓ ${data.discount_percent}% off applied`;
+        // Réinitialiser le Payment Element avec le code promo
+        await initPaymentElement();
+      } else {
+        appliedPromo = null;
+        msg.style.color = '#c0392b';
+        msg.textContent = data.error || 'Invalid code';
+        btn.disabled = false;
+        btn.textContent = 'APPLY';
+      }
+    } catch (e) {
+      appliedPromo = null;
+      msg.style.color = '#c0392b';
+      msg.textContent = 'Connection error';
+      btn.disabled = false;
+      btn.textContent = 'APPLY';
+    }
+  });
+
   const amountEl = document.getElementById('payBtnAmount');
   if(amountEl) amountEl.textContent = `$${total.toFixed(2)}`;
 }
@@ -917,11 +985,32 @@ async function initPaymentElement(){
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         cart: cart.map(c => ({ id: c.id, color: c.color, size: c.size, qty: c.qty })),
-        email: emailInput?.value || undefined
+        email: emailInput?.value || undefined,
+        promo_code: appliedPromo?.code || undefined
       })
     });
     const data = await res.json();
     if(!res.ok) throw new Error(data.error || 'Could not start checkout.');
+
+    const discountEl = document.getElementById('checkoutDiscount');
+    const totalEl = document.getElementById('checkoutTotal');
+    if (data.discount_cents > 0) {
+      if (totalEl) {
+        totalEl.textContent = '$' + (data.amount_cents / 100).toFixed(2);
+      }
+      if (discountEl) {
+        discountEl.style.display = 'flex';
+        discountEl.querySelector('span:last-child').textContent = '− $' + (data.discount_cents / 100).toFixed(2);
+      }
+    } else {
+      if (discountEl) {
+        discountEl.style.display = 'none';
+      }
+      if (totalEl) {
+        const { total } = cartTotals();
+        totalEl.textContent = '$' + total.toFixed(2);
+      }
+    }
 
     const elementsOptions = { clientSecret: data.client_secret, appearance: { theme: 'stripe' } };
     if(data.customer_session_client_secret){

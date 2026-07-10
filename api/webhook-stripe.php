@@ -66,6 +66,22 @@ try {
     }
 
     $cart = json_decode($pi['metadata']['cart'] ?? '[]', true);
+
+    // Marquer le code promo comme utilisé
+    $usedPromoCode = $pi['metadata']['promo_code'] ?? null;
+    if ($usedPromoCode) {
+        try {
+            $dbPromo = boa_db();
+            $dbPromo->prepare('
+                UPDATE newsletter_subscribers 
+                SET used_at = NOW() 
+                WHERE promo_code = ? AND used_at IS NULL
+            ')->execute([$usedPromoCode]);
+        } catch (Exception $e) {
+            error_log('Could not mark promo code as used: ' . $e->getMessage());
+        }
+    }
+
     if (empty($cart)) {
         error_log("PaymentIntent {$paymentIntentId} succeeded but had no cart metadata.");
         http_response_code(200);
@@ -133,7 +149,8 @@ try {
         $subtotalCents = array_sum(array_map(function ($c) {
             return boa_price_cents_for_size($c['size']) * $c['qty'];
         }, $cart));
-        $shippingCents = max(0, $totalCents - $subtotalCents);
+        $discountCents = (int) ($pi['metadata']['discount_cents'] ?? 0);
+        $shippingCents = max(0, $totalCents - $subtotalCents + $discountCents);
 
         $insertOrder = $db->prepare('INSERT INTO orders (user_id, stripe_session_id, email, provider, provider_order_id, cart_json, subtotal_cents, shipping_cents, total_cents, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
         $insertOrder->execute([

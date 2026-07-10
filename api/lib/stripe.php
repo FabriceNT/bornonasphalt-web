@@ -106,13 +106,17 @@ function boa_stripe_create_customer_session(string $customerId): array
 
 // amountCents: total to charge (product + shipping), already computed
 // server-side. customerId is optional — omit for guest checkout.
-function boa_stripe_create_payment_intent(int $amountCents, string $metadataCartJson, ?string $customerId, ?string $email): array
+function boa_stripe_create_payment_intent(int $amountCents, string $metadataCartJson, ?string $customerId, ?string $email, array $extraMetadata = []): array
 {
+    $metadata = ['cart' => $metadataCartJson];
+    if (!empty($extraMetadata)) {
+        $metadata = array_merge($metadata, $extraMetadata);
+    }
     $params = [
         'amount' => $amountCents,
         'currency' => 'usd',
         'automatic_payment_methods' => ['enabled' => true],
-        'metadata' => ['cart' => $metadataCartJson],
+        'metadata' => $metadata,
     ];
     if ($customerId) {
         $params['customer'] = $customerId;
