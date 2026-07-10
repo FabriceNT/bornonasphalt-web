@@ -23,6 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 $input = json_decode(file_get_contents('php://input'), true);
 $cart = $input['cart'] ?? null;
+$promoCode = strtoupper(trim($input['promo_code'] ?? ''));
 
 if (!is_array($cart) || count($cart) === 0) {
     http_response_code(400);
@@ -59,6 +60,28 @@ try {
     $shippingCents = boa_shipping_cents($subtotalCents);
     $totalCents = $subtotalCents + $shippingCents;
 
+    $discountCents = 0;
+    $validatedPromoCode = null;
+    if (!empty($promoCode)) {
+        require_once __DIR__ . '/lib/newsletter.php';
+        $db = boa_db();
+        $promoStmt = $db->prepare('
+            SELECT id, promo_code 
+            FROM newsletter_subscribers 
+            WHERE promo_code = ? 
+              AND used_at IS NULL 
+              AND expires_at > NOW()
+              AND unsubscribed_at IS NULL
+        ');
+        $promoStmt->execute([$promoCode]);
+        $promoRow = $promoStmt->fetch();
+        if ($promoRow) {
+            $discountCents = (int) round($subtotalCents * 0.10);
+            $totalCents = max(0, $totalCents - $discountCents);
+            $validatedPromoCode = $promoRow['promo_code'];
+        }
+    }
+
     $shipping = [
         'name' => trim($input['full_name'] ?? ''),
         'address1' => trim($input['address1'] ?? ''),
@@ -77,8 +100,10 @@ try {
     // confirmed. Relies on the same browser session completing both steps
     // shortly after each other, which is how the PayPal Buttons flow works.
     $_SESSION['paypal_pending_orders'][$order['id']] = [
-        'cart' => $metadataCart,
-        'shipping' => $shipping,
+        'cart'           => $metadataCart,
+        'shipping'       => $shipping,
+        'promo_code'     => $validatedPromoCode,
+        'discount_cents' => $discountCents,
     ];
 
     echo json_encode(['id' => $order['id']]);

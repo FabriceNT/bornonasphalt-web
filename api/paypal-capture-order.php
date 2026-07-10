@@ -96,10 +96,12 @@ try {
             }
         }
 
+        $discountCents = $pending['discount_cents'] ?? 0;
         $subtotalCents = array_sum(array_map(function ($c) {
             return boa_price_cents_for_size($c['size']) * $c['qty'];
         }, $cart));
         $shippingCents = boa_shipping_cents($subtotalCents);
+        $totalCents = max(0, $subtotalCents + $shippingCents - $discountCents);
 
         $insertOrder = $db->prepare('INSERT INTO orders (user_id, stripe_session_id, email, provider, provider_order_id, cart_json, subtotal_cents, shipping_cents, total_cents, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
         $insertOrder->execute([
@@ -111,11 +113,26 @@ try {
             json_encode($cart),
             $subtotalCents,
             $shippingCents,
-            $subtotalCents + $shippingCents,
+            $totalCents,
             'created',
         ]);
     } catch (Exception $e) {
         error_log('Could not save PayPal order to database: ' . $e->getMessage());
+    }
+
+    // Marquer le code promo comme utilisé
+    $usedPromoCode = $pending['promo_code'] ?? null;
+    if ($usedPromoCode) {
+        try {
+            $dbPromo = boa_db();
+            $dbPromo->prepare('
+                UPDATE newsletter_subscribers 
+                SET used_at = NOW() 
+                WHERE promo_code = ? AND used_at IS NULL
+            ')->execute([$usedPromoCode]);
+        } catch (Exception $e) {
+            error_log('Could not mark promo code as used (PayPal): ' . $e->getMessage());
+        }
     }
 
     // Confirmation email
@@ -129,7 +146,7 @@ try {
                 $shipping,
                 $subtotalCents,
                 $shippingCents,
-                $subtotalCents + $shippingCents
+                $totalCents
             );
         }
     } catch (Exception $e) {

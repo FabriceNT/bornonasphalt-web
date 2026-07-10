@@ -992,6 +992,10 @@ async function initPaymentElement(){
     const data = await res.json();
     if(!res.ok) throw new Error(data.error || 'Could not start checkout.');
 
+    if(payBtn) {
+      payBtn.textContent = 'PAY $' + (data.amount_cents / 100).toFixed(2);
+    }
+
     const discountEl = document.getElementById('checkoutDiscount');
     const totalEl = document.getElementById('checkoutTotal');
     if (data.discount_cents > 0) {
@@ -1124,7 +1128,8 @@ async function initPayPalButton(){
             city: document.getElementById('checkoutCity')?.value || '',
             state_code: document.getElementById('checkoutState')?.value || '',
             zip: document.getElementById('checkoutZip')?.value || '',
-            email: document.getElementById('checkoutEmail')?.value || ''
+            email: document.getElementById('checkoutEmail')?.value || '',
+            promo_code: appliedPromo?.code || undefined
           })
         });
         const data = await res.json();
