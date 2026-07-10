@@ -58,6 +58,13 @@ try {
 
     $_SESSION['user_id'] = $userId;
 
+    // Newsletter opt-in
+    $newsletter = isset($input['newsletter']) && $input['newsletter'] === true;
+    if ($newsletter) {
+        require_once __DIR__ . '/lib/newsletter.php';
+        boa_newsletter_subscribe($email); // email = variable déjà disponible
+    }
+
     echo json_encode(['user' => ['id' => $userId, 'name' => $name, 'email' => $email]]);
 } catch (Exception $e) {
     error_log('Signup error: ' . $e->getMessage());

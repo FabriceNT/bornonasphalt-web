@@ -215,6 +215,11 @@
           <label>Password</label>
           <input type="password" required placeholder="Minimum 8 characters" />
         </div>
+        <label class="boa-checkbox-label" style="display:flex;align-items:center;gap:10px;margin:12px 0;font-size:0.85rem;cursor:pointer;">
+          <input type="checkbox" id="registerNewsletter" name="newsletter" checked
+                 style="accent-color:#8B0000;width:16px;height:16px;cursor:pointer;">
+          Get 10% off my first order — join the BOA newsletter
+        </label>
         <button type="submit" class="btn" style="width:100%;">Create account</button>
       </form>
     </div>
@@ -292,7 +297,9 @@
         <input type="email" id="welcomeEmail" required placeholder="you@email.com" />
         <button type="submit" class="btn" style="width:100%;">Get my code</button>
       </form>
-      <div class="welcome-code" id="welcomeCode">CODE: ASPHALT10</div>
+      <div class="welcome-code" id="welcomeCode">
+        <p id="welcomeCodeValue" style="font-size:1.4rem;font-weight:700;letter-spacing:0.1em;text-align:center;margin:16px 0;"></p>
+      </div>
     </div>
   </div>
 </div>
@@ -300,6 +307,6 @@
 <script src="https://js.stripe.com/v3/"></script>
 <script src="js/products.js?v=7"></script>
 <script src="js/reviews.js?v=6"></script>
-<script src="js/main.js?v=21"></script>
+<script src="js/main.js?v=22"></script>
 </body>
 </html>

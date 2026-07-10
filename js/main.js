@@ -556,6 +556,11 @@ function renderAccountPanel(container){
           <div class="form-field"><label>Name</label><input type="text" name="name" required placeholder="Full name" /></div>
           <div class="form-field"><label>Email</label><input type="email" name="email" required placeholder="you@email.com" /></div>
           <div class="form-field"><label>Password</label><input type="password" name="password" required placeholder="Minimum 8 characters" /></div>
+          <label class="boa-checkbox-label" style="display:flex;align-items:center;gap:10px;margin:12px 0;font-size:0.85rem;cursor:pointer;">
+            <input type="checkbox" id="registerNewsletter" name="newsletter" checked
+                   style="accent-color:#8B0000;width:16px;height:16px;cursor:pointer;">
+            Get 10% off my first order — join the BOA newsletter
+          </label>
           <button type="submit" class="btn" style="width:100%;">Create account</button>
         </form>
       </div>
@@ -613,7 +618,12 @@ async function handleSignUp(e){
       method: 'POST',
       credentials: 'include',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: form.name.value, email: form.email.value, password: form.password.value })
+      body: JSON.stringify({
+        name: form.name.value,
+        email: form.email.value,
+        password: form.password.value,
+        newsletter: document.getElementById('registerNewsletter')?.checked ?? false
+      })
     });
     const data = await res.json();
     if(!res.ok) throw new Error(data.error || 'Could not create account.');
@@ -818,17 +828,34 @@ function initWelcomePopup(){
   document.getElementById('welcomeOverlay')?.addEventListener('click', (e) => {
     if(e.target.id === 'welcomeOverlay') dismissWelcome();
   });
-  document.getElementById('welcomeForm')?.addEventListener('submit', (e) => {
+  document.getElementById('welcomeForm')?.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const email = document.getElementById('welcomeEmail').value;
-    // NOTE: this only stores the email locally for demo purposes.
-    // In production this must POST to a backend endpoint that saves
-    // the email to your ESP/CRM (Klaviyo, Mailchimp, etc). See
-    // README-integrations.md for the exact endpoint to build.
-    console.log('Captured email (demo only, not sent anywhere):', email);
-    document.getElementById('welcomeForm').style.display = 'none';
-    document.getElementById('welcomeCode').classList.add('show');
-    localStorage.setItem('boa_welcome_seen', '1');
+    const email = document.getElementById('welcomeEmail').value.trim();
+    const btn = document.querySelector('#welcomeForm button[type="submit"]');
+    if (btn) { btn.disabled = true; btn.textContent = 'SENDING...'; }
+
+    try {
+      const res = await fetch('/api/newsletter-subscribe.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      });
+      const data = await res.json();
+
+      if (data.success) {
+        const codeSlot = document.getElementById('welcomeCodeValue');
+        if (codeSlot && data.code) codeSlot.textContent = data.code;
+        document.getElementById('welcomeForm').style.display = 'none';
+        document.getElementById('welcomeCode').classList.add('show');
+        localStorage.setItem('boa_welcome_seen', '1');
+      } else {
+        if (btn) { btn.disabled = false; btn.textContent = 'GET MY CODE'; }
+        alert('Something went wrong. Please try again.');
+      }
+    } catch (err) {
+      if (btn) { btn.disabled = false; btn.textContent = 'GET MY CODE'; }
+      alert('Connection error. Please try again.');
+    }
   });
 }
 function dismissWelcome(){
