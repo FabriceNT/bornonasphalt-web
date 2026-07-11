@@ -557,6 +557,13 @@ function renderAccountPanel(container){
           <p class="form-error" id="signInError" style="display:none; color:var(--stamp-red); font-size:12px; margin-bottom:10px;"></p>
           <div class="form-field"><label>Email</label><input type="email" name="email" required placeholder="you@email.com" /></div>
           <div class="form-field"><label>Password</label><input type="password" name="password" required placeholder="••••••••" /></div>
+          <p style="text-align:right;margin:4px 0 12px;">
+            <a href="#" id="forgotPasswordLink"
+               style="font-size:0.75rem;color:#888;font-family:'IBM Plex Mono',monospace;
+                      text-decoration:none;letter-spacing:0.05em;">
+              Forgot your password?
+            </a>
+          </p>
           <button type="submit" class="btn" style="width:100%;">Sign in</button>
         </form>
       </div>
@@ -586,7 +593,84 @@ function renderAccountPanel(container){
     });
     container.querySelector('#signInForm').addEventListener('submit', handleSignIn);
     container.querySelector('#signUpForm').addEventListener('submit', handleSignUp);
+    container.querySelector('#forgotPasswordLink')
+      ?.addEventListener('click', (e) => {
+        e.preventDefault();
+        renderForgotPasswordPanel(container);
+      });
   }
+}
+
+function renderForgotPasswordPanel(container) {
+  container.innerHTML = `
+    <div class="account-panel">
+      <h2 style="font-family:'Oswald',sans-serif;letter-spacing:0.08em;margin-bottom:20px;">
+        FORGOT PASSWORD
+      </h2>
+      <p style="font-size:0.85rem;color:#888;font-family:'IBM Plex Mono',monospace;
+                margin-bottom:20px;line-height:1.6;">
+        Enter your email address and we'll send you a reset link.
+      </p>
+      <div class="form-field">
+        <label>EMAIL</label>
+        <input type="email" id="forgotEmail" placeholder="you@email.com" />
+      </div>
+      <div id="forgotMessage" style="font-size:0.8rem;font-family:'IBM Plex Mono',monospace;
+                                      min-height:18px;margin-bottom:12px;"></div>
+      <button class="btn" id="forgotSubmitBtn" style="width:100%;margin-bottom:12px;">
+        SEND RESET LINK
+      </button>
+      <p style="text-align:center;">
+        <a href="#" id="backToSignIn"
+           style="font-size:0.75rem;color:#888;font-family:'IBM Plex Mono',monospace;
+                  text-decoration:none;">
+          ← Back to sign in
+        </a>
+      </p>
+    </div>
+  `;
+
+  container.querySelector('#backToSignIn')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    renderAccountPanel(container);
+  });
+
+  container.querySelector('#forgotSubmitBtn')?.addEventListener('click', async () => {
+    const email  = document.getElementById('forgotEmail')?.value?.trim();
+    const msgEl  = document.getElementById('forgotMessage');
+    const btn    = document.getElementById('forgotSubmitBtn');
+
+    msgEl.textContent = '';
+    msgEl.style.color = '#888';
+
+    if (!email) {
+      msgEl.style.color = '#c0392b';
+      msgEl.textContent = 'Please enter your email.';
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'SENDING...';
+
+    try {
+      const res = await fetch('/api/auth-forgot-password.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      });
+
+      // Toujours afficher le même message — anti-énumération
+      msgEl.style.color = '#4caf50';
+      msgEl.textContent = 'If this email exists, a reset link has been sent.';
+      btn.disabled = true;
+      btn.textContent = 'SENT';
+    } catch (e) {
+      msgEl.style.color = '#c0392b';
+      msgEl.textContent = 'Connection error. Try again.';
+      btn.disabled = false;
+      btn.textContent = 'SEND RESET LINK';
+    }
+  });
 }
 
 async function handleSignIn(e){
