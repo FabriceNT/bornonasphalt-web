@@ -153,7 +153,7 @@ try {
         error_log('Order confirmation email failed: ' . $e->getMessage());
     }
 
-    echo json_encode(['ok' => true]);
+    echo json_encode(['ok' => true, 'total_cents' => $totalCents]);
 } catch (Throwable $e) {
     error_log('PayPal capture/fulfillment error: ' . $e->getMessage());
     $logLine = json_encode([

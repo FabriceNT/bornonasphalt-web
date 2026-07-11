@@ -174,6 +174,18 @@ function initProductPage(){
   pdState = { id, color: p.comingSoon ? null : p.colors[0], size: null, qty: 1 };
   document.title = `${p.title} — Born on Asphalt`;
   renderProductDetail(p);
+
+  // Meta Pixel — ViewContent
+  if (typeof fbq !== 'undefined' && p) {
+    fbq('track', 'ViewContent', {
+      content_ids: [id],
+      content_name: p.title,
+      content_type: 'product',
+      currency: 'USD',
+      value: SIZE_PRICES['M'] ?? BASE_PRICE
+    });
+  }
+
   initRelatedProducts(p.id, p.tribe);
   if (typeof boaLoadProductReviews === 'function') {
     boaLoadProductReviews(id, pdState.color, pdState.size);
@@ -332,6 +344,18 @@ window.addToCart = function(id, color, size, qty){
   saveCart();
   renderCart();
   openDrawer();
+
+  // Meta Pixel — AddToCart
+  if (typeof fbq !== 'undefined') {
+    const _p = PRODUCTS.find(x => x.id === id);
+    fbq('track', 'AddToCart', {
+      content_ids: [id],
+      content_name: _p ? _p.title : id,
+      content_type: 'product',
+      currency: 'USD',
+      value: SIZE_PRICES[size] ?? BASE_PRICE
+    });
+  }
 }
 window.removeFromCart = function(lineKey){
   cart = cart.filter(c => c.lineKey !== lineKey);
@@ -431,6 +455,18 @@ function initModals(){
   document.getElementById('checkoutBtn')?.addEventListener('click', () => {
     closeDrawer();
     openModal('checkoutModal');
+
+    // Meta Pixel — InitiateCheckout
+    if (typeof fbq !== 'undefined') {
+      const _total = cart.reduce((s, c) => s + (SIZE_PRICES[c.size] ?? BASE_PRICE) * c.qty, 0);
+      fbq('track', 'InitiateCheckout', {
+        content_ids: cart.map(c => c.id),
+        num_items: cart.reduce((s, c) => s + c.qty, 0),
+        currency: 'USD',
+        value: _total
+      });
+    }
+
     renderCheckoutSummary();
     if(currentUser){
       const emailInput = document.getElementById('checkoutEmail');
@@ -1154,7 +1190,7 @@ function initCheckoutButtons(){
       // redirect ourselves to the same success page Stripe would have
       // used, so the experience is identical either way.
       localStorage.removeItem('boa_cart');
-      window.location.href = `checkout-success.html?payment_intent=${paymentIntent.id}`;
+      window.location.href = `checkout-success.html?payment_intent=${paymentIntent.id}&amount=${(paymentIntent.amount/100).toFixed(2)}`;
     } catch(err){
       errorEl.textContent = err.message;
       errorEl.style.display = 'block';
@@ -1231,7 +1267,7 @@ async function initPayPalButton(){
         const result = await res.json();
         if(!res.ok) throw new Error(result.error || 'Payment could not be completed.');
         localStorage.removeItem('boa_cart');
-        window.location.href = `checkout-success.html?payment_intent=paypal_${data.orderID}`;
+        window.location.href = `checkout-success.html?payment_intent=paypal_${data.orderID}&amount=${(result.total_cents/100).toFixed(2)}`;
       },
 
       onError: (err) => {

@@ -11,6 +11,7 @@ require_once __DIR__ . '/lib/printful.php';
 require_once __DIR__ . '/lib/printify.php';
 require_once __DIR__ . '/lib/fulfillment.php';
 require_once __DIR__ . '/lib/mailer.php';
+require_once __DIR__ . '/lib/meta.php';
 
 // Catches PHP fatal errors (TypeError, Error, etc.) that catch(Exception)
 // can't — writes file/line/message to order-errors.log so you can see it
@@ -185,6 +186,16 @@ try {
         }
     } catch (Exception $e) {
         error_log('Order confirmation email failed: ' . $e->getMessage());
+    }
+
+    // Meta CAPI — Purchase
+    try {
+        $capiEmail   = $shipping['email'] ?? '';
+        $capiEventId = 'purchase_' . $paymentIntentId;
+        $capiValue   = (int) $pi['amount']; // montant après discount
+        boa_meta_capi_purchase($capiEventId, $capiValue, 'USD', $capiEmail);
+    } catch (Exception $e) {
+        error_log('Meta CAPI call failed: ' . $e->getMessage());
     }
 
     http_response_code(200);
