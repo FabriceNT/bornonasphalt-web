@@ -45,6 +45,10 @@ try {
 
     $_SESSION['user_id'] = (int) $user['id'];
 
+    // Rattacher les commandes guest passées avec le même email
+    $db->prepare('UPDATE orders SET user_id = ? WHERE email = ? AND user_id IS NULL')
+       ->execute([(int) $user['id'], strtolower(trim($user['email']))]);
+
     echo json_encode(['user' => ['id' => (int) $user['id'], 'name' => $user['name'], 'email' => $user['email']]]);
 } catch (Exception $e) {
     error_log('Login error: ' . $e->getMessage());

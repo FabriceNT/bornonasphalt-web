@@ -58,6 +58,10 @@ try {
 
     $_SESSION['user_id'] = $userId;
 
+    // Rattacher les commandes guest passées avec le même email
+    $db->prepare('UPDATE orders SET user_id = ? WHERE email = ? AND user_id IS NULL')
+       ->execute([$userId, strtolower(trim($email))]);
+
     // Newsletter opt-in
     $promo_code = null;
     $nl = null;
