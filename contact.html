@@ -138,6 +138,10 @@ src="https://www.facebook.com/tr?id=1315795703870249&ev=PageView&noscript=1"/></
         <div class="form-field"><label>Name</label><input type="text" required placeholder="Full name" /></div>
         <div class="form-field"><label>Email</label><input type="email" required placeholder="you@email.com" /></div>
         <div class="form-field"><label>Password</label><input type="password" required placeholder="Minimum 8 characters" /></div>
+        <div class="form-field">
+          <label>Confirm password</label>
+          <input type="password" name="confirm_password" required placeholder="Repeat your password" />
+        </div>
         <label class="boa-checkbox-label" style="display:flex;align-items:center;gap:10px;margin:12px 0;font-size:0.85rem;cursor:pointer;">
           <input type="checkbox" id="registerNewsletter" name="newsletter" checked
                  style="accent-color:#8B0000;width:16px;height:16px;cursor:pointer;">
@@ -202,7 +206,7 @@ src="https://www.facebook.com/tr?id=1315795703870249&ev=PageView&noscript=1"/></
 
 <script src="https://js.stripe.com/v3/"></script>
 <script src="js/products.js?v=7"></script>
-<script src="js/main.js?v=26"></script>
+<script src="js/main.js?v=27"></script>
 <script>
 document.getElementById('contactForm')?.addEventListener('submit', function(e){
   e.preventDefault();

@@ -609,6 +609,7 @@ function renderAccountPanel(container){
           <div class="form-field"><label>Name</label><input type="text" name="name" required placeholder="Full name" /></div>
           <div class="form-field"><label>Email</label><input type="email" name="email" required placeholder="you@email.com" /></div>
           <div class="form-field"><label>Password</label><input type="password" name="password" required placeholder="Minimum 8 characters" /></div>
+          <div class="form-field"><label>Confirm password</label><input type="password" name="confirm_password" required placeholder="Repeat your password" /></div>
           <label class="boa-checkbox-label" style="display:flex;align-items:center;gap:10px;margin:12px 0;font-size:0.85rem;cursor:pointer;">
             <input type="checkbox" id="registerNewsletter" name="newsletter" checked
                    style="accent-color:#8B0000;width:16px;height:16px;cursor:pointer;">
@@ -742,6 +743,19 @@ async function handleSignUp(e){
   const errorEl = form.querySelector('#signUpError');
   const btn = form.querySelector('button[type="submit"]');
   errorEl.style.display = 'none';
+
+  // Validation mot de passe
+  if(form.password.value.length < 8){
+    errorEl.textContent = 'Password must be at least 8 characters.';
+    errorEl.style.display = 'block';
+    return;
+  }
+  if(form.password.value !== form.confirm_password.value){
+    errorEl.textContent = 'Passwords do not match.';
+    errorEl.style.display = 'block';
+    return;
+  }
+
   btn.disabled = true;
   try{
     const res = await fetch(AUTH_SIGNUP_ENDPOINT, {
