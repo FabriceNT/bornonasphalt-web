@@ -201,5 +201,21 @@ const PRODUCTS = [
     price: 34.99, swatch: "C2-gm", image: "https:\/\/files.cdn.printful.com\/files\/6f9\/6f95f476b89ad8491fa25bf87ccf91bd_preview.png", images: {"Black":"https://files.cdn.printful.com/files/6f9/6f95f476b89ad8491fa25bf87ccf91bd_preview.png","True Navy":"https://files.cdn.printful.com/files/80a/80a57cc7ba4283bce061e1645736e0f2_preview.png","Red":"https://files.cdn.printful.com/files/d57/d5767c4cbe33920ed4f841c86b38662c_preview.png","Midnight":"https://files.cdn.printful.com/files/8c2/8c203730c2676e57381728a4f6935826_preview.png","Brick":"https://files.cdn.printful.com/files/105/1057414881092e9b42469869376c4563_preview.png","Espresso":"https://files.cdn.printful.com/files/6f0/6f01fd334ee0b32ce6a6889e4e8cc298_preview.png","Moss":"https://files.cdn.printful.com/files/05d/05d85782544d3d607aac84708df9464c_preview.png","Yam":"https://files.cdn.printful.com/files/c7a/c7a89b990c4cd48814504fc0979ec75f_preview.png","Mustard":"https://files.cdn.printful.com/files/459/459de880a14330fe11253e374abbf368_preview.png","Butter":"https://files.cdn.printful.com/files/19f/19f01da4ffc5c3d9d269060225333275_preview.png","Chambray":"https://files.cdn.printful.com/files/17f/17fb1e344bff7c5b37d5ae0e384ccda3_preview.png","White":"https://files.cdn.printful.com/files/6b3/6b38072840b004b658ba53e0adcd7518_preview.png"},
     colors: ["Black","True Navy","Red","Midnight","Brick","Espresso","Moss","Yam","Mustard","Butter","Chambray","White"],
     sizes: ["S","M","L","XL","2XL","3XL","4XL"]
+  },
+  {
+    id: "G1", series: "G — Voix du Garage", tribe: "cross", tribeLabel: "Cross-Tribe",
+    title: "Cammed by ear", slogan: "Cammed by ear.", sub: "",
+    desc: "Cammed by ear — the way real builders tune. Comfort Colors 1717, garment-dyed heavyweight.",
+    price: 34.99, swatch: "G1", image: "https://files.cdn.printful.com/files/5aa/5aaf851117eaebe625c4adb199bf2f65_preview.png", images: {"Black":"https://files.cdn.printful.com/files/5aa/5aaf851117eaebe625c4adb199bf2f65_preview.png","True Navy":"https://files.cdn.printful.com/files/06d/06db51e325e5178f8baa4eb0ea5a6bb8_preview.png","Graphite":"https://files.cdn.printful.com/files/607/60782bb50e7fe766f42ce322812f9015_preview.png"},
+    colors: ["Black","True Navy","Graphite"],
+    sizes: ["S","M","L","XL","2XL","3XL","4XL"]
+  },
+  {
+    id: "C2-camaro", series: "C — Tribal Rivalry", tribe: "gm", tribeLabel: "GM",
+    title: "I Have a Camaro Tee", slogan: "I don't have a favorite. I have a Camaro.", sub: "",
+    desc: "Distressed newspaper-headline style typography, Camaro edition. Comfort Colors 1717, garment-dyed heavyweight.",
+    price: 34.99, swatch: "C2-camaro", image: "https://files.cdn.printful.com/files/a43/a430301ab5d124140c65505a72f7e52e_preview.png", images: {"Black":"https://files.cdn.printful.com/files/a43/a430301ab5d124140c65505a72f7e52e_preview.png","True Navy":"https://files.cdn.printful.com/files/b26/b262eb5f484e55f7693c0af704293892_preview.png","Sage":"https://files.cdn.printful.com/files/b0a/b0a7c1e569b7dc9c7ba6be88f4b7c718_preview.png","Mystic Blue":"https://files.cdn.printful.com/files/8db/8db78a5fdc46d7794bc27b156ea8ab08_preview.png","Moss":"https://files.cdn.printful.com/files/13e/13efb542235aa45c5f64f7441c0d36e0_preview.png","Light Green":"https://files.cdn.printful.com/files/f3c/f3c230ef8e86a743f7c5f22f43414927_preview.png","Yam":"https://files.cdn.printful.com/files/f10/f106adc023f194500f3d93760fd6a383_preview.png","Seafoam":"https://files.cdn.printful.com/files/da8/da87c1c926246f2fe2ebf781e7bd57f0_preview.png","White":"https://files.cdn.printful.com/files/e1f/e1fbd4fc6d9c64ad82d2d778fe3d01f1_preview.png"},
+    colors: ["Black","True Navy","Sage","Mystic Blue","Moss","Light Green","Yam","Seafoam","White"],
+    sizes: ["S","M","L","XL","2XL","3XL","4XL"]
   }
 ];
