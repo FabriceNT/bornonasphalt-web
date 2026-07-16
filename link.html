@@ -6,7 +6,7 @@
 <title>Born on Asphalt — Link in Bio</title>
 <meta name="description" content="Born on Asphalt — Built for the guys who know what's under the hood." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Caveat:wght@500;600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
 <link rel="icon" type="image/x-icon" href="img/favicon.ico" />
 <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png" />
 <link rel="apple-touch-icon" sizes="180x180" href="img/favicon-180.png" />
@@ -16,6 +16,124 @@
 <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1315795703870249&ev=PageView&noscript=1"/></noscript>
 
 <style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: #0f0e0c;
+  color: #f5f0e8;
+  font-family: 'IBM Plex Mono', monospace;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+}
+
+.logo-wrap {
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.logo-wrap img {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+}
+
+.brand-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #7a7060;
+  margin-top: 10px;
+}
+
+.headline {
+  font-family: 'Oswald', sans-serif;
+  font-size: clamp(28px, 8vw, 42px);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #f5f0e8;
+  text-align: center;
+  line-height: 1.1;
+  margin-bottom: 10px;
+}
+
+.subline {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: #7a7060;
+  letter-spacing: 0.06em;
+  text-align: center;
+  margin-bottom: 48px;
+  text-transform: uppercase;
+}
+
+.divider {
+  width: 48px;
+  height: 1px;
+  background: #3a3530;
+  margin: 0 auto 48px;
+}
+
+.btn-stack {
+  width: 100%;
+  max-width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.link-btn {
+  width: 100%;
+  padding: 16px 20px;
+  font-family: 'Oswald', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.15s ease;
+}
+
+.link-btn:active { opacity: 0.8; }
+.link-btn:hover { opacity: 0.88; }
+
+.btn-shop {
+  background: #f5f0e8;
+  color: #0f0e0c;
+}
+
+.btn-email {
+  background: transparent;
+  color: #f5f0e8;
+  border: 1px solid #3a3530;
+}
+
+.btn-email:hover {
+  border-color: #f5f0e8;
+}
+
+.footer-label {
+  margin-top: 48px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  color: #3a3530;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+/* ---- Welcome popup ---- */
 :root {
   --paper: #EDE6D3;
   --paper-dim: #E2DABF;
@@ -25,110 +143,10 @@
   --line: #B8AF95;
 }
 
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  padding: 24px;
-  background: #0a0a0a;
-  color: #f5f0e8;
-  font-family: 'Oswald', sans-serif;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.container {
-  width: 100%;
-  max-width: 480px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.logo-img {
-  width: 120px;
-  height: 120px;
-  object-fit: contain;
-  display: block;
-  margin-bottom: 16px;
-}
-
-.title {
-  font-size: 20px;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  margin: 0;
-  color: #f5f0e8;
-  -webkit-text-fill-color: #f5f0e8;
-  text-shadow: none;
-}
-
-.tagline {
-  font-size: 13px;
-  font-weight: 500;
-  color: #888;
-  margin: 6px 0 32px 0;
-  max-width: 280px;
-  line-height: 1.5;
-}
-
-.btn-container {
-  width: 100%;
-  max-width: 320px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.link-btn {
-  width: 100%;
-  padding: 16px 20px;
-  font-family: 'Oswald', sans-serif;
-  font-size: 15px;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: opacity 0.2s ease, transform 0.1s ease;
-  border-radius: 0;
-}
-
-.link-btn:active {
-  transform: scale(0.98);
-}
-
-.link-btn-shop {
-  background: #f5f0e8;
-  color: #0a0a0a;
-  border: none;
-}
-
-.link-btn-email {
-  background: transparent;
-  color: #f5f0e8;
-  border: 1px solid #f5f0e8;
-}
-
-.link-btn:hover {
-  opacity: 0.9;
-}
-
-/* ---------- Welcome / discount popup extracted from style.css ---------- */
 .welcome-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(10,9,7,0.75);
+  background: rgba(10,9,7,0.82);
   display: none;
   align-items: center;
   justify-content: center;
@@ -136,9 +154,7 @@ body {
   padding: 20px;
 }
 
-.welcome-overlay.open {
-  display: flex;
-}
+.welcome-overlay.open { display: flex; }
 
 .welcome-card {
   max-width: 420px;
@@ -146,7 +162,6 @@ body {
   background: var(--paper);
   color: var(--ink);
   border: 1px solid var(--line);
-  padding: 0;
   position: relative;
   text-align: center;
 }
@@ -163,6 +178,8 @@ body {
 .welcome-top .doc-id {
   color: var(--paper-dim);
   font-size: 9.5px;
+  font-family: 'IBM Plex Mono', monospace;
+  letter-spacing: 0.06em;
   text-align: left;
 }
 
@@ -176,20 +193,35 @@ body {
 
 .welcome-body {
   padding: 26px 26px 30px;
-  text-align: center;
 }
 
-.welcome-body .stamp {
+.stamp {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  color: var(--stamp-red);
+  border: 2.5px solid var(--stamp-red);
+  padding: 6px 12px;
+  transform: rotate(-7deg);
+  display: inline-block;
+  opacity: 0.88;
   margin-bottom: 10px;
+  animation: stampIn 0.5s cubic-bezier(.2,1.4,.4,1) 0.15s both;
+}
+
+@keyframes stampIn {
+  0% { transform: rotate(-7deg) scale(2.2); opacity: 0; }
+  60% { opacity: 0.92; }
+  100% { transform: rotate(-7deg) scale(1); opacity: 0.88; }
 }
 
 .welcome-body h2 {
   font-family: 'Oswald', sans-serif;
   font-size: 26px;
   text-transform: uppercase;
-  margin: 6px 0 6px;
+  margin: 6px 0;
   color: var(--ink);
-  letter-spacing: 0;
 }
 
 .welcome-body p {
@@ -206,42 +238,6 @@ body {
   gap: 10px;
 }
 
-.welcome-code {
-  display: none;
-  border: 2px dashed var(--stamp-red);
-  padding: 14px;
-  font-family: 'Oswald', sans-serif;
-  font-size: 20px;
-  letter-spacing: 0.1em;
-  color: var(--stamp-red);
-  margin-top: 16px;
-}
-
-.welcome-code.show {
-  display: block;
-}
-
-/* Additional elements inside welcome card */
-.stamp {
-  font-family: 'Oswald', sans-serif;
-  font-weight: 700;
-  font-size: 12px;
-  letter-spacing: 0.14em;
-  color: var(--stamp-red);
-  border: 2.5px solid var(--stamp-red);
-  padding: 6px 12px;
-  transform: rotate(-7deg);
-  display: inline-block;
-  opacity: 0.88;
-  animation: stampIn 0.5s cubic-bezier(.2,1.4,.4,1) 0.15s both;
-}
-
-@keyframes stampIn {
-  0% { transform: rotate(-7deg) scale(2.2); opacity: 0; }
-  60% { opacity: 0.92; }
-  100% { transform: rotate(-7deg) scale(1); opacity: 0.88; }
-}
-
 .welcome-form input {
   width: 100%;
   padding: 10px 12px;
@@ -252,9 +248,7 @@ body {
   color: var(--ink);
 }
 
-.welcome-form input:focus {
-  outline: 2px solid #3E5568;
-}
+.welcome-form input:focus { outline: 2px solid #3E5568; }
 
 .btn {
   font-family: 'IBM Plex Mono', monospace;
@@ -266,38 +260,44 @@ body {
   background: var(--ink);
   color: var(--paper);
   cursor: pointer;
+  width: 100%;
 }
 
-.btn:hover {
-  opacity: 0.85;
+.btn:hover { opacity: 0.85; }
+
+.welcome-code {
+  display: none;
+  border: 2px dashed var(--stamp-red);
+  padding: 14px;
+  font-family: 'Oswald', sans-serif;
+  font-size: 20px;
+  letter-spacing: 0.1em;
+  color: var(--stamp-red);
+  margin-top: 16px;
 }
 
-.doc-id {
-  font-size: 10.5px;
-  letter-spacing: 0.06em;
-  color: var(--ink-faded);
-  line-height: 1.6;
-}
-
-.doc-id b {
-  color: var(--ink);
-}
+.welcome-code.show { display: block; }
 </style>
 </head>
 <body>
 
-<div class="container">
-  <img src="img/logo-512.png" alt="Born on Asphalt" class="logo-img" />
-  <h1 class="title">Born on Asphalt</h1>
-  <p class="tagline">Built for the guys who know what's under the hood.</p>
-
-  <div class="btn-container">
-    <a href="/" class="link-btn link-btn-shop">🛒  SHOP THE COLLECTION</a>
-    <button class="link-btn link-btn-email" onclick="document.getElementById('welcomeOverlay').classList.add('open')">📧  GET 10% OFF — JOIN THE LIST</button>
-  </div>
+<div class="logo-wrap">
+  <img src="img/logo-512.png" alt="Born on Asphalt" />
+  <div class="brand-label">// bornonasphalt.com</div>
 </div>
 
-<!-- Welcome Overlay (Popup) -->
+<h1 class="headline">Born on Asphalt</h1>
+<p class="subline">Built for the guys who know what's under the hood.</p>
+<div class="divider"></div>
+
+<div class="btn-stack">
+  <a href="/" class="link-btn btn-shop">🛒 &nbsp;Shop the Collection</a>
+  <button class="link-btn btn-email" onclick="document.getElementById('welcomeOverlay').classList.add('open')">📧 &nbsp;Get 10% Off — Join the List</button>
+</div>
+
+<div class="footer-label">Born on Asphalt · Est. on the Quarter Mile</div>
+
+<!-- Welcome popup -->
 <div class="welcome-overlay" id="welcomeOverlay">
   <div class="welcome-card">
     <div class="welcome-top">
@@ -310,7 +310,7 @@ body {
       <p>Leave your email and get 10% off your first order — plus first look at new series before they launch.</p>
       <form class="welcome-form" id="welcomeForm">
         <input type="email" id="welcomeEmail" required placeholder="you@email.com" />
-        <button type="submit" class="btn" style="width:100%;">Get my code</button>
+        <button type="submit" class="btn">Get my code</button>
       </form>
       <div class="welcome-code" id="welcomeCode">
         <p id="welcomeCodeValue" style="font-size:1.4rem;font-weight:700;letter-spacing:0.1em;text-align:center;margin:16px 0;"></p>
