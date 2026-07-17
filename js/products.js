@@ -204,8 +204,8 @@ const PRODUCTS = [
     sizes: ["S", "M", "L", "XL", "2XL", "3XL", "4XL"]
   },
   {
-    id: "G1", series: "G — Voix du Garage", tribe: "cross", tribeLabel: "Cross-Tribe",
-    title: "Cammed by ear", slogan: "Cammed by ear.", sub: "",
+    id: "G1", series: "G — Human Builder Stories", tribe: "cross", tribeLabel: "Cross-Tribe",
+    title: "Cammed by Ear", slogan: "Cammed by ear.", sub: "",
     desc: "Cammed by ear — the way real builders tune. Comfort Colors 1717, garment-dyed heavyweight.",
     price: 34.99, swatch: "G1", image: "https://files.cdn.printful.com/files/5aa/5aaf851117eaebe625c4adb199bf2f65_preview.png", images: { "Black": "https://files.cdn.printful.com/files/5aa/5aaf851117eaebe625c4adb199bf2f65_preview.png", "True Navy": "https://files.cdn.printful.com/files/06d/06db51e325e5178f8baa4eb0ea5a6bb8_preview.png", "Graphite": "https://files.cdn.printful.com/files/607/60782bb50e7fe766f42ce322812f9015_preview.png" },
     colors: ["Black", "True Navy", "Graphite"],
