@@ -12,6 +12,16 @@ const ADDRESSES_DELETE_ENDPOINT = '/api/addresses-delete.php';
 const PAYPAL_CREATE_ORDER_ENDPOINT = '/api/paypal-create-order.php';
 const PAYPAL_CAPTURE_ORDER_ENDPOINT = '/api/paypal-capture-order.php';
 
+/* ===================== HELPER ===================== */
+function getProductPrice(p, size) {
+  const isHoodie = p && p.id && p.id.includes('hoodie');
+  const priceMap = isHoodie ? HOODIE_PRICES : SIZE_PRICES;
+  if (size) {
+    return priceMap[size] ?? (isHoodie ? 49.99 : BASE_PRICE);
+  }
+  return isHoodie ? 49.99 : (p.price ?? BASE_PRICE);
+}
+
 /* ===================== STATE ===================== */
 let cart = JSON.parse(localStorage.getItem('boa_cart') || '[]');
 
@@ -182,7 +192,7 @@ function initProductPage(){
       content_name: p.title,
       content_type: 'product',
       currency: 'USD',
-      value: SIZE_PRICES['M'] ?? BASE_PRICE
+      value: getProductPrice(p, 'M')
     });
   }
 
@@ -264,8 +274,9 @@ function renderProductDetail(p){
 
   const canAdd = !p.comingSoon && pdState.color && pdState.size;
   const pdImg = p.images?.[pdState.color] || p.image;
-  const pdPrice = pdState.size ? SIZE_PRICES[pdState.size] : BASE_PRICE;
-  const pdPriceLabel = pdState.size ? `$${pdPrice.toFixed(2)}` : `From $${BASE_PRICE.toFixed(2)}`;
+  const pdPrice = getProductPrice(p, pdState.size);
+  const startPrice = p.id.includes('hoodie') ? 49.99 : BASE_PRICE;
+  const pdPriceLabel = pdState.size ? `$${pdPrice.toFixed(2)}` : `From $${startPrice.toFixed(2)}`;
 
   container.innerHTML = `
     <div class="section-label">// Product detail — ${p.series}</div>
@@ -288,7 +299,7 @@ function renderProductDetail(p){
           <span class="price">${pdPriceLabel}</span>
           <button class="add-btn" ${canAdd ? '' : 'disabled'} onclick="confirmAddToCart()">+ Add to sheet</button>
         </div>
-        <p class="modal-note" style="margin-top:6px;">2XL $36.99 · 3XL $39.99 · 4XL $40.99 — sizes S–XL $34.99. Shipping $${SHIPPING_FLAT.toFixed(2)}, free over $${FREE_SHIPPING_THRESHOLD}.</p>
+        <p class="modal-note" style="margin-top:6px;">${p.id.includes('hoodie') ? '2XL $51.99 · 3XL $53.99 — sizes S–XL $49.99' : '2XL $36.99 · 3XL $38.99 · 4XL $40.99 — sizes S–XL $34.99'}. Shipping $${SHIPPING_FLAT.toFixed(2)}, free over $${FREE_SHIPPING_THRESHOLD}.</p>
 
         <div class="pd-accordion-group">
           <details class="pd-accordion-item" open>
@@ -337,7 +348,7 @@ window.addToCart = function(id, color, size, qty){
   const existing = cart.find(c => c.lineKey === lineKey);
   if(existing){ existing.qty += qty; } else {
     const p = PRODUCTS.find(x => x.id === id);
-    const price = SIZE_PRICES[size] ?? BASE_PRICE;
+    const price = getProductPrice(p, size);
     const image = p.images?.[color] || p.image || null;
     cart.push({ lineKey, id: p.id, title: p.title, price, swatch: p.swatch, image, color, size, qty });
   }
@@ -353,7 +364,7 @@ window.addToCart = function(id, color, size, qty){
       content_name: _p ? _p.title : id,
       content_type: 'product',
       currency: 'USD',
-      value: SIZE_PRICES[size] ?? BASE_PRICE
+      value: _p ? getProductPrice(_p, size) : (SIZE_PRICES[size] ?? BASE_PRICE)
     });
   }
 }
@@ -458,7 +469,7 @@ function initModals(){
 
     // Meta Pixel — InitiateCheckout
     if (typeof fbq !== 'undefined') {
-      const _total = cart.reduce((s, c) => s + (SIZE_PRICES[c.size] ?? BASE_PRICE) * c.qty, 0);
+      const _total = cart.reduce((s, c) => s + c.price * c.qty, 0);
       fbq('track', 'InitiateCheckout', {
         content_ids: cart.map(c => c.id),
         num_items: cart.reduce((s, c) => s + c.qty, 0),

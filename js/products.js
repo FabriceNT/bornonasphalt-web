@@ -6,6 +6,7 @@
 // threshold. Kept here so both card "from" price and the size buttons can
 // reference the same numbers.
 const SIZE_PRICES = { 'S': 34.99, 'M': 34.99, 'L': 34.99, 'XL': 34.99, '2XL': 36.99, '3XL': 38.99, '4XL': 40.99 };
+const HOODIE_PRICES = { 'S': 49.99, 'M': 49.99, 'L': 49.99, 'XL': 49.99, '2XL': 51.99, '3XL': 53.99, '4XL': 55.99 };
 const SHIPPING_FLAT = 4.75;
 const FREE_SHIPPING_THRESHOLD = 85;
 const BASE_PRICE = 34.99; // shown on catalog cards as "From $X" before a size is picked
@@ -182,7 +183,7 @@ const PRODUCTS = [
     id: "D3-hoodie", series: "D — The Engine as Hero", tribe: "ford", tribeLabel: "Ford",
     title: "Boss 429 Hoodie", slogan: "Boss 429. NASA Couldn't Stop It Either.", sub: "",
     desc: "Same design as the Boss 429 tee, hoodie cut.",
-    price: 34.99, swatch: "429-H", image: "https:\/\/files.cdn.printful.com\/files\/f91\/f91a48c23bace11e44b21b67413d9fbf_preview.png", images: { "Black": "https://files.cdn.printful.com/files/f91/f91a48c23bace11e44b21b67413d9fbf_preview.png", "Forest Green": "https://files.cdn.printful.com/files/db3/db3f5d545510b9e9b44676413c03778f_preview.png", "Adobe": "https://files.cdn.printful.com/files/267/267fbc0b91b960c7ab839356fdc2b196_preview.png" },
+    price: 49.99, swatch: "429-H", image: "https:\/\/files.cdn.printful.com\/files\/f91\/f91a48c23bace11e44b21b67413d9fbf_preview.png", images: { "Black": "https://files.cdn.printful.com/files/f91/f91a48c23bace11e44b21b67413d9fbf_preview.png", "Forest Green": "https://files.cdn.printful.com/files/db3/db3f5d545510b9e9b44676413c03778f_preview.png", "Adobe": "https://files.cdn.printful.com/files/267/267fbc0b91b960c7ab839356fdc2b196_preview.png" },
     colors: ["Black", "Forest Green", "Adobe"],
     sizes: ["S", "M", "L", "XL", "2XL", "3XL"]
   },
