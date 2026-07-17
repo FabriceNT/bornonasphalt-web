@@ -127,9 +127,21 @@ const PRODUCTS = [
     id: "C2", series: "C — Tribal Rivalry", tribe: "mopar", tribeLabel: "Mopar",
     title: "I Have a Charger", slogan: "I don't have a favorite. I have a Charger.", sub: "Also available: Mustang / Chevelle",
     desc: "Distressed newspaper-headline print, italic display type.",
-    price: 34.99, swatch: "CHRG", image: null, images: {},
-    colors: [], sizes: [],
-    comingSoon: true
+    price: 34.99, swatch: "CHRG",
+    image: "https://files.cdn.printful.com/files/30e/30ea77d77167f9d147965de4938463fb_preview.png",
+    images: {
+      "Black": "https://files.cdn.printful.com/files/30e/30ea77d77167f9d147965de4938463fb_preview.png",
+      "True Navy": "https://files.cdn.printful.com/files/100/100fce7ee9b58489635a99917fea632b_preview.png",
+      "Graphite": "https://files.cdn.printful.com/files/afd/afdd2a1072f0506c8eed4549d3d5231a_preview.png",
+      "Hemp": "https://files.cdn.printful.com/files/9e0/9e015f73dc086a2413df572a7998a18e_preview.png",
+      "Denim": "https://files.cdn.printful.com/files/e61/e61dfeb406d6dc4e3c7120ee6a019506_preview.png",
+      "Mystic Blue": "https://files.cdn.printful.com/files/7d7/7d7d8d3c543f33c64266b599d1020d66_preview.png",
+      "Washed Denim": "https://files.cdn.printful.com/files/1e3/1e3ab6d7d2447b8c126d60315d174ca5_preview.png",
+      "Chalky Mint": "https://files.cdn.printful.com/files/be6/be6b30426da323a1417d6b7c2a50fba6_preview.png",
+      "White": "https://files.cdn.printful.com/files/22f/22fc3277982f2f3d746d4fad35a99cf9_preview.png"
+    },
+    colors: ["Black", "True Navy", "Graphite", "Hemp", "Denim", "Mystic Blue", "Washed Denim", "Chalky Mint", "White"],
+    sizes: ["S", "M", "L", "XL", "2XL", "3XL", "4XL"]
   },
   {
     id: "C3", series: "C — Tribal Rivalry", tribe: "cross", tribeLabel: "Cross-Tribe",
