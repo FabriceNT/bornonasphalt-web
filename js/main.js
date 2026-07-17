@@ -90,7 +90,7 @@ function renderProducts(){
         <h3>${p.title}</h3>
         <div class="tribe-tag">${p.tribeLabel}</div>
         <div class="price-row">
-          <span class="price">From $${BASE_PRICE.toFixed(2)}</span>
+          <span class="price">From $${getProductPrice(p, null).toFixed(2)}</span>
           ${p.comingSoon
             ? `<button class="add-btn" disabled>Coming soon</button>`
             : `<button class="add-btn" onclick="event.stopPropagation(); location.href='product.html?id=${p.id}'">Select</button>`}
