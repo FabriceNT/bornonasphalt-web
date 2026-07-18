@@ -11,7 +11,7 @@ function boa_meta_capi_purchase(
     if (!defined('META_PIXEL_ID') || !defined('META_ACCESS_TOKEN')) return;
     if (empty(META_PIXEL_ID) || empty(META_ACCESS_TOKEN)) return;
 
-    $url = 'https://graph.facebook.com/v19.0/' . META_PIXEL_ID . '/events';
+    $url = 'https://graph.facebook.com/v21.0/' . META_PIXEL_ID . '/events';
 
     $userData = ['client_user_agent' => $_SERVER['HTTP_USER_AGENT'] ?? ''];
     if (!empty($email)) {
