@@ -148,7 +148,8 @@ try {
 
         $totalCents = (int) $pi['amount'];
         $subtotalCents = array_sum(array_map(function ($c) {
-            return boa_price_cents_for_size($c['size']) * $c['qty'];
+            $p = boa_find_product($c['id']);
+            return boa_price_cents_for_product($p ?? ['id' => $c['id']], $c['size']) * $c['qty'];
         }, $cart));
         $discountCents = (int) ($pi['metadata']['discount_cents'] ?? 0);
         $shippingCents = max(0, $totalCents - $subtotalCents + $discountCents);

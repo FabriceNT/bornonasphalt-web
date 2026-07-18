@@ -320,3 +320,131 @@ HTML;
 
     @mail($toEmail, $subject, $body, $headers);
 }
+
+function boa_send_shipping_notification(
+    string $toEmail,
+    string $toName,
+    string $orderId,
+    string $carrier,
+    string $trackingNumber,
+    string $trackingUrl,
+    array  $cart
+): void {
+    $fromName  = 'Born on Asphalt';
+    $fromEmail = 'orders@bornonasphalt.com';
+    $subject   = "Your Born on Asphalt order has shipped — #{$orderId}";
+
+    $itemLines = '';
+    foreach ($cart as $item) {
+        $product = function_exists('boa_find_product') ? boa_find_product($item['id'] ?? '') : null;
+        $title   = $product ? $product['title'] : ($item['id'] ?? '');
+        $color   = $item['color'] ?? '';
+        $size    = $item['size']  ?? '';
+        $qty     = (int)($item['qty'] ?? 1);
+        $itemLines .= "<li style='margin-bottom:4px;font-family:monospace;font-size:13px;color:#1B1812;'>"
+            . htmlspecialchars("{$title} — {$color}, {$size} × {$qty}") . "</li>";
+    }
+
+    $html = <<<HTML
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
+<body style="margin:0;padding:0;background:#121210;font-family:'IBM Plex Mono',monospace;">
+<table width="100%" cellpadding="0" cellspacing="0" style="background:#121210;padding:32px 0;">
+  <tr><td align="center">
+    <table width="600" cellpadding="0" cellspacing="0" style="background:#EDE6D3;border:1px solid #B8AF95;max-width:600px;width:100%;">
+
+      <tr>
+        <td style="background:#9C3B2E;padding:14px 28px;">
+          <span style="font-family:Oswald,Arial,sans-serif;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#EDE6D3;">
+            Born on Asphalt — Shipping Confirmation
+          </span>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="padding:28px 28px 0;">
+          <p style="font-family:monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#55503f;margin:0 0 6px;">
+            DOC NO. <strong style="color:#1B1812;">BOA-{$orderId}</strong>
+          </p>
+          <h1 style="font-family:Oswald,Arial,sans-serif;font-size:28px;text-transform:uppercase;color:#1B1812;margin:0 0 6px;">
+            It's on its way.
+          </h1>
+          <p style="font-family:monospace;font-size:13px;color:#55503f;margin:0 0 24px;font-style:italic;">
+            "Left the shop. Now it's just you and the road."
+          </p>
+          <hr style="border:none;border-top:2px solid #1B1812;margin:0 0 20px;">
+        </td>
+      </tr>
+
+      <tr>
+        <td style="padding:0 28px 24px;">
+          <p style="font-family:Oswald,Arial,sans-serif;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#9C3B2E;margin:0 0 10px;">
+            // Tracking
+          </p>
+          <p style="font-family:monospace;font-size:13px;color:#1B1812;margin:0 0 6px;">
+            <strong>Carrier :</strong> {$carrier}
+          </p>
+          <p style="font-family:monospace;font-size:13px;color:#1B1812;margin:0 0 16px;">
+            <strong>Tracking :</strong> {$trackingNumber}
+          </p>
+          <a href="{$trackingUrl}"
+             style="display:inline-block;background:#1B1812;color:#EDE6D3;font-family:Oswald,Arial,sans-serif;
+                    font-size:13px;text-transform:uppercase;letter-spacing:.08em;padding:12px 24px;
+                    text-decoration:none;">
+            Track Your Order →
+          </a>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="padding:0 28px 28px;border-top:1px solid #B8AF95;">
+          <p style="font-family:Oswald,Arial,sans-serif;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#9C3B2E;margin:16px 0 10px;">
+            // Items shipped
+          </p>
+          <ul style="margin:0;padding-left:18px;">{$itemLines}</ul>
+        </td>
+      </tr>
+
+      <tr>
+        <td style="padding:20px 28px;border-top:1px solid #B8AF95;">
+          <p style="font-family:monospace;font-size:11px;color:#55503f;margin:0;line-height:1.7;">
+            Printed on demand · Comfort Colors 1717 · Ships from the US<br>
+            Questions? <a href="mailto:support@bornonasphalt.com" style="color:#9C3B2E;">support@bornonasphalt.com</a>
+          </p>
+        </td>
+      </tr>
+
+    </table>
+  </td></tr>
+</table>
+</body>
+</html>
+HTML;
+
+    $text  = "Your Born on Asphalt order has shipped!\n\n";
+    $text .= "Order : BOA-{$orderId}\n";
+    $text .= "Carrier : {$carrier}\n";
+    $text .= "Tracking : {$trackingNumber}\n";
+    $text .= "Track here : {$trackingUrl}\n\n";
+    $text .= "Questions? support@bornonasphalt.com\n";
+
+    $boundary = '----=_BOA_' . md5(uniqid('', true));
+    $headers  = implode("\r\n", [
+        "From: {$fromName} <{$fromEmail}>",
+        "Reply-To: support@bornonasphalt.com",
+        "MIME-Version: 1.0",
+        "Content-Type: multipart/alternative; boundary=\"{$boundary}\"",
+        "X-Mailer: PHP/" . phpversion(),
+    ]);
+
+    $body  = "--{$boundary}\r\n";
+    $body .= "Content-Type: text/plain; charset=UTF-8\r\nContent-Transfer-Encoding: 8bit\r\n\r\n";
+    $body .= $text . "\r\n";
+    $body .= "--{$boundary}\r\n";
+    $body .= "Content-Type: text/html; charset=UTF-8\r\nContent-Transfer-Encoding: 8bit\r\n\r\n";
+    $body .= $html . "\r\n";
+    $body .= "--{$boundary}--";
+
+    @mail($toEmail, $subject, $body, $headers);
+}
