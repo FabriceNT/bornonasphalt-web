@@ -9,7 +9,14 @@ require_once __DIR__ . '/config.php';
 require_once __DIR__ . '/products.php';
 require_once __DIR__ . '/lib/mailer.php';
 
-// Vérification du token secret
+// Printify envoie un GET pour valider l'URL — répondre 200 immédiatement
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    http_response_code(200);
+    echo json_encode(['ok' => true]);
+    exit;
+}
+
+// Vérification du token secret sur les POST uniquement
 $receivedKey = $_GET['key'] ?? '';
 if (!defined('PRINTIFY_WEBHOOK_SECRET') || !hash_equals(PRINTIFY_WEBHOOK_SECRET, $receivedKey)) {
     http_response_code(401);
