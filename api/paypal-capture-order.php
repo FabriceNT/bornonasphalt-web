@@ -41,6 +41,25 @@ if (!$orderId) {
 }
 
 $pending = $_SESSION['paypal_pending_orders'][$orderId] ?? null;
+
+// Session fallback — recover from DB if session expired
+if (!$pending) {
+    try {
+        $db = boa_db();
+        $stmt = $db->prepare(
+            "SELECT cart_json FROM orders
+             WHERE provider_order_id = ? AND status = 'pending_payment' LIMIT 1"
+        );
+        $stmt->execute([$orderId]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($row) {
+            $pending = json_decode($row['cart_json'], true);
+        }
+    } catch (Exception $e) {
+        error_log('Could not recover PayPal pending order from DB: ' . $e->getMessage());
+    }
+}
+
 if (!$pending) {
     http_response_code(400);
     echo json_encode(['error' => 'No matching pending order for this session.']);
@@ -105,10 +124,16 @@ try {
         $shippingCents = boa_shipping_cents($subtotalCents);
         $totalCents = max(0, $subtotalCents + $shippingCents - $discountCents);
 
-        $insertOrder = $db->prepare('INSERT INTO orders (user_id, stripe_session_id, email, provider, provider_order_id, cart_json, subtotal_cents, shipping_cents, total_cents, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
-        $insertOrder->execute([
+        // Update the pre-saved pending row if it exists, otherwise insert fresh
+        $updateStmt = $db->prepare(
+            "UPDATE orders
+             SET user_id = ?, email = ?, provider = ?, provider_order_id = ?,
+                 cart_json = ?, subtotal_cents = ?, shipping_cents = ?,
+                 total_cents = ?, status = 'created'
+             WHERE stripe_session_id = ? AND status = 'pending_payment'"
+        );
+        $updateStmt->execute([
             $userId,
-            'paypal_' . $orderId, // reusing the same column across both payment providers
             $shipping['email'] ?? '',
             $result['chosen_provider'],
             (string) $result['chosen_order_id'],
@@ -116,8 +141,29 @@ try {
             $subtotalCents,
             $shippingCents,
             $totalCents,
-            'created',
+            'paypal_' . $orderId,
         ]);
+
+        if ($updateStmt->rowCount() === 0) {
+            // No pending row found — insert fresh (should not happen in normal flow)
+            $db->prepare(
+                'INSERT INTO orders
+                 (user_id, stripe_session_id, email, provider, provider_order_id,
+                  cart_json, subtotal_cents, shipping_cents, total_cents, status)
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
+            )->execute([
+                $userId,
+                'paypal_' . $orderId,
+                $shipping['email'] ?? '',
+                $result['chosen_provider'],
+                (string) $result['chosen_order_id'],
+                json_encode($cart),
+                $subtotalCents,
+                $shippingCents,
+                $totalCents,
+                'created',
+            ]);
+        }
     } catch (Exception $e) {
         error_log('Could not save PayPal order to database: ' . $e->getMessage());
     }

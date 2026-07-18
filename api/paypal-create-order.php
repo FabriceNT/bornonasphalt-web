@@ -94,17 +94,54 @@ try {
 
     $order = boa_paypal_create_order($totalCents, $shipping);
 
-    // PayPal's own order fields (custom_id etc.) are too small to hold a
-    // full cart. Stash it in the session instead, keyed by the order id,
-    // and read it back in paypal-capture-order.php once payment is
-    // confirmed. Relies on the same browser session completing both steps
-    // shortly after each other, which is how the PayPal Buttons flow works.
+    // Stash in session — fast path used by paypal-capture-order.php
     $_SESSION['paypal_pending_orders'][$order['id']] = [
         'cart'           => $metadataCart,
         'shipping'       => $shipping,
         'promo_code'     => $validatedPromoCode,
         'discount_cents' => $discountCents,
     ];
+
+    // Also persist to DB immediately as safety net.
+    // If the session expires before capture (mobile timeout, tab switch),
+    // paypal-capture-order.php and webhook-paypal.php can recover from here.
+    try {
+        $db = boa_db();
+        $userId = null;
+        if (!empty($shipping['email'])) {
+            $userStmt = $db->prepare('SELECT id FROM users WHERE email = ?');
+            $userStmt->execute([strtolower($shipping['email'])]);
+            $matchedUser = $userStmt->fetch();
+            if ($matchedUser) {
+                $userId = (int) $matchedUser['id'];
+            }
+        }
+        $db->prepare(
+            'INSERT INTO orders
+             (user_id, stripe_session_id, email, provider, provider_order_id,
+              cart_json, subtotal_cents, shipping_cents, total_cents, status)
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
+        )->execute([
+            $userId,
+            'paypal_' . $order['id'],
+            $shipping['email'] ?? '',
+            'pending',
+            $order['id'],
+            json_encode([
+                'cart'           => $metadataCart,
+                'shipping'       => $shipping,
+                'promo_code'     => $validatedPromoCode,
+                'discount_cents' => $discountCents,
+            ]),
+            $subtotalCents,
+            $shippingCents,
+            $totalCents,
+            'pending_payment',
+        ]);
+    } catch (Exception $e) {
+        // Non-fatal — session is still available as primary fallback
+        error_log('Could not pre-save PayPal pending order to DB: ' . $e->getMessage());
+    }
 
     echo json_encode(['id' => $order['id']]);
 } catch (Throwable $e) {
