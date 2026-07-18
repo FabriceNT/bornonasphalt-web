@@ -116,7 +116,7 @@ try {
     }
 
     if (!$row) {
-        // Payment captured but no record at all — log for manual intervention
+        // Payment captured but no record at all — log + alert email
         $errLine = json_encode([
             'time'            => date('c'),
             'alert'           => 'ORPHANED_PAYPAL_PAYMENT',
@@ -126,6 +126,26 @@ try {
         ]) . "\n";
         file_put_contents(__DIR__ . '/logs/order-errors.log', $errLine, FILE_APPEND | LOCK_EX);
         error_log("ORPHANED PayPal payment — order ID: {$paypalOrderId}");
+
+        // Alert email — paiement reçu mais aucune commande en base
+        $alertSubject = '[BOA URGENT] Paiement PayPal orphelin — intervention requise';
+        $alertBody    = "Un paiement PayPal a été capturé mais aucune commande correspondante n'existe en base.\n\n"
+            . "PayPal Order ID : {$paypalOrderId}\n"
+            . "Capture ID      : " . ($resource['id'] ?? 'N/A') . "\n"
+            . "Montant         : " . json_encode($resource['amount'] ?? []) . "\n"
+            . "Heure           : " . date('c') . "\n\n"
+            . "Action requise : vérifier le dashboard PayPal et créer la commande manuellement si nécessaire.\n"
+            . "Log complet    : public_html/api/logs/order-errors.log\n";
+        @mail(
+            'support@bornonasphalt.com',
+            $alertSubject,
+            $alertBody,
+            implode("\r\n", [
+                'From: Born on Asphalt <orders@bornonasphalt.com>',
+                'Content-Type: text/plain; charset=UTF-8',
+            ])
+        );
+
         http_response_code(200);
         echo json_encode(['received' => true, 'note' => 'Orphaned payment logged.']);
         exit;
