@@ -15,6 +15,7 @@ require_once __DIR__ . '/lib/printful.php';
 require_once __DIR__ . '/lib/printify.php';
 require_once __DIR__ . '/lib/fulfillment.php';
 require_once __DIR__ . '/lib/mailer.php';
+require_once __DIR__ . '/lib/meta.php';
 
 header('Content-Type: application/json');
 boa_send_cors_headers();
@@ -98,7 +99,8 @@ try {
 
         $discountCents = $pending['discount_cents'] ?? 0;
         $subtotalCents = array_sum(array_map(function ($c) {
-            return boa_price_cents_for_size($c['size']) * $c['qty'];
+            $p = boa_find_product($c['id']);
+            return boa_price_cents_for_product($p ?? ['id' => $c['id']], $c['size']) * $c['qty'];
         }, $cart));
         $shippingCents = boa_shipping_cents($subtotalCents);
         $totalCents = max(0, $subtotalCents + $shippingCents - $discountCents);
@@ -151,6 +153,15 @@ try {
         }
     } catch (Exception $e) {
         error_log('Order confirmation email failed: ' . $e->getMessage());
+    }
+
+    // Meta CAPI — Purchase
+    try {
+        $capiEmail   = $shipping['email'] ?? '';
+        $capiEventId = 'purchase_paypal_' . $orderId;
+        boa_meta_capi_purchase($capiEventId, $totalCents, 'USD', $capiEmail);
+    } catch (Exception $e) {
+        error_log('Meta CAPI call failed (PayPal): ' . $e->getMessage());
     }
 
     echo json_encode(['ok' => true, 'total_cents' => $totalCents]);
