@@ -35,8 +35,8 @@ if (!$event || !isset($event['type'])) {
     exit;
 }
 
-// On ne traite que order:shipment:sent — ignorer silencieusement tout le reste
-if ($event['type'] !== 'order:shipment:sent') {
+// On ne traite que order:updated avec statut shipped — ignorer silencieusement tout le reste
+if ($event['type'] !== 'order:updated') {
     http_response_code(200);
     echo json_encode(['received' => true]);
     exit;
@@ -45,10 +45,19 @@ if ($event['type'] !== 'order:shipment:sent') {
 try {
     $resource = $event['resource'] ?? [];
     $data     = $resource['data'] ?? [];
-    $shipment = $data['shipment'] ?? [];
 
-    $trackingNumber  = $shipment['number'] ?? '';
-    $trackingUrl     = $shipment['url']    ?? '';
+    // N'agir que si le statut est shipped
+    $status = $data['status'] ?? '';
+    if ($status !== 'shipped') {
+        http_response_code(200);
+        echo json_encode(['received' => true, 'note' => 'Not a shipment event.']);
+        exit;
+    }
+
+    $shipment = $data['shipment'] ?? ($data['shipments'][0] ?? []);
+
+    $trackingNumber  = $shipment['number'] ?? ($shipment['tracking_number'] ?? '');
+    $trackingUrl     = $shipment['url']    ?? ($shipment['tracking_url']    ?? '');
     $carrier         = $shipment['carrier'] ?? 'Carrier';
 
     // L'ID Printify de la commande
