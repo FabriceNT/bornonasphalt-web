@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Returns &amp; Refunds — Born on Asphalt</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Caveat:wght@500;600&display=swap" rel="stylesheet" />
+<link rel="icon" type="image/x-icon" href="img/favicon.ico" />
+<link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="img/favicon-180.png" />
+<link rel="stylesheet" href="css/style.css?v=7" />
+<!-- Meta Pixel -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1315795703870249');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1315795703870249&ev=PageView&noscript=1"/></noscript>
+<!-- End Meta Pixel -->
+</head>
+<body>
+
+<div class="announce">Free shipping on orders $85+ · US domestic only</div>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <img src="img/logo-nav.png"
+           alt="Born on Asphalt"
+           style="height:52px; width:52px; object-fit:contain; display:block;" />
+    </a>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html#shop">Shop</a>
+      <a href="about.html">About</a>
+      <a href="faq.html">FAQ</a>
+      <a href="shipping.html">Shipping</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="nav-actions">
+      <button class="nav-icon-btn" id="accountIconBtn" aria-label="Account">☰ ACCOUNT</button>
+      <button class="nav-icon-btn" id="cartIconBtn" aria-label="Cart">CART <span class="cart-count" id="cartCount">0</span></button>
+      <button class="burger" id="burgerBtn" aria-label="Menu">≡</button>
+    </div>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <div class="container">
+    <div class="section-label">// Document BOA-RETURNS</div>
+    <h1>Returns &amp; Refunds</h1>
+  </div>
+</div>
+
+<div class="page-body">
+  <div class="container" style="max-width:760px;">
+
+    <div class="legal-block">
+      <h2>Defective or Damaged Items</h2>
+      <p>If your order arrives defective, misprinted, or damaged in transit, we will arrange a free replacement at no cost to you. Claims must be submitted within 14 days of delivery and are handled directly through our fulfillment partners, who inspect and produce each item on demand. Once verified, a replacement is produced and shipped without any additional charge.</p>
+    </div>
+
+    <div class="legal-block">
+      <h2>Buyer's Remorse &amp; Size Exchanges</h2>
+      <p>Because every product is made to order under our Print-on-Demand model, we do not accept returns or issue refunds for buyer's remorse, changes of mind, or incorrect size selections. Items are produced only after a purchase is confirmed, so we are unable to accept returns, process size exchanges, or restock goods. Please review the size chart and product details carefully before ordering.</p>
+    </div>
+
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>Born on Asphalt</h4>
+        <p>Apparel for Ford, Mopar and GM builders. Printed on demand, shipped from the US. Comfort Colors 1717, garment-dyed heavyweight.</p>
+        <div class="payment-icons"><span>Stripe</span><span>PayPal</span><span>Visa</span><span>Mastercard</span></div>
+      </div>
+      <div class="footer-col">
+        <h4>Shop</h4>
+        <a href="index.html#shop">All designs</a>
+        <a href="index.html#shop">Ford</a>
+        <a href="index.html#shop">Mopar</a>
+        <a href="index.html#shop">GM</a>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <a href="faq.html">FAQ</a>
+        <a href="shipping.html">Shipping &amp; returns</a>
+        <a href="contact.html">Contact us</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="about.html">Our story</a>
+        <a href="contact.html">Get in touch</a>
+        <a href="privacy.html">Privacy policy</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Born on Asphalt. All rights reserved.</span>
+      <span>bornonasphalt.com</span>
+    </div>
+  </div>
+</footer>
+
+<div class="overlay" id="productModal"><div class="modal"><button class="modal-close" data-close-modal="productModal">✕</button><div id="pdBody"></div></div></div>
+
+<div class="overlay" id="accountModal">
+  <div class="modal">
+    <button class="modal-close" data-close-modal="accountModal">✕</button>
+    <div class="section-label">// Driver record</div>
+    <h2>Your account</h2>
+    <div class="tab-row">
+      <button class="tab-btn active" data-tab="signInPanel">Sign in</button>
+      <button class="tab-btn" data-tab="signUpPanel">Create account</button>
+    </div>
+    <div class="tab-panel active" id="signInPanel">
+      <form id="signInForm">
+        <div class="form-field"><label>Email</label><input type="email" required placeholder="you@email.com" /></div>
+        <div class="form-field"><label>Password</label><input type="password" required placeholder="••••••••" /></div>
+        <button type="submit" class="btn" style="width:100%;">Sign in</button>
+      </form>
+    </div>
+    <div class="tab-panel" id="signUpPanel">
+      <form id="signUpForm">
+        <div class="form-field"><label>Name</label><input type="text" required placeholder="Full name" /></div>
+        <div class="form-field"><label>Email</label><input type="email" required placeholder="you@email.com" /></div>
+        <div class="form-field"><label>Password</label><input type="password" required placeholder="Minimum 8 characters" /></div>
+        <div class="form-field">
+          <label>Confirm password</label>
+          <input type="password" name="confirm_password" required placeholder="Repeat your password" />
+        </div>
+        <label class="boa-checkbox-label" style="display:flex;align-items:center;gap:10px;margin:12px 0;font-size:0.85rem;cursor:pointer;">
+          <input type="checkbox" id="registerNewsletter" name="newsletter" checked
+                 style="accent-color:#8B0000;width:16px;height:16px;cursor:pointer;">
+          Get 10% off my first order — join the BOA newsletter
+        </label>
+        <button type="submit" class="btn" style="width:100%;">Create account</button>
+      </form>
+    </div>
+    <p class="modal-note">Accounts require a backend service — this is a front-end placeholder. See README-integrations.md.</p>
+  </div>
+</div>
+
+<div class="overlay" id="checkoutModal">
+  <div class="modal">
+    <button class="modal-close" data-close-modal="checkoutModal">✕</button>
+    <div class="section-label">// Final line item</div>
+    <h2>Checkout</h2>
+    <div id="checkoutSummary" style="margin-bottom:18px;"></div>
+    <div class="form-field">
+      <label>Email</label>
+      <input type="email" id="checkoutEmail" placeholder="you@email.com" />
+    </div>
+    <div class="form-field">
+      <label>Full name</label>
+      <input type="text" id="checkoutFullName" placeholder="Full name" />
+    </div>
+    <div class="form-field">
+      <label>Shipping address</label>
+      <input type="text" id="checkoutAddress1" placeholder="Street address" />
+    </div>
+    <div style="display:flex; gap:10px;">
+      <div class="form-field" style="flex:1;"><label>City</label><input type="text" id="checkoutCity" /></div>
+      <div class="form-field" style="flex:0 0 70px;"><label>State</label><input type="text" id="checkoutState" maxlength="2" placeholder="NY" /></div>
+      <div class="form-field" style="flex:1;"><label>ZIP</label><input type="text" id="checkoutZip" /></div>
+    </div>
+    <div class="form-field">
+      <label>Payment</label>
+      <div id="paymentElementContainer" style="padding:12px; border:1px solid var(--line); background:var(--paper-dim); min-height:44px;">
+        <p style="font-size:12px; color:var(--ink-faded); margin:0;">Loading payment form...</p>
+      </div>
+    </div>
+    <p id="checkoutPayError" style="display:none; color:var(--stamp-red); font-size:12px; margin-bottom:10px;"></p>
+    <button class="btn" id="stripePayBtn" style="width:100%; margin-bottom:10px;">Pay <span id="payBtnAmount"></span></button>
+    <div id="paypalButtonContainer" style="margin-top:10px; min-height:45px;"></div>
+    <p class="modal-note">Card payment via Stripe and PayPal are both fully connected.</p>
+  </div>
+</div>
+
+<div class="drawer-overlay" id="drawerOverlay"></div>
+<div class="drawer" id="cartDrawer">
+  <div class="drawer-head"><h3>Build sheet</h3><button class="modal-close" id="drawerCloseBtn" style="position:static;">✕</button></div>
+  <div class="drawer-items" id="drawerItems"></div>
+  <div class="drawer-foot">
+    <p id="freeShippingNote" style="font-size:10.5px; color:var(--ink-faded); margin:0 0 12px;"></p>
+    <div class="subtotal-row" style="font-size:13px;"><span>Subtotal</span><span id="subtotalAmount">$0.00</span></div>
+    <div class="subtotal-row" style="font-size:13px;"><span>Shipping</span><span id="shippingAmount">$0.00</span></div>
+    <div class="subtotal-row"><span>Total</span><span id="cartTotalAmount">$0.00</span></div>
+    <button class="btn" style="width:100%; margin-bottom:10px;" id="checkoutBtn">Checkout</button>
+    <a href="index.html#shop" class="btn ghost" style="width:100%; display:block; text-align:center;">Continue shopping</a>
+  </div>
+</div>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script src="js/products.js?v=11"></script>
+<script src="js/main.js?v=29"></script>
+</body>
+</html>
