@@ -29,8 +29,8 @@ if (!$event || !isset($event['type'])) {
     exit;
 }
 
-// On ne traite que shipment.shipped — ignorer silencieusement tout le reste
-if ($event['type'] !== 'shipment.shipped') {
+// On ne traite que shipment_sent — ignorer silencieusement tout le reste
+if ($event['type'] !== 'shipment_sent') {
     http_response_code(200);
     echo json_encode(['received' => true]);
     exit;
