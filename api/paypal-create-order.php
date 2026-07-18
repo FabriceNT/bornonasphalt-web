@@ -53,7 +53,7 @@ try {
         }
 
         $qty = max(1, (int) ($item['qty'] ?? 1));
-        $subtotalCents += boa_price_cents_for_size($size) * $qty;
+        $subtotalCents += boa_price_cents_for_product($product, $size) * $qty;
         $metadataCart[] = ['id' => $product['id'], 'color' => $color, 'size' => $size, 'qty' => $qty];
     }
 

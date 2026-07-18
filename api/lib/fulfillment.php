@@ -3,13 +3,9 @@
 // cost (product + shipping) for this specific cart and address, confirms /
 // sends to production whichever is cheaper, and cancels the other.
 //
-// ⚠️  DRY-RUN MODE ACTIF (BOA_FULFILLMENT_DRY_RUN = true)
-// En mode dry-run, les deux drafts sont créés et comparés, mais AUCUN
-// n'est confirmé ni envoyé en production — les deux restent en brouillon.
-// Les coûts réels sont loggués dans orders.log pour vérification.
-// Passer à false uniquement quand tu es prêt à facturer des vraies commandes.
-//
-const BOA_FULFILLMENT_DRY_RUN = false;
+// Défini dans secrets.php — true = dry-run, false = production.
+// Guard de sécurité : active dry-run si secrets.php est absent (script isolé, test).
+defined('BOA_FULFILLMENT_DRY_RUN') || define('BOA_FULFILLMENT_DRY_RUN', true);
 
 // Returns: [
 //   'chosen_provider' => 'printful' | 'printify' | 'dry-run',

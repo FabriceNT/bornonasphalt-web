@@ -21,10 +21,25 @@ function boa_price_cents_for_size(string $size): int
 {
     return match ($size) {
         '2XL' => 3699,
-        '3XL' => 3999,
+        '3XL' => 3899,
         '4XL' => 4099,
         default => 3499, // S, M, L, XL
     };
+}
+
+// Dispatche vers le bon barème selon le type de produit.
+// Utiliser cette fonction dans checkout-stripe.php et paypal-create-order.php.
+function boa_price_cents_for_product(array $product, string $size): int
+{
+    if (str_contains($product['id'], 'hoodie')) {
+        return match ($size) {
+            '2XL' => 5199,
+            '3XL' => 5399,
+            '4XL' => 5599,
+            default => 4999, // S, M, L, XL
+        };
+    }
+    return boa_price_cents_for_size($size);
 }
 
 // Computes the shipping fee for a given subtotal, in cents.
@@ -1140,6 +1155,104 @@ function boa_products(): array
                 ['color' => 'Adobe', 'size' => 'XL', 'printful_sync_variant_id' => 5377715653, 'printify_variant_id' => null],
                 ['color' => 'Adobe', 'size' => '2XL', 'printful_sync_variant_id' => 5377715662, 'printify_variant_id' => null],
                 ['color' => 'Adobe', 'size' => '3XL', 'printful_sync_variant_id' => 5377715670, 'printify_variant_id' => null],
+            ],
+        ],
+        [
+            'id' => 'G1', 'title' => 'Cammed by Ear',
+            'printful_sync_product_id' => 445957199,
+            'printify_product_id' => '6a5517cb601c7962380ba36a',
+            'variants' => [
+                ['color' => 'Black',      'size' => 'S',   'printful_sync_variant_id' => 5393157421, 'printify_variant_id' => 73196],
+                ['color' => 'Black',      'size' => 'M',   'printful_sync_variant_id' => 5393157422, 'printify_variant_id' => 73200],
+                ['color' => 'Black',      'size' => 'L',   'printful_sync_variant_id' => 5393157423, 'printify_variant_id' => 73204],
+                ['color' => 'Black',      'size' => 'XL',  'printful_sync_variant_id' => 5393157424, 'printify_variant_id' => 73208],
+                ['color' => 'Black',      'size' => '2XL', 'printful_sync_variant_id' => 5393157425, 'printify_variant_id' => 73212],
+                ['color' => 'Black',      'size' => '3XL', 'printful_sync_variant_id' => 5393157426, 'printify_variant_id' => 79114],
+                ['color' => 'Black',      'size' => '4XL', 'printful_sync_variant_id' => 5393157427, 'printify_variant_id' => 101423],
+                ['color' => 'True Navy',  'size' => 'S',   'printful_sync_variant_id' => 5393157428, 'printify_variant_id' => 79081],
+                ['color' => 'True Navy',  'size' => 'M',   'printful_sync_variant_id' => 5393157429, 'printify_variant_id' => 79082],
+                ['color' => 'True Navy',  'size' => 'L',   'printful_sync_variant_id' => 5393157430, 'printify_variant_id' => 79083],
+                ['color' => 'True Navy',  'size' => 'XL',  'printful_sync_variant_id' => 5393157431, 'printify_variant_id' => 79084],
+                ['color' => 'True Navy',  'size' => '2XL', 'printful_sync_variant_id' => 5393157432, 'printify_variant_id' => 79085],
+                ['color' => 'True Navy',  'size' => '3XL', 'printful_sync_variant_id' => 5393157433, 'printify_variant_id' => 79164],
+                ['color' => 'True Navy',  'size' => '4XL', 'printful_sync_variant_id' => 5393157434, 'printify_variant_id' => 101471],
+                ['color' => 'Graphite',   'size' => 'S',   'printful_sync_variant_id' => 5393157435, 'printify_variant_id' => 78961],
+                ['color' => 'Graphite',   'size' => 'M',   'printful_sync_variant_id' => 5393157436, 'printify_variant_id' => 78962],
+                ['color' => 'Graphite',   'size' => 'L',   'printful_sync_variant_id' => 5393157437, 'printify_variant_id' => 78963],
+                ['color' => 'Graphite',   'size' => 'XL',  'printful_sync_variant_id' => 5393157438, 'printify_variant_id' => 78964],
+                ['color' => 'Graphite',   'size' => '2XL', 'printful_sync_variant_id' => 5393157439, 'printify_variant_id' => 78965],
+                ['color' => 'Graphite',   'size' => '3XL', 'printful_sync_variant_id' => 5393157440, 'printify_variant_id' => 79135],
+                ['color' => 'Graphite',   'size' => '4XL', 'printful_sync_variant_id' => 5393157441, 'printify_variant_id' => 101443],
+            ],
+        ],
+        [
+            'id' => 'C2-camaro', 'title' => 'I Have a Camaro',
+            'printful_sync_product_id' => 445607155,
+            'printify_product_id' => '6a4ef7aac7382dae5c06ac91',
+            'variants' => [
+                ['color' => 'Black',       'size' => 'S',   'printful_sync_variant_id' => 5386873284, 'printify_variant_id' => 73196],
+                ['color' => 'Black',       'size' => 'M',   'printful_sync_variant_id' => 5386873285, 'printify_variant_id' => 73200],
+                ['color' => 'Black',       'size' => 'L',   'printful_sync_variant_id' => 5386873286, 'printify_variant_id' => 73204],
+                ['color' => 'Black',       'size' => 'XL',  'printful_sync_variant_id' => 5386873288, 'printify_variant_id' => 73208],
+                ['color' => 'Black',       'size' => '2XL', 'printful_sync_variant_id' => 5386873289, 'printify_variant_id' => 73212],
+                ['color' => 'Black',       'size' => '3XL', 'printful_sync_variant_id' => 5386873290, 'printify_variant_id' => 79114],
+                ['color' => 'Black',       'size' => '4XL', 'printful_sync_variant_id' => 5386873291, 'printify_variant_id' => 101423],
+                ['color' => 'True Navy',   'size' => 'S',   'printful_sync_variant_id' => 5386873292, 'printify_variant_id' => 79081],
+                ['color' => 'True Navy',   'size' => 'M',   'printful_sync_variant_id' => 5386873294, 'printify_variant_id' => 79082],
+                ['color' => 'True Navy',   'size' => 'L',   'printful_sync_variant_id' => 5386873295, 'printify_variant_id' => 79083],
+                ['color' => 'True Navy',   'size' => 'XL',  'printful_sync_variant_id' => 5386873296, 'printify_variant_id' => 79084],
+                ['color' => 'True Navy',   'size' => '2XL', 'printful_sync_variant_id' => 5386873297, 'printify_variant_id' => 79085],
+                ['color' => 'True Navy',   'size' => '3XL', 'printful_sync_variant_id' => 5386873298, 'printify_variant_id' => 79164],
+                ['color' => 'True Navy',   'size' => '4XL', 'printful_sync_variant_id' => 5386873300, 'printify_variant_id' => 101471],
+                ['color' => 'Sage',        'size' => 'S',   'printful_sync_variant_id' => 5386873301, 'printify_variant_id' => 79061],
+                ['color' => 'Sage',        'size' => 'M',   'printful_sync_variant_id' => 5386873302, 'printify_variant_id' => 79062],
+                ['color' => 'Sage',        'size' => 'L',   'printful_sync_variant_id' => 5386873303, 'printify_variant_id' => 79063],
+                ['color' => 'Sage',        'size' => 'XL',  'printful_sync_variant_id' => 5386873304, 'printify_variant_id' => 79064],
+                ['color' => 'Sage',        'size' => '2XL', 'printful_sync_variant_id' => 5386873306, 'printify_variant_id' => 79065],
+                ['color' => 'Sage',        'size' => '3XL', 'printful_sync_variant_id' => 5386873307, 'printify_variant_id' => 79159],
+                ['color' => 'Sage',        'size' => '4XL', 'printful_sync_variant_id' => 5386873308, 'printify_variant_id' => 101467],
+                ['color' => 'Mystic Blue', 'size' => 'S',   'printful_sync_variant_id' => 5386873309, 'printify_variant_id' => 79031],
+                ['color' => 'Mystic Blue', 'size' => 'M',   'printful_sync_variant_id' => 5386873310, 'printify_variant_id' => 79032],
+                ['color' => 'Mystic Blue', 'size' => 'L',   'printful_sync_variant_id' => 5386873312, 'printify_variant_id' => 79033],
+                ['color' => 'Mystic Blue', 'size' => 'XL',  'printful_sync_variant_id' => 5386873313, 'printify_variant_id' => 79034],
+                ['color' => 'Mystic Blue', 'size' => '2XL', 'printful_sync_variant_id' => 5386873314, 'printify_variant_id' => 79035],
+                ['color' => 'Mystic Blue', 'size' => '3XL', 'printful_sync_variant_id' => 5386873315, 'printify_variant_id' => 79151],
+                ['color' => 'Mystic Blue', 'size' => '4XL', 'printful_sync_variant_id' => 5386873316, 'printify_variant_id' => 101459],
+                ['color' => 'Moss',        'size' => 'S',   'printful_sync_variant_id' => 5386873319, 'printify_variant_id' => 79021],
+                ['color' => 'Moss',        'size' => 'M',   'printful_sync_variant_id' => 5386873320, 'printify_variant_id' => 79022],
+                ['color' => 'Moss',        'size' => 'L',   'printful_sync_variant_id' => 5386873321, 'printify_variant_id' => 79023],
+                ['color' => 'Moss',        'size' => 'XL',  'printful_sync_variant_id' => 5386873322, 'printify_variant_id' => 79024],
+                ['color' => 'Moss',        'size' => '2XL', 'printful_sync_variant_id' => 5386873323, 'printify_variant_id' => 79025],
+                ['color' => 'Moss',        'size' => '3XL', 'printful_sync_variant_id' => 5386873324, 'printify_variant_id' => 79149],
+                ['color' => 'Moss',        'size' => '4XL', 'printful_sync_variant_id' => 5386873325, 'printify_variant_id' => 101457],
+                ['color' => 'Light Green', 'size' => 'S',   'printful_sync_variant_id' => 5386873326, 'printify_variant_id' => 79006],
+                ['color' => 'Light Green', 'size' => 'M',   'printful_sync_variant_id' => 5386873327, 'printify_variant_id' => 79007],
+                ['color' => 'Light Green', 'size' => 'L',   'printful_sync_variant_id' => 5386873328, 'printify_variant_id' => 79008],
+                ['color' => 'Light Green', 'size' => 'XL',  'printful_sync_variant_id' => 5386873329, 'printify_variant_id' => 79009],
+                ['color' => 'Light Green', 'size' => '2XL', 'printful_sync_variant_id' => 5386873330, 'printify_variant_id' => 79010],
+                ['color' => 'Light Green', 'size' => '3XL', 'printful_sync_variant_id' => 5386873331, 'printify_variant_id' => 79146],
+                ['color' => 'Light Green', 'size' => '4XL', 'printful_sync_variant_id' => 5386873332, 'printify_variant_id' => 101454],
+                ['color' => 'Yam',         'size' => 'S',   'printful_sync_variant_id' => 5386873333, 'printify_variant_id' => 79106],
+                ['color' => 'Yam',         'size' => 'M',   'printful_sync_variant_id' => 5386873334, 'printify_variant_id' => 79107],
+                ['color' => 'Yam',         'size' => 'L',   'printful_sync_variant_id' => 5386873335, 'printify_variant_id' => 79108],
+                ['color' => 'Yam',         'size' => 'XL',  'printful_sync_variant_id' => 5386873336, 'printify_variant_id' => 79109],
+                ['color' => 'Yam',         'size' => '2XL', 'printful_sync_variant_id' => 5386873337, 'printify_variant_id' => 79110],
+                ['color' => 'Yam',         'size' => '3XL', 'printful_sync_variant_id' => 5386873338, 'printify_variant_id' => 79170],
+                ['color' => 'Yam',         'size' => '4XL', 'printful_sync_variant_id' => 5386873339, 'printify_variant_id' => 101477],
+                ['color' => 'Seafoam',     'size' => 'S',   'printful_sync_variant_id' => 5386873340, 'printify_variant_id' => 78951],
+                ['color' => 'Seafoam',     'size' => 'M',   'printful_sync_variant_id' => 5386873341, 'printify_variant_id' => 78952],
+                ['color' => 'Seafoam',     'size' => 'L',   'printful_sync_variant_id' => 5386873342, 'printify_variant_id' => 78953],
+                ['color' => 'Seafoam',     'size' => 'XL',  'printful_sync_variant_id' => 5386873343, 'printify_variant_id' => 78954],
+                ['color' => 'Seafoam',     'size' => '2XL', 'printful_sync_variant_id' => 5386873344, 'printify_variant_id' => 78955],
+                ['color' => 'Seafoam',     'size' => '3XL', 'printful_sync_variant_id' => 5386873345, 'printify_variant_id' => 79132],
+                ['color' => 'Seafoam',     'size' => '4XL', 'printful_sync_variant_id' => 5386873346, 'printify_variant_id' => 101468],
+                ['color' => 'White',       'size' => 'S',   'printful_sync_variant_id' => 5386873347, 'printify_variant_id' => 73199],
+                ['color' => 'White',       'size' => 'M',   'printful_sync_variant_id' => 5386873348, 'printify_variant_id' => 73203],
+                ['color' => 'White',       'size' => 'L',   'printful_sync_variant_id' => 5386873349, 'printify_variant_id' => 73207],
+                ['color' => 'White',       'size' => 'XL',  'printful_sync_variant_id' => 5386873350, 'printify_variant_id' => 73211],
+                ['color' => 'White',       'size' => '2XL', 'printful_sync_variant_id' => 5386873351, 'printify_variant_id' => 73215],
+                ['color' => 'White',       'size' => '3XL', 'printful_sync_variant_id' => 5386873352, 'printify_variant_id' => 79169],
+                ['color' => 'White',       'size' => '4XL', 'printful_sync_variant_id' => 5386873353, 'printify_variant_id' => 101476],
             ],
         ],
         [
