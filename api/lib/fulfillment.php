@@ -9,7 +9,7 @@
 // Les coûts réels sont loggués dans orders.log pour vérification.
 // Passer à false uniquement quand tu es prêt à facturer des vraies commandes.
 //
-const BOA_FULFILLMENT_DRY_RUN = true;
+const BOA_FULFILLMENT_DRY_RUN = false;
 
 // Returns: [
 //   'chosen_provider' => 'printful' | 'printify' | 'dry-run',
