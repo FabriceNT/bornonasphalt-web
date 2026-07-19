@@ -1,0 +1,3 @@
+# Clean URL pour la page lien-en-bio Instagram
+RewriteEngine On
+RewriteRule ^link$ link.html [L]
