@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>BOA Control Panel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Oswald:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="admin.css?v=1">
+</head>
+<body>
+  <!-- Login Screen -->
+  <div id="login-screen" class="screen">
+    <div class="login-card">
+      <h1 class="brand-title">BORN ON ASPHALT</h1>
+      <p class="subtitle">CONTROL PANEL</p>
+      <form id="login-form">
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" required placeholder="••••••••">
+        </div>
+        <div id="login-error" class="error-msg"></div>
+        <button type="submit" class="btn btn-primary btn-block">ACCESS SYSTEM</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Dashboard Screen -->
+  <div id="dashboard-screen" class="screen hidden">
+    <!-- Top Alert Banner -->
+    <div id="alert-banner" class="alert-banner hidden">
+      <span class="alert-text"></span>
+    </div>
+
+    <!-- Header -->
+    <header class="dashboard-header">
+      <div class="header-logo">
+        <h1 class="brand-title-small">BORN ON ASPHALT</h1>
+        <span class="badge">ADMIN v1.0</span>
+      </div>
+      <button id="logout-btn" class="btn btn-secondary">LOGOUT</button>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="dashboard-tabs">
+      <button class="tab-btn active" data-tab="orders">ORDERS</button>
+      <button class="tab-btn" data-tab="reviews">REVIEWS</button>
+      <button class="tab-btn" data-tab="logs">LOGS</button>
+      <button class="tab-btn" data-tab="newsletter">NEWSLETTER</button>
+    </nav>
+
+    <!-- Main Content Panels -->
+    <main class="dashboard-content">
+      
+      <!-- Orders Tab -->
+      <section id="tab-orders" class="tab-panel active">
+        <div class="panel-header">
+          <h2>ORDERS MONITORING</h2>
+          <div class="filter-bar">
+            <label for="order-status-filter">Status :</label>
+            <select id="order-status-filter" class="form-control">
+              <option value="">ALL STATUSES</option>
+              <option value="created">Created</option>
+              <option value="pending_payment">Pending Payment</option>
+              <option value="shipped">Shipped</option>
+              <option value="failed">Failed</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Created At</th>
+                <th>Email</th>
+                <th>Total</th>
+                <th>Status</th>
+                <th>Provider</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="orders-list">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+
+        <div class="pagination" id="orders-pagination">
+          <!-- Dynamically populated -->
+        </div>
+      </section>
+
+      <!-- Reviews Tab -->
+      <section id="tab-reviews" class="tab-panel">
+        <div class="panel-header">
+          <h2>REVIEWS MANAGEMENT</h2>
+          <div class="filter-bar">
+            <label for="review-filter">Filter :</label>
+            <select id="review-filter" class="form-control">
+              <option value="pending">Pending Approval</option>
+              <option value="approved">Approved</option>
+              <option value="all">All Reviews</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Product ID</th>
+                <th>Author</th>
+                <th>Rating</th>
+                <th>Content</th>
+                <th>Verified</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="reviews-list">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Logs Tab -->
+      <section id="tab-logs" class="tab-panel">
+        <div class="panel-header">
+          <h2>SYSTEM LOGS</h2>
+          <div class="filter-bar logs-filters">
+            <select id="log-file-select" class="form-control">
+              <option value="errors">order-errors.log</option>
+              <option value="orders">orders.log</option>
+            </select>
+            <select id="log-lines-select" class="form-control">
+              <option value="100">Last 100 lines</option>
+              <option value="250">Last 250 lines</option>
+              <option value="500">Last 500 lines</option>
+            </select>
+            <button id="refresh-logs-btn" class="btn btn-primary">REFRESH</button>
+          </div>
+        </div>
+
+        <div class="logs-console-wrapper">
+          <pre id="logs-console" class="logs-console">Loading logs...</pre>
+        </div>
+      </section>
+
+      <!-- Newsletter Tab -->
+      <section id="tab-newsletter" class="tab-panel">
+        <div class="panel-header">
+          <h2>NEWSLETTER & PROMO CODES</h2>
+          <button id="export-csv-btn" class="btn btn-accent">EXPORT CSV</button>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+          <div class="stats-card">
+            <span class="stats-label">Total Subscribers</span>
+            <span class="stats-value" id="stats-total-subscribers">-</span>
+          </div>
+          <div class="stats-card">
+            <span class="stats-label">Active Subscribers</span>
+            <span class="stats-value" id="stats-active-subscribers">-</span>
+          </div>
+          <div class="stats-card">
+            <span class="stats-label">Promo Codes Generated</span>
+            <span class="stats-value" id="stats-promos-generated">-</span>
+          </div>
+          <div class="stats-card">
+            <span class="stats-label">Promo Codes Used</span>
+            <span class="stats-value" id="stats-promos-used">-</span>
+          </div>
+          <div class="stats-card">
+            <span class="stats-label">Promo Codes Expired</span>
+            <span class="stats-value" id="stats-promos-expired">-</span>
+          </div>
+        </div>
+
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Email</th>
+                <th>Subscribed At</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="subscribers-list">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+
+        <div class="pagination" id="subscribers-pagination">
+          <!-- Dynamically populated -->
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="admin.js?v=1"></script>
+</body>
+</html>

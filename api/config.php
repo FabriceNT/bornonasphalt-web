@@ -97,3 +97,16 @@ function boa_start_session(): void
     ]);
     session_start();
 }
+
+// Restricts endpoint access to authenticated administrators only
+function boa_require_admin(): void
+{
+    boa_start_session();
+    if (empty($_SESSION['is_admin']) || $_SESSION['is_admin'] !== true) {
+        http_response_code(401);
+        header('Content-Type: application/json');
+        echo json_encode(['error' => 'Unauthorized']);
+        exit;
+    }
+}
+

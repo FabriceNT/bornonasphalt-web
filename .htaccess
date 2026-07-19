@@ -1,3 +1,10 @@
 # Clean URL pour la page lien-en-bio Instagram
 RewriteEngine On
 RewriteRule ^link$ link.html [L]
+
+# Block indexing of admin panel
+<IfModule mod_headers.c>
+  SetEnvIf Request_URI "^/boa-panel/" IS_ADMIN_PANEL
+  Header set X-Robots-Tag "noindex, nofollow" env=IS_ADMIN_PANEL
+</IfModule>
+
