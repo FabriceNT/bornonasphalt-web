@@ -151,6 +151,8 @@ document.addEventListener('DOMContentLoaded', () => {
       loadLogs();
     } else if (tab === 'newsletter') {
       loadNewsletter();
+    } else if (tab === 'analytics') {
+      loadAnalytics();
     }
   }
 
@@ -248,9 +250,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const data = await res.json();
       const order = data.order;
       
-      const subtotal = (order.subtotal_cents / 100).toFixed(2);
-      const shipping = (order.shipping_cents / 100).toFixed(2);
-      const total = (order.total_cents / 100).toFixed(2);
+      const subtotal = ((order.subtotal_cents || 0) / 100).toFixed(2);
+      const shipping = ((order.shipping_cents || 0) / 100).toFixed(2);
+      const total = ((order.total_cents || 0) / 100).toFixed(2);
 
       let itemsHtml = '';
       if (Array.isArray(order.cart_json)) {
@@ -273,9 +275,9 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="detail-section">
               <h4>Delivery Information</h4>
               <p><strong>Email:</strong> ${escapeHtml(order.email)}</p>
-              <p><strong>Fulfillment Provider:</strong> ${escapeHtml(order.provider.toUpperCase())}</p>
-              <p><strong>Provider Order ID:</strong> ${order.provider_order_id ? escapeHtml(order.provider_order_id) : 'Not Fulfilled yet'}</p>
-              <p><strong>Stripe/PayPal Session:</strong> ${escapeHtml(order.stripe_session_id)}</p>
+              <p><strong>Fulfillment Provider:</strong> ${order.provider ? escapeHtml(order.provider.toUpperCase()) : 'N/A'}</p>
+              <p><strong>Provider Order ID:</strong> ${order.provider_order_id ? escapeHtml(order.provider_order_id) : 'Not fulfilled yet'}</p>
+              <p><strong>Payment Ref:</strong> ${order.stripe_session_id ? escapeHtml(order.stripe_session_id) : 'N/A'}</p>
             </div>
             <div class="detail-section">
               <h4>Payment Summary</h4>
@@ -359,7 +361,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (Array.isArray(review.photos) && review.photos.length > 0) {
           photosHtml = '<div class="review-photos">';
           review.photos.forEach(photo => {
-            photosHtml += `<img src="${photo}" class="review-photo-thumb" onclick="window.open('${photo}', '_blank')" alt="Review photo">`;
+            photosHtml += `<img src="${escapeHtml(photo)}" class="review-photo-thumb" data-photo-url="${escapeHtml(photo)}" alt="Review photo">`;
           });
           photosHtml += '</div>';
         }
@@ -394,6 +396,11 @@ document.addEventListener('DOMContentLoaded', () => {
           </td>
         `;
         listContainer.appendChild(tr);
+      });
+
+      // Bind review photos click events
+      document.querySelectorAll('.review-photo-thumb').forEach(img => {
+        img.addEventListener('click', () => window.open(img.dataset.photoUrl, '_blank'));
       });
 
       // Bind Review Action Buttons
@@ -454,6 +461,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const logsConsole = document.getElementById('logs-console');
 
   refreshLogsBtn.addEventListener('click', loadLogs);
+
+  const refreshAnalyticsBtn = document.getElementById('refresh-analytics-btn');
+  if (refreshAnalyticsBtn) {
+    refreshAnalyticsBtn.addEventListener('click', loadAnalytics);
+  }
 
   async function loadLogs() {
     logsConsole.textContent = 'Loading logs...';
@@ -585,6 +597,147 @@ document.addEventListener('DOMContentLoaded', () => {
     paginContainer.appendChild(prevBtn);
     paginContainer.appendChild(info);
     paginContainer.appendChild(nextBtn);
+  }
+
+  // --- ANALYTICS MODULE ---
+
+  async function loadAnalytics() {
+    const API_ANALYTICS = '../api/admin-analytics.php';
+    const updatedEl = document.getElementById('analytics-updated');
+    const refreshBtn = document.getElementById('refresh-analytics-btn');
+
+    if (refreshBtn) refreshBtn.disabled = true;
+    if (updatedEl) updatedEl.textContent = 'Loading...';
+
+    // Clear fields to show loading state
+    document.getElementById('an-sessions').textContent = '-';
+    document.getElementById('an-users').textContent = '-';
+    document.getElementById('an-pageviews').textContent = '-';
+    document.getElementById('an-duration').textContent = '-';
+    document.getElementById('an-sparkline').innerHTML = '';
+    document.getElementById('an-sources').innerHTML = '<tr><td colspan="2" class="text-center">Loading...</td></tr>';
+    document.getElementById('an-geo').innerHTML = '<tr><td colspan="2" class="text-center">Loading...</td></tr>';
+    document.getElementById('an-pages').innerHTML = '<tr><td colspan="3" class="text-center">Loading...</td></tr>';
+
+    try {
+      const [overviewRes, pagesRes, sourcesRes, geoRes] = await Promise.all([
+        fetch(`${API_ANALYTICS}?action=overview`, { credentials: 'include' }),
+        fetch(`${API_ANALYTICS}?action=pages`, { credentials: 'include' }),
+        fetch(`${API_ANALYTICS}?action=sources`, { credentials: 'include' }),
+        fetch(`${API_ANALYTICS}?action=geo`, { credentials: 'include' })
+      ]);
+
+      if (overviewRes.status === 401 || pagesRes.status === 401 || sourcesRes.status === 401 || geoRes.status === 401) {
+        showLogin();
+        return;
+      }
+
+      if (!overviewRes.ok || !pagesRes.ok || !sourcesRes.ok || !geoRes.ok) {
+        throw new Error('One or more analytics requests failed');
+      }
+
+      const overview = await overviewRes.json();
+      const pages = await pagesRes.json();
+      const sources = await sourcesRes.json();
+      const geo = await geoRes.json();
+
+      // Populate Overview Cards
+      document.getElementById('an-sessions').textContent = (overview.sessions || 0).toLocaleString();
+      document.getElementById('an-users').textContent = (overview.users || 0).toLocaleString();
+      document.getElementById('an-pageviews').textContent = (overview.pageviews || 0).toLocaleString();
+      document.getElementById('an-duration').textContent = formatDuration(overview.avg_duration_seconds || 0);
+
+      // Populate 30-Day Sparkline
+      const sparklineContainer = document.getElementById('an-sparkline');
+      sparklineContainer.innerHTML = '';
+      const dailyData = overview.daily || [];
+      const maxSessions = Math.max(...dailyData.map(d => d.sessions), 0);
+
+      dailyData.forEach(d => {
+        const bar = document.createElement('div');
+        bar.className = 'sparkline-bar';
+        const pct = maxSessions > 0 ? (d.sessions / maxSessions) * 100 : 0;
+        bar.style.height = `${pct}%`;
+        
+        let formattedDate = d.date;
+        if (d.date && d.date.length === 8) {
+          formattedDate = `${d.date.slice(0, 4)}-${d.date.slice(4, 6)}-${d.date.slice(6, 8)}`;
+        }
+        bar.title = `${formattedDate}: ${d.sessions} sessions`;
+        sparklineContainer.appendChild(bar);
+      });
+
+      // Populate Sources Table
+      const sourcesBody = document.getElementById('an-sources');
+      sourcesBody.innerHTML = '';
+      if (!sources.sources || sources.sources.length === 0) {
+        sourcesBody.innerHTML = '<tr><td colspan="2" class="text-center">No source data available.</td></tr>';
+      } else {
+        sources.sources.forEach(src => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td><strong>${escapeHtml(src.channel)}</strong></td>
+            <td>${(src.sessions || 0).toLocaleString()}</td>
+          `;
+          sourcesBody.appendChild(tr);
+        });
+      }
+
+      // Populate Geo Table
+      const geoBody = document.getElementById('an-geo');
+      geoBody.innerHTML = '';
+      if (!geo.regions || geo.regions.length === 0) {
+        geoBody.innerHTML = '<tr><td colspan="2" class="text-center">No regional data available.</td></tr>';
+      } else {
+        geo.regions.forEach(g => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td><strong>${escapeHtml(g.region)}</strong></td>
+            <td>${(g.sessions || 0).toLocaleString()}</td>
+          `;
+          geoBody.appendChild(tr);
+        });
+      }
+
+      // Populate Pages Table
+      const pagesBody = document.getElementById('an-pages');
+      pagesBody.innerHTML = '';
+      if (!pages.pages || pages.pages.length === 0) {
+        pagesBody.innerHTML = '<tr><td colspan="3" class="text-center">No page data available.</td></tr>';
+      } else {
+        pages.pages.forEach(p => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td><strong>${escapeHtml(p.path)}</strong></td>
+            <td>${(p.pageviews || 0).toLocaleString()}</td>
+            <td>${(p.sessions || 0).toLocaleString()}</td>
+          `;
+          pagesBody.appendChild(tr);
+        });
+      }
+
+      const now = new Date();
+      const timeStr = now.toTimeString().split(' ')[0];
+      if (updatedEl) updatedEl.textContent = `Updated: ${timeStr}`;
+
+    } catch (err) {
+      console.error('Failed to load GA4 analytics:', err);
+      if (updatedEl) updatedEl.textContent = 'Error loading data';
+      
+      const errMsg = '<tr><td colspan="3" class="text-center error-msg">Failed to load analytics data.</td></tr>';
+      document.getElementById('an-sources').innerHTML = '<tr><td colspan="2" class="text-center error-msg">Error</td></tr>';
+      document.getElementById('an-geo').innerHTML = '<tr><td colspan="2" class="text-center error-msg">Error</td></tr>';
+      document.getElementById('an-pages').innerHTML = errMsg;
+    } finally {
+      if (refreshBtn) refreshBtn.disabled = false;
+    }
+  }
+
+  function formatDuration(sec) {
+    sec = Math.round(sec);
+    const m = Math.floor(sec / 60);
+    const s = sec % 60;
+    return `${m}m ${s}s`;
   }
 
   // --- HELPERS ---

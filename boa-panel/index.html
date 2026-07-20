@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Oswald:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="admin.css?v=1">
+  <link rel="stylesheet" href="admin.css?v=2">
 </head>
 <body>
   <!-- Login Screen -->
@@ -49,6 +49,7 @@
       <button class="tab-btn" data-tab="reviews">REVIEWS</button>
       <button class="tab-btn" data-tab="logs">LOGS</button>
       <button class="tab-btn" data-tab="newsletter">NEWSLETTER</button>
+      <button class="tab-btn" data-tab="analytics">ANALYTICS</button>
     </nav>
 
     <!-- Main Content Panels -->
@@ -202,9 +203,61 @@
         </div>
       </section>
 
+      <!-- Analytics Tab -->
+      <section id="tab-analytics" class="tab-panel">
+        <div class="panel-header">
+          <h2>ANALYTICS</h2>
+          <div class="filter-bar">
+            <span id="analytics-updated" style="color:#888; font-size:0.85rem;"></span>
+            <button id="refresh-analytics-btn" class="btn btn-primary">REFRESH</button>
+          </div>
+        </div>
+
+        <!-- Overview cards -->
+        <div class="stats-grid" id="analytics-overview-cards">
+          <div class="stats-card"><span class="stats-label">Sessions (7d)</span><span class="stats-value" id="an-sessions">-</span></div>
+          <div class="stats-card"><span class="stats-label">Users (7d)</span><span class="stats-value" id="an-users">-</span></div>
+          <div class="stats-card"><span class="stats-label">Pageviews (7d)</span><span class="stats-value" id="an-pageviews">-</span></div>
+          <div class="stats-card"><span class="stats-label">Avg Session</span><span class="stats-value" id="an-duration">-</span></div>
+        </div>
+
+        <!-- 30-day sparkline -->
+        <div class="analytics-section">
+          <h3 class="analytics-section-title">SESSIONS — LAST 30 DAYS</h3>
+          <div id="an-sparkline" class="sparkline-container"></div>
+        </div>
+
+        <!-- Two columns: sources + geo -->
+        <div class="analytics-two-col">
+          <div>
+            <h3 class="analytics-section-title">TRAFFIC SOURCES</h3>
+            <table class="data-table">
+              <thead><tr><th>Channel</th><th>Sessions</th></tr></thead>
+              <tbody id="an-sources"></tbody>
+            </table>
+          </div>
+          <div>
+            <h3 class="analytics-section-title">TOP US REGIONS</h3>
+            <table class="data-table">
+              <thead><tr><th>Region</th><th>Sessions</th></tr></thead>
+              <tbody id="an-geo"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Top pages -->
+        <div class="analytics-section">
+          <h3 class="analytics-section-title">TOP PAGES</h3>
+          <table class="data-table">
+            <thead><tr><th>Page</th><th>Pageviews</th><th>Sessions</th></tr></thead>
+            <tbody id="an-pages"></tbody>
+          </table>
+        </div>
+      </section>
+
     </main>
   </div>
 
-  <script src="admin.js?v=1"></script>
+  <script src="admin.js?v=2"></script>
 </body>
 </html>
