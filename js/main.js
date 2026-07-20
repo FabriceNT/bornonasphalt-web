@@ -170,6 +170,41 @@ function initFilters(){
 /* ===================== PRODUCT DETAIL (full page) ===================== */
 let pdState = { id: null, color: null, size: null, qty: 1 };
 
+function boaSetProductMeta(p) {
+  const defaultColor = p.colors && p.colors.length > 0 ? p.colors[0] : null;
+  const rawImageUrl = defaultColor && p.images && p.images[defaultColor]
+    ? p.images[defaultColor]
+    : (p.image || null);
+
+  const imageUrl = rawImageUrl
+    ? (rawImageUrl.startsWith('http') ? rawImageUrl : 'https://bornonasphalt.com' + rawImageUrl)
+    : 'https://bornonasphalt.com/img/logo-nav.png';
+
+  const description = p.slogan
+    || p.desc
+    || 'Garment-dyed heavyweight tees for Ford, Mopar and GM builders. Born on Asphalt.';
+
+  const pageUrl = 'https://bornonasphalt.com/product.html?id=' + encodeURIComponent(p.id);
+  const title = p.title + ' — Born on Asphalt';
+
+  function setMeta(selector, attr, value) {
+    let el = document.querySelector(selector);
+    if (!el) {
+      el = document.createElement('meta');
+      const parts = selector.match(/\[(\w+(?::\w+)?)="([^"]+)"\]/);
+      if (parts) el.setAttribute(parts[1], parts[2]);
+      document.head.appendChild(el);
+    }
+    el.setAttribute(attr, value);
+  }
+
+  setMeta('meta[property="og:title"]',       'content', title);
+  setMeta('meta[property="og:description"]', 'content', description);
+  setMeta('meta[property="og:image"]',       'content', imageUrl);
+  setMeta('meta[property="og:url"]',         'content', pageUrl);
+  setMeta('meta[name="description"]',        'content', description);
+}
+
 // Called on product.html — reads ?id= from the URL and renders the page.
 function initProductPage(){
   const container = document.getElementById('productDetailContainer');
@@ -183,6 +218,7 @@ function initProductPage(){
   }
   pdState = { id, color: p.comingSoon ? null : p.colors[0], size: null, qty: 1 };
   document.title = `${p.title} — Born on Asphalt`;
+  boaSetProductMeta(p);
   renderProductDetail(p);
 
   // Meta Pixel — ViewContent
