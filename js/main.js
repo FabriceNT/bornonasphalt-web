@@ -254,7 +254,7 @@ function initRelatedProducts(currentId, currentTribe) {
     .sort((a, b) => a.k - b.k)
     .map(x => x.v);
 
-  const pool = [...shuffle(sameTribe), ...shuffle(others)].slice(0, 4);
+  const pool = [...shuffle(sameTribe), ...shuffle(others)].slice(0, 6);
 
   grid.innerHTML = pool.map(p => {
     const img = p.images?.[p.colors?.[0]] || p.image;
