@@ -12,6 +12,109 @@ const ADDRESSES_DELETE_ENDPOINT = '/api/addresses-delete.php';
 const PAYPAL_CREATE_ORDER_ENDPOINT = '/api/paypal-create-order.php';
 const PAYPAL_CAPTURE_ORDER_ENDPOINT = '/api/paypal-capture-order.php';
 
+// ── GDPR Consent & Meta Pixel ──────────────────────────────────────────
+const BOA_PIXEL_ID = '1315795703870249';
+
+function boaLoadPixel() {
+  if (window._boaPixelLoaded) return;
+  window._boaPixelLoaded = true;
+  // Chargement dynamique du stub Meta Pixel
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}
+  (window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', BOA_PIXEL_ID);
+  fbq('track', 'PageView');
+  window.dispatchEvent(new Event('boa:pixel:ready'));
+}
+
+function boaShowConsentBanner() {
+  if (document.getElementById('boa-consent')) return;
+  const style = document.createElement('style');
+  style.textContent = `
+    #boa-consent{position:fixed;bottom:0;left:0;right:0;background:#111111;
+      border-top:1px solid #2a2a2a;padding:14px 24px;display:flex;align-items:center;
+      justify-content:space-between;gap:16px;z-index:9999;
+      font-family:'IBM Plex Mono',monospace;font-size:0.78rem;color:#888;}
+    #boa-consent p{margin:0;flex:1;line-height:1.5;}
+    #boa-consent a{color:#b8943f;text-decoration:none;}
+    #boa-consent a:hover{text-decoration:underline;}
+    .boa-cbtn{padding:8px 18px;border:1px solid #444;background:transparent;
+      color:#c8c0b0;cursor:pointer;font-family:'IBM Plex Mono',monospace;
+      font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;
+      transition:background 0.15s,border-color 0.15s;white-space:nowrap;}
+    .boa-cbtn:hover{background:#1e1e1e;}
+    #boa-cb-accept{border-color:#b8943f;color:#b8943f;}
+    #boa-cb-accept:hover{background:#1a1400;}
+  `;
+  document.head.appendChild(style);
+
+  const banner = document.createElement('div');
+  banner.id = 'boa-consent';
+  banner.innerHTML = `
+    <p>We use cookies to measure traffic. No data is sold.
+      <a href="/privacy.html">Privacy policy</a>.</p>
+    <div style="display:flex;gap:10px;flex-shrink:0;">
+      <button class="boa-cbtn" id="boa-cb-decline">Decline</button>
+      <button class="boa-cbtn" id="boa-cb-accept">Accept</button>
+    </div>
+  `;
+  document.body.appendChild(banner);
+
+  document.getElementById('boa-cb-accept').addEventListener('click', () => {
+    localStorage.setItem('boa_consent', 'accepted');
+    banner.remove();
+    boaLoadPixel();
+  });
+  document.getElementById('boa-cb-decline').addEventListener('click', () => {
+    localStorage.setItem('boa_consent', 'declined');
+    banner.remove();
+  });
+}
+
+const BOA_EU_COUNTRIES = new Set([
+  'AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR',
+  'HU','IE','IT','LV','LT','LU','MT','NL','PL','PT','RO','SK',
+  'SI','ES','SE','NO','IS','LI','CH'
+]);
+
+async function boaInitConsent() {
+  const consent = localStorage.getItem('boa_consent');
+  if (consent === 'accepted') { boaLoadPixel(); return; }
+  if (consent === 'declined') { return; }
+
+  // Aucune décision stockée — vérifier la région
+  try {
+    const cachedRegion = localStorage.getItem('boa_geo_region');
+    const cachedTs     = parseInt(localStorage.getItem('boa_geo_ts') || '0', 10);
+    const TTL          = 7 * 24 * 3600 * 1000; // 7 jours
+    let isEU = false;
+
+    if (cachedRegion && (Date.now() - cachedTs) < TTL) {
+      isEU = (cachedRegion === 'EU');
+    } else {
+      const res  = await fetch('https://ipapi.co/json/', { cache: 'no-store' });
+      const data = await res.json();
+      isEU = BOA_EU_COUNTRIES.has(data.country_code);
+      localStorage.setItem('boa_geo_region', isEU ? 'EU' : 'OTHER');
+      localStorage.setItem('boa_geo_ts', String(Date.now()));
+    }
+
+    if (isEU) {
+      boaShowConsentBanner();
+    } else {
+      boaLoadPixel();
+    }
+  } catch (_) {
+    // Erreur réseau ou API → banner par défaut (failsafe GDPR)
+    boaShowConsentBanner();
+  }
+}
+
+document.addEventListener('DOMContentLoaded', boaInitConsent);
+// ── Fin GDPR Consent ───────────────────────────────────────────────────
+
 /* ===================== HELPER ===================== */
 function getProductPrice(p, size) {
   const isHoodie = p && p.id && p.id.includes('hoodie');
