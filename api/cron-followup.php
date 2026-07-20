@@ -11,6 +11,59 @@ require_once __DIR__ . '/products.php';
 require_once __DIR__ . '/lib/stripe.php';
 require_once __DIR__ . '/lib/mailer.php';
 
+function boa_check_order_errors_log(): void
+{
+    $logPath = __DIR__ . '/logs/order-errors.log';
+
+    // File absent or empty — nothing to report
+    if (!file_exists($logPath) || filesize($logPath) === 0) {
+        return;
+    }
+
+    $twentyFourHoursAgo = time() - 86400;
+    $recentErrors = [];
+
+    $fp = fopen($logPath, 'r');
+    if (!$fp) return;
+
+    while (($line = fgets($fp)) !== false) {
+        $line = trim($line);
+        if ($line === '') continue;
+        $data = json_decode($line, true);
+        if (!$data || !isset($data['time'])) continue;
+        $ts = strtotime($data['time']);
+        if ($ts && $ts >= $twentyFourHoursAgo) {
+            $recentErrors[] = $line;
+        }
+    }
+    fclose($fp);
+
+    if (empty($recentErrors)) return;
+
+    // Build alert email
+    $count   = count($recentErrors);
+    $subject = "[BOA ALERT] {$count} order error(s) in the last 24h — " . date('Y-m-d');
+    $body    = "Born on Asphalt — Order Error Alert\n";
+    $body   .= "Generated: " . date('c') . "\n";
+    $body   .= "Errors in the last 24h: {$count}\n\n";
+    $body   .= str_repeat('-', 60) . "\n\n";
+    foreach ($recentErrors as $i => $entry) {
+        $body .= "Error " . ($i + 1) . ":\n" . $entry . "\n\n";
+    }
+    $body .= str_repeat('-', 60) . "\n";
+    $body .= "Check /boa-panel/ Logs tab for full context.\n";
+    $body .= "bornonasphalt.com\n";
+
+    // Use the same admin email as the PayPal orphan alert
+    // (retrieved from webhook-paypal.php in Step 0)
+    $adminEmail = 'support@bornonasphalt.com';
+    $headers    = 'From: Born on Asphalt <orders@bornonasphalt.com>' . "\r\n"
+                . 'Content-Type: text/plain; charset=UTF-8' . "\r\n";
+
+    @mail($adminEmail, $subject, $body, $headers);
+    error_log("boa_check_order_errors_log: alert sent — {$count} recent error(s)");
+}
+
 // Sécurité : accès HTTP uniquement avec la clé secrète
 if (php_sapi_name() !== 'cli') {
     $key = $_GET['key'] ?? '';
@@ -97,3 +150,7 @@ echo json_encode([
     'errors'    => $errors,
     'timestamp' => date('c'),
 ]);
+
+// Check order-errors.log and alert admin if recent errors
+boa_check_order_errors_log();
+
