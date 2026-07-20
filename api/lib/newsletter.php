@@ -33,7 +33,7 @@ function boa_newsletter_subscribe(string $email): array {
         }
         $promo_code = 'WELCOME-' . $suffix;
         $unsubscribe_token = bin2hex(random_bytes(32));
-        $expires_at = date('Y-m-d H:i:s', strtotime('+30 days'));
+        $expires_at = date('Y-m-d H:i:s', strtotime('+90 days'));
 
         $stmt = $pdo->prepare('
             INSERT INTO newsletter_subscribers 
@@ -47,7 +47,7 @@ function boa_newsletter_subscribe(string $email): array {
         $subject = 'Your 10% off — Born on Asphalt';
         $body  = "Your code is ready.\r\n\r\n";
         $body .= "Use {$promo_code} at checkout for 10% off your first order.\r\n\r\n";
-        $body .= "No expiry. No minimum. One use per customer.\r\n\r\n";
+        $body .= "Valid for 90 days. No minimum. One use per customer.\r\n\r\n";
         $body .= "bornonasphalt.com\r\n\r\n— The BOA Shop\r\n\r\n";
         $body .= "─\r\n";
         $body .= "You're receiving this email because you subscribed on bornonasphalt.com.\r\n";
