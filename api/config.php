@@ -110,3 +110,62 @@ function boa_require_admin(): void
     }
 }
 
+/**
+ * Rate limiter — generic, keyed by arbitrary string.
+ * Auto-creates the rate_limit_attempts table on first use.
+ * Exits with HTTP 429 if limit exceeded.
+ *
+ * @param string $key        Unique identifier for this action+subject (e.g. "login:1.2.3.4")
+ * @param int    $maxAttempts Max number of attempts allowed in the window
+ * @param int    $windowSecs  Rolling window in seconds
+ */
+function boa_rate_limit(string $key, int $maxAttempts, int $windowSecs): void
+{
+    try {
+        $db = boa_db();
+
+        // Auto-create table if not exists (runs once, cached by MySQL)
+        $db->exec("CREATE TABLE IF NOT EXISTS `rate_limit_attempts` (
+            `id` INT AUTO_INCREMENT PRIMARY KEY,
+            `attempt_key` VARCHAR(255) NOT NULL,
+            `attempted_at` DATETIME NOT NULL,
+            KEY `idx_key_time` (`attempt_key`, `attempted_at`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
+
+        $since = date('Y-m-d H:i:s', time() - $windowSecs);
+        $stmt = $db->prepare(
+            "SELECT COUNT(*) FROM rate_limit_attempts WHERE attempt_key = ? AND attempted_at >= ?"
+        );
+        $stmt->execute([$key, $since]);
+        $count = (int) $stmt->fetchColumn();
+
+        if ($count >= $maxAttempts) {
+            http_response_code(429);
+            header('Content-Type: application/json');
+            echo json_encode(['error' => 'Too many attempts. Please try again later.']);
+            exit;
+        }
+    } catch (\Exception $e) {
+        // If rate limiting itself fails, log and allow the request through
+        // (fail open — better UX than blocking legitimate users on a DB error)
+        error_log('boa_rate_limit error: ' . $e->getMessage());
+    }
+}
+
+/**
+ * Records a rate limit attempt for the given key.
+ * Call this AFTER a failed/unwanted action (not before checking).
+ */
+function boa_rate_limit_record(string $key): void
+{
+    try {
+        $db = boa_db();
+        $db->prepare(
+            "INSERT INTO rate_limit_attempts (attempt_key, attempted_at) VALUES (?, NOW())"
+        )->execute([$key]);
+    } catch (\Exception $e) {
+        error_log('boa_rate_limit_record error: ' . $e->getMessage());
+    }
+}
+
+

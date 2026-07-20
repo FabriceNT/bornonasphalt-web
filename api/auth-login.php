@@ -29,6 +29,9 @@ if ($email === '' || $password === '') {
     exit;
 }
 
+$rl_key = 'login:' . ($_SERVER['REMOTE_ADDR'] ?? '');
+boa_rate_limit($rl_key, 10, 900); // 10 attempts / 15 min
+
 try {
     $db = boa_db();
     $stmt = $db->prepare('SELECT id, name, email, password_hash FROM users WHERE email = ?');
@@ -38,6 +41,7 @@ try {
     // Same error for "no such user" and "wrong password" — don't reveal
     // which one it was, that just helps someone enumerate valid emails.
     if (!$user || !password_verify($password, $user['password_hash'])) {
+        boa_rate_limit_record($rl_key);
         http_response_code(401);
         echo json_encode(['error' => 'Incorrect email or password.']);
         exit;
