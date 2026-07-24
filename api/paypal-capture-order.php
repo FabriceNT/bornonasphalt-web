@@ -164,6 +164,18 @@ try {
                 'created',
             ]);
         }
+
+        // Marquer abandon de panier comme converti
+        try {
+            $email = $shipping['email'] ?? '';
+            if (!empty($email)) {
+                $stmtAb = $db->prepare(
+                    'UPDATE cart_abandonments SET converted_at = NOW()
+                     WHERE email = ? AND converted_at IS NULL'
+                );
+                $stmtAb->execute([$email]);
+            }
+        } catch (Exception $e) { /* silencieux */ }
     } catch (Exception $e) {
         error_log('Could not save PayPal order to database: ' . $e->getMessage());
     }

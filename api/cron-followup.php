@@ -10,6 +10,7 @@ require_once __DIR__ . '/config.php';
 require_once __DIR__ . '/products.php';
 require_once __DIR__ . '/lib/stripe.php';
 require_once __DIR__ . '/lib/mailer.php';
+require_once __DIR__ . '/lib/cart-abandon.php';
 
 function boa_check_order_errors_log(): void
 {
@@ -137,7 +138,8 @@ try {
             $errors++;
             error_log("Follow-up failed for order #{$order['id']}: " . $e->getMessage());
         }
-    }
+    // Abandon de panier — emails 24h après
+    boa_check_cart_abandonments();
 
 } catch (Exception $e) {
     error_log('cron-followup fatal: ' . $e->getMessage());

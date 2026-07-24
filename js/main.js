@@ -559,6 +559,114 @@ window.addToCart = function(id, color, size, qty){
       value: _p ? getProductPrice(_p, size) : (SIZE_PRICES[size] ?? BASE_PRICE)
     });
   }
+
+  // Abandon de panier — sauvegarde silencieuse (connecté) ou prompt (anonyme)
+  const userEmail = currentUser?.email || window._boaUser?.email;
+  if (userEmail) {
+    fetch('/api/cart-abandon-save.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: userEmail, cart: JSON.stringify(cart) })
+    }).catch(() => {});
+  } else {
+    boaShowCartSavePrompt();
+  }
+}
+
+function boaShowCartSavePrompt() {
+  if (sessionStorage.getItem('boa_cart_prompt_shown')) return;
+  if (document.getElementById('boa-cart-save-prompt')) return;
+
+  setTimeout(() => {
+    if (sessionStorage.getItem('boa_cart_prompt_shown')) return;
+    if (currentUser?.email || window._boaUser?.email) return;
+    if (document.getElementById('boa-cart-save-prompt')) return;
+
+    const style = document.createElement('style');
+    style.id = 'boa-cart-prompt-style';
+    style.textContent = `
+      #boa-cart-save-prompt {
+        position: fixed; bottom: 20px; right: 20px;
+        background: #111111; border: 1px solid #2a2a2a;
+        padding: 14px 18px; z-index: 9999;
+        font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; color: #888;
+        max-width: 320px; box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+      }
+      #boa-cart-save-prompt p { margin: 0 0 10px 0; color: #c8c0b0; line-height: 1.4; }
+      #boa-cart-save-prompt .boa-prompt-row { display: flex; gap: 8px; }
+      #boa-cart-save-prompt input[type="email"] {
+        flex: 1; padding: 6px 10px; background: #1a1a1a; border: 1px solid #333;
+        color: #e8e0d0; font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem;
+      }
+      #boa-cart-save-prompt button.boa-psave-btn {
+        padding: 6px 12px; background: #8B0000; color: #fff; border: none;
+        cursor: pointer; font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem;
+        letter-spacing: 0.08em; text-transform: uppercase;
+      }
+      #boa-cart-save-prompt button.boa-pclose-btn {
+        position: absolute; top: 4px; right: 6px; background: transparent;
+        border: none; color: #666; cursor: pointer; font-size: 0.85rem; padding: 2px 6px;
+      }
+      #boa-cart-save-prompt button.boa-pclose-btn:hover { color: #ccc; }
+    `;
+    if (!document.getElementById('boa-cart-prompt-style')) {
+      document.head.appendChild(style);
+    }
+
+    const box = document.createElement('div');
+    box.id = 'boa-cart-save-prompt';
+    box.innerHTML = `
+      <button class="boa-pclose-btn" id="boaCartPromptClose">✕</button>
+      <p>Save your cart — enter your email to pick up where you left off.</p>
+      <form id="boaCartPromptForm" class="boa-prompt-row">
+        <input type="email" id="boaCartPromptEmail" placeholder="you@email.com" required />
+        <button type="submit" class="boa-psave-btn">Save</button>
+      </form>
+      <div id="boaCartPromptMsg" style="font-size:0.75rem;margin-top:6px;display:none;"></div>
+    `;
+    document.body.appendChild(box);
+
+    const dismissPrompt = () => {
+      sessionStorage.setItem('boa_cart_prompt_shown', '1');
+      box.remove();
+    };
+
+    document.getElementById('boaCartPromptClose')?.addEventListener('click', dismissPrompt);
+
+    document.getElementById('boaCartPromptForm')?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = document.getElementById('boaCartPromptEmail')?.value?.trim();
+      if (!email || !/\S+@\S+\.\S+/.test(email)) return;
+
+      const msgEl = document.getElementById('boaCartPromptMsg');
+      const submitBtn = box.querySelector('.boa-psave-btn');
+      if (submitBtn) submitBtn.disabled = true;
+
+      fetch('/api/cart-abandon-save.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email, cart: JSON.stringify(cart) })
+      })
+      .then(res => res.json())
+      .then(() => {
+        if (msgEl) {
+          msgEl.style.color = '#4caf50';
+          msgEl.textContent = 'Cart saved ✓';
+          msgEl.style.display = 'block';
+        }
+        sessionStorage.setItem('boa_cart_prompt_shown', '1');
+        setTimeout(() => box.remove(), 1800);
+      })
+      .catch(() => {
+        if (msgEl) {
+          msgEl.style.color = '#c0392b';
+          msgEl.textContent = 'Error saving cart.';
+          msgEl.style.display = 'block';
+        }
+        if (submitBtn) submitBtn.disabled = false;
+      });
+    });
+  }, 3000);
 }
 window.removeFromCart = function(lineKey){
   cart = cart.filter(c => c.lineKey !== lineKey);
