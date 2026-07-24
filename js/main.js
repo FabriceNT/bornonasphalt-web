@@ -323,6 +323,7 @@ function initProductPage(){
   document.title = `${p.title} — Born on Asphalt`;
   boaSetProductMeta(p);
   renderProductDetail(p);
+  boaInitLightbox();
 
   // Meta Pixel — ViewContent
   if (typeof fbq !== 'undefined' && p) {
@@ -461,6 +462,58 @@ function renderProductDetail(p){
       </div>
     </div>
   `;
+}
+
+function boaInitLightbox() {
+  const img = document.querySelector('.pd-swatch img');
+  if (!img) return;
+
+  img.style.cursor = 'zoom-in';
+
+  img.addEventListener('click', () => {
+    if (document.getElementById('boa-lightbox')) return;
+
+    const overlay = document.createElement('div');
+    overlay.id = 'boa-lightbox';
+    Object.assign(overlay.style, {
+      position: 'fixed',
+      inset: '0',
+      zIndex: '10000',
+      background: 'rgba(0,0,0,0.92)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      cursor: 'zoom-out'
+    });
+
+    const big = document.createElement('img');
+    big.src = img.src;
+    big.alt = img.alt || '';
+    Object.assign(big.style, {
+      maxWidth: '90vw',
+      maxHeight: '90vh',
+      objectFit: 'contain',
+      display: 'block',
+      cursor: 'zoom-out'
+    });
+
+    overlay.appendChild(big);
+    document.body.appendChild(overlay);
+
+    const close = () => {
+      overlay.remove();
+      document.removeEventListener('keydown', onKey);
+    };
+    overlay.addEventListener('click', close);
+    big.addEventListener('click', e => e.stopPropagation());
+
+    const onKey = e => {
+      if (e.key === 'Escape') {
+        close();
+      }
+    };
+    document.addEventListener('keydown', onKey);
+  });
 }
 
 window.selectColor = function(color){
