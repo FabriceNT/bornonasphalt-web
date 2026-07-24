@@ -238,25 +238,16 @@ if ($action === 'overview') {
     echo json_encode(['sources' => $sources]);
     exit;
 
-} elseif ($action === 'geo') {
+} elseif ($action === 'geo' || $action === 'regions') {
     $body = [
         'dateRanges' => [['startDate' => '7daysAgo', 'endDate' => 'today']],
         'dimensions' => [['name' => 'region']],
         'metrics' => [['name' => 'sessions']],
-        'dimensionFilter' => [
-            'filter' => [
-                'fieldName' => 'region',
-                'stringFilter' => [
-                    'matchType' => 'FULL_REGEXP',
-                    'value' => '^(?!\\(not set\\)|$|not set).+$'
-                ]
-            ]
-        ],
         'orderBys' => [[
             'metric' => ['metricName' => 'sessions'],
             'desc' => true
         ]],
-        'limit' => 10
+        'limit' => 15
     ];
 
     $token = boa_ga4_access_token();
@@ -265,10 +256,17 @@ if ($action === 'overview') {
     $regions = [];
     $rows = $rep['rows'] ?? [];
     foreach ($rows as $row) {
+        $val = $row['dimensionValues'][0]['value'] ?? '';
+        if ($val === '' || $val === '(not set)' || strtolower($val) === 'not set') {
+            continue;
+        }
         $regions[] = [
-            'region' => $row['dimensionValues'][0]['value'] ?? '',
+            'region' => $val,
             'sessions' => (int)($row['metricValues'][0]['value'] ?? 0)
         ];
+        if (count($regions) >= 10) {
+            break;
+        }
     }
 
     echo json_encode(['regions' => $regions]);
