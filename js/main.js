@@ -465,24 +465,21 @@ function renderProductDetail(p){
 }
 
 function boaInitLightbox() {
-  const img = document.querySelector('.pd-swatch img');
-  if (!img) return;
+  const container = document.getElementById('productDetailContainer');
+  if (!container || container._boaLightboxReady) return;
+  container._boaLightboxReady = true;
 
-  img.style.cursor = 'zoom-in';
-
-  img.addEventListener('click', () => {
+  container.addEventListener('click', (e) => {
+    const img = e.target.closest('.pd-swatch img');
+    if (!img) return;
     if (document.getElementById('boa-lightbox')) return;
 
     const overlay = document.createElement('div');
     overlay.id = 'boa-lightbox';
     Object.assign(overlay.style, {
-      position: 'fixed',
-      inset: '0',
-      zIndex: '10000',
+      position: 'fixed', inset: '0', zIndex: '10000',
       background: 'rgba(0,0,0,0.92)',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
+      display: 'flex', alignItems: 'center', justifyContent: 'center',
       cursor: 'zoom-out'
     });
 
@@ -490,11 +487,8 @@ function boaInitLightbox() {
     big.src = img.src;
     big.alt = img.alt || '';
     Object.assign(big.style, {
-      maxWidth: '90vw',
-      maxHeight: '90vh',
-      objectFit: 'contain',
-      display: 'block',
-      cursor: 'zoom-out'
+      maxWidth: '90vw', maxHeight: '90vh',
+      objectFit: 'contain', display: 'block', cursor: 'zoom-out'
     });
 
     overlay.appendChild(big);
@@ -507,13 +501,16 @@ function boaInitLightbox() {
     overlay.addEventListener('click', close);
     big.addEventListener('click', e => e.stopPropagation());
 
-    const onKey = e => {
-      if (e.key === 'Escape') {
-        close();
-      }
-    };
+    const onKey = e => { if (e.key === 'Escape') close(); };
     document.addEventListener('keydown', onKey);
   });
+
+  const style = document.createElement('style');
+  style.textContent = '.pd-swatch img { cursor: zoom-in; }';
+  if (!document.getElementById('boa-lightbox-style')) {
+    style.id = 'boa-lightbox-style';
+    document.head.appendChild(style);
+  }
 }
 
 window.selectColor = function(color){
