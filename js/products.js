@@ -235,6 +235,15 @@ const PRODUCTS = [
     id: "D5", series: "D — Engine Heroes", tribe: "mopar", tribeLabel: "Mopar",
     title: "Six Pack Sunday", slogan: "440 Six Pack. Subtlety Wasn't in the Brochure.", sub: "",
     desc: "Technical blueprint illustration of a 1969 Mopar 440 Six Pack V8, exploded engineering view with triple carburetors. Comfort Colors 1717, garment-dyed heavyweight.",
+    image: "https://files.cdn.printful.com/files/980/9800d9124e792b32568096fa69ce441c_preview.png",
+    images: {
+      "Black": "https://files.cdn.printful.com/files/980/9800d9124e792b32568096fa69ce441c_preview.png",
+      "True Navy": "https://files.cdn.printful.com/files/62d/62d5a69f23dd39e02f341ee18031a418_preview.png",
+      "Graphite": "https://files.cdn.printful.com/files/9ba/9ba2988388fa53c4665dc2095d5cbbcd_preview.png",
+      "Pepper": "https://files.cdn.printful.com/files/f22/f22e75b613ca1469030c8d35fc76064f_preview.png",
+      "Grey": "https://files.cdn.printful.com/files/442/442f2f96b7354d2e44ed2a0cf58905ab_preview.png",
+      "White": "https://files.cdn.printful.com/files/c40/c40985fe09a8b2f000946cb684f3d712_preview.png"
+    },
     price: 34.99,
     colors: ["Black", "True Navy", "Graphite", "Pepper", "Grey", "White"],
     sizes: ["S", "M", "L", "XL", "2XL", "3XL", "4XL"]
@@ -243,6 +252,18 @@ const PRODUCTS = [
     id: "G13", series: "G — Human Builder Stories", tribe: "gm", tribeLabel: "GM",
     title: "The Chevelle Doesn't Forgive Rust", slogan: "The Chevelle Doesn't Forgive Rust. 1970. Learned the Hard Way.", sub: "",
     desc: "Vintage distressed 1970 Chevelle SS silhouette with worn rust texture on the rocker panel. Comfort Colors 1717, garment-dyed heavyweight.",
+    image: "https://files.cdn.printful.com/files/f99/f99b105403d686378a259ccfde64933e_preview.png",
+    images: {
+      "Black": "https://files.cdn.printful.com/files/f99/f99b105403d686378a259ccfde64933e_preview.png",
+      "True Navy": "https://files.cdn.printful.com/files/fba/fbaf1df58380993ac5a300fc49b31389_preview.png",
+      "Graphite": "https://files.cdn.printful.com/files/dcf/dcf5f9ac12f08722f43de1698fc5d0a2_preview.png",
+      "Navy": "https://files.cdn.printful.com/files/918/918ae4a2bf786676a21d44345ed3f6dd_preview.png",
+      "Midnight": "https://files.cdn.printful.com/files/105/105b91e4cbe9720dee1fa659f23a299d_preview.png",
+      "Hemp": "https://files.cdn.printful.com/files/b54/b54bb1adf8a62e7c86d5f27604dee35c_preview.png",
+      "Burnt orange": "https://files.cdn.printful.com/files/c47/c478b80a880fecac5242fa34a20e40d9_preview.png",
+      "Crunchberry": "https://files.cdn.printful.com/files/341/34173d53466c84b2457a8fad910209a7_preview.png",
+      "White": "https://files.cdn.printful.com/files/b84/b848ae49933b5a4d440aa80a305bc0e5_preview.png"
+    },
     price: 34.99,
     colors: ["Black", "True Navy", "Graphite", "Navy", "Midnight", "Hemp", "Burnt orange", "Crunchberry", "White"],
     sizes: ["S", "M", "L", "XL", "2XL", "3XL", "4XL"]
@@ -251,6 +272,16 @@ const PRODUCTS = [
     id: "G14", series: "G — Human Builder Stories", tribe: "cross", tribeLabel: "Cross-Tribe",
     title: "Finished? That's Cute", slogan: "Finished? That's Cute.", sub: "",
     desc: "Vintage engraved illustration of an overflowing bolt jar on a worn workbench — garage culture icon every builder recognizes. Comfort Colors 1717, garment-dyed heavyweight.",
+    image: "https://files.cdn.printful.com/files/275/27517618dfa1f5b1eee3634710691fcb_preview.png",
+    images: {
+      "Black": "https://files.cdn.printful.com/files/275/27517618dfa1f5b1eee3634710691fcb_preview.png",
+      "True Navy": "https://files.cdn.printful.com/files/b5f/b5f7ae2ef0c4b007f4a165c1d3976d12_preview.png",
+      "Graphite": "https://files.cdn.printful.com/files/f98/f98f879b9c1fe86d132ec2218e945f88_preview.png",
+      "Berry": "https://files.cdn.printful.com/files/db8/db8840175c55190c0a20a01edee568ac_preview.png",
+      "Flo Blue": "https://files.cdn.printful.com/files/2da/2dab6b6d297faf34c8c3fa8ac77c5af1_preview.png",
+      "Crunchberry": "https://files.cdn.printful.com/files/95b/95b0be8738001d119e7c85c819b8d4e3_preview.png",
+      "White": "https://files.cdn.printful.com/files/cfb/cfb4a45cc3f9073b084184d7377df990_preview.png"
+    },
     price: 34.99,
     colors: ["Black", "True Navy", "Graphite", "Berry", "Flo Blue", "Crunchberry", "White"],
     sizes: ["S", "M", "L", "XL", "2XL", "3XL", "4XL"]
