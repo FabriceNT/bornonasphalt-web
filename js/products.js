@@ -285,5 +285,26 @@ const PRODUCTS = [
     price: 34.99,
     colors: ["Black", "True Navy", "Graphite", "Berry", "Flo Blue", "Crunchberry", "White"],
     sizes: ["S", "M", "L", "XL", "2XL", "3XL", "4XL"]
+  },
+  {
+    id: "G5", series: "G — Human Builder Stories", tribe: "cross", tribeLabel: "Cross-Tribe",
+    title: "Every Time This Starts, a Tesla Cries", slogan: "Every time this starts, a Tesla cries.", sub: "V8. Non-negotiable.",
+    desc: "Tattoo flash-style Holley 750 CFM 4-barrel carburetor with bold flames, celebrating V8 gas power over electric silence. Comfort Colors 1717, garment-dyed heavyweight.",
+    image: "https://files.cdn.printful.com/files/e9d/e9de8180d7cb5ea471250935ab2f0f73_preview.png",
+    images: {
+      "Black": "https://files.cdn.printful.com/files/e9d/e9de8180d7cb5ea471250935ab2f0f73_preview.png",
+      "True Navy": "https://files.cdn.printful.com/files/9d5/9d54e7cf92961ed89f7fba86a755d814_preview.png",
+      "Graphite": "https://files.cdn.printful.com/files/26c/26c67dfe5cca103d0c60cf3d72be2c06_preview.png",
+      "Sage": "https://files.cdn.printful.com/files/a09/a098154994d4fd659de5fe0c55239ad3_preview.png",
+      "Mystic Blue": "https://files.cdn.printful.com/files/774/774af9d5fb77990df3633b42bb374198_preview.png",
+      "Espresso": "https://files.cdn.printful.com/files/109/109a24c69351962b2159705027786ed5_preview.png",
+      "Blue Jean": "https://files.cdn.printful.com/files/e83/e8309c5aa8c2fd3dbd496eb287184195_preview.png",
+      "Ice Blue": "https://files.cdn.printful.com/files/031/031cb2a6334878e86684dd0f41ed83a0_preview.png",
+      "Seafoam": "https://files.cdn.printful.com/files/41c/41c0fc8d784da6faf317d50aba1f20e1_preview.png",
+      "White": "https://files.cdn.printful.com/files/4b7/4b703741d0edd181c5282ed94b66d8d8_preview.png"
+    },
+    price: 34.99,
+    colors: ["Black", "True Navy", "Graphite", "Sage", "Mystic Blue", "Espresso", "Blue Jean", "Ice Blue", "Seafoam", "White"],
+    sizes: ["S", "M", "L", "XL", "2XL", "3XL", "4XL"]
   }
 ];
