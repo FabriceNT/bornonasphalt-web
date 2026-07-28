@@ -230,5 +230,29 @@ const PRODUCTS = [
     price: 34.99, swatch: "C2-camaro", image: "https://files.cdn.printful.com/files/a43/a430301ab5d124140c65505a72f7e52e_preview.png", images: { "Black": "https://files.cdn.printful.com/files/a43/a430301ab5d124140c65505a72f7e52e_preview.png", "True Navy": "https://files.cdn.printful.com/files/b26/b262eb5f484e55f7693c0af704293892_preview.png", "Sage": "https://files.cdn.printful.com/files/b0a/b0a7c1e569b7dc9c7ba6be88f4b7c718_preview.png", "Mystic Blue": "https://files.cdn.printful.com/files/8db/8db78a5fdc46d7794bc27b156ea8ab08_preview.png", "Moss": "https://files.cdn.printful.com/files/13e/13efb542235aa45c5f64f7441c0d36e0_preview.png", "Light Green": "https://files.cdn.printful.com/files/f3c/f3c230ef8e86a743f7c5f22f43414927_preview.png", "Yam": "https://files.cdn.printful.com/files/f10/f106adc023f194500f3d93760fd6a383_preview.png", "Seafoam": "https://files.cdn.printful.com/files/da8/da87c1c926246f2fe2ebf781e7bd57f0_preview.png", "White": "https://files.cdn.printful.com/files/e1f/e1fbd4fc6d9c64ad82d2d778fe3d01f1_preview.png" },
     colors: ["Black", "True Navy", "Sage", "Mystic Blue", "Moss", "Light Green", "Yam", "Seafoam", "White"],
     sizes: ["S", "M", "L", "XL", "2XL", "3XL", "4XL"]
+  },
+  {
+    id: "D5", series: "D — Engine Heroes", tribe: "mopar", tribeLabel: "Mopar",
+    title: "Six Pack Sunday", slogan: "440 Six Pack. Subtlety Wasn't in the Brochure.", sub: "",
+    desc: "Technical blueprint illustration of a 1969 Mopar 440 Six Pack V8, exploded engineering view with triple carburetors. Comfort Colors 1717, garment-dyed heavyweight.",
+    price: 34.99,
+    colors: ["Black", "True Navy", "Graphite", "Pepper", "Grey", "White"],
+    sizes: ["S", "M", "L", "XL", "2XL", "3XL", "4XL"]
+  },
+  {
+    id: "G13", series: "G — Human Builder Stories", tribe: "gm", tribeLabel: "GM",
+    title: "The Chevelle Doesn't Forgive Rust", slogan: "The Chevelle Doesn't Forgive Rust. 1970. Learned the Hard Way.", sub: "",
+    desc: "Vintage distressed 1970 Chevelle SS silhouette with worn rust texture on the rocker panel. Comfort Colors 1717, garment-dyed heavyweight.",
+    price: 34.99,
+    colors: ["Black", "True Navy", "Graphite", "Navy", "Midnight", "Hemp", "Burnt orange", "Crunchberry", "White"],
+    sizes: ["S", "M", "L", "XL", "2XL", "3XL", "4XL"]
+  },
+  {
+    id: "G14", series: "G — Human Builder Stories", tribe: "cross", tribeLabel: "Cross-Tribe",
+    title: "Finished? That's Cute", slogan: "Finished? That's Cute.", sub: "",
+    desc: "Vintage engraved illustration of an overflowing bolt jar on a worn workbench — garage culture icon every builder recognizes. Comfort Colors 1717, garment-dyed heavyweight.",
+    price: 34.99,
+    colors: ["Black", "True Navy", "Graphite", "Berry", "Flo Blue", "Crunchberry", "White"],
+    sizes: ["S", "M", "L", "XL", "2XL", "3XL", "4XL"]
   }
 ];
