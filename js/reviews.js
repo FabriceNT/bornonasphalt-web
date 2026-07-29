@@ -214,7 +214,9 @@ function boaRenderMyReview(review, productId, container) {
         if (uploadedPaths.length >= 3) break;
         statusEl.textContent = 'Uploading…';
         const fd = new FormData();
-        fd.append('photo', file);
+        const safeExt = (file.name.split('.').pop() || 'jpg').replace(/[^a-zA-Z0-9]/g, '') || 'jpg';
+        const safeName = `photo_${Date.now()}_${Math.random().toString(36).slice(2, 8)}.${safeExt}`;
+        fd.append('photo', file, safeName);
         try {
           const r = await fetch('/api/reviews-upload.php', {
             method: 'POST', credentials: 'include', body: fd,
@@ -359,7 +361,9 @@ function boaRenderReviewForm(productId, color, size, formContainer) {
       if (uploadedPaths.length >= 3) break;
       statusEl.textContent = `Uploading ${file.name}…`;
       const fd = new FormData();
-      fd.append('photo', file);
+      const safeExt = (file.name.split('.').pop() || 'jpg').replace(/[^a-zA-Z0-9]/g, '') || 'jpg';
+      const safeName = `photo_${Date.now()}_${Math.random().toString(36).slice(2, 8)}.${safeExt}`;
+      fd.append('photo', file, safeName);
       try {
         const res  = await fetch('/api/reviews-upload.php', { method: 'POST', credentials: 'include', body: fd });
         const data = await res.json();
