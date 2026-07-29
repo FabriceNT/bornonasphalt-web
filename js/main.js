@@ -153,6 +153,32 @@ window._boaUserPromise = new Promise(resolve => { window._boaUserResolve = resol
 let currentPage = 1;
 const PRODUCTS_PER_PAGE = 20;
 
+/* ===================== SHUFFLE SEED & PRODUCT SORT ORDER ===================== */
+function boaHash32(a, b) {
+  let h = Math.imul(a ^ b, 2654435761);
+  h ^= h >>> 15;
+  h = Math.imul(h, 2246822519);
+  h ^= h >>> 13;
+  return h >>> 0;
+}
+
+let boaShuffleSeed = sessionStorage.getItem('boa_shuffle_seed');
+if (!boaShuffleSeed) {
+  boaShuffleSeed = Math.floor(Math.random() * 1e9);
+  sessionStorage.setItem('boa_shuffle_seed', String(boaShuffleSeed));
+} else {
+  boaShuffleSeed = parseInt(boaShuffleSeed, 10);
+}
+
+const productSortOrder = new Map();
+if (typeof PRODUCTS !== 'undefined' && Array.isArray(PRODUCTS)) {
+  PRODUCTS.forEach(p => {
+    const idSeed = p.id.split('').reduce((a, c) => a + c.charCodeAt(0), 0);
+    const hashKey = boaHash32(boaShuffleSeed, idSeed);
+    productSortOrder.set(p.id, hashKey);
+  });
+}
+
 /* ===================== INIT ===================== */
 document.addEventListener('DOMContentLoaded', () => {
   renderProducts();
@@ -173,7 +199,8 @@ document.addEventListener('DOMContentLoaded', () => {
 function renderProducts(){
   const grid = document.getElementById('productGrid');
   if(!grid) return;
-  const items = activeTribe === 'all' ? PRODUCTS : PRODUCTS.filter(p => p.tribe === activeTribe);
+  const items = (activeTribe === 'all' ? [...PRODUCTS] : PRODUCTS.filter(p => p.tribe === activeTribe))
+    .sort((a, b) => (productSortOrder.get(a.id) ?? 0) - (productSortOrder.get(b.id) ?? 0));
 
   const totalPages = Math.max(1, Math.ceil(items.length / PRODUCTS_PER_PAGE));
   if (currentPage > totalPages) {
