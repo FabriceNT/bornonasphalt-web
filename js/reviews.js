@@ -379,6 +379,9 @@ function boaRenderReviewForm(productId, color, size, formContainer) {
             // Re-index remaining remove buttons
             previewsEl.querySelectorAll('.boa-photo-remove').forEach((b, i) => b.dataset.idx = i);
             refreshAddBtn();
+            statusEl.textContent = uploadedPaths.length > 0
+              ? `${uploadedPaths.length} photo${uploadedPaths.length > 1 ? 's' : ''} ready.`
+              : '';
           });
           previewsEl.appendChild(wrap);
           statusEl.textContent = '';
