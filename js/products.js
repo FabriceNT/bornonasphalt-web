@@ -306,5 +306,48 @@ const PRODUCTS = [
     price: 34.99,
     colors: ["Black", "True Navy", "Graphite", "Sage", "Mystic Blue", "Espresso", "Blue Jean", "Ice Blue", "Seafoam", "White"],
     sizes: ["S", "M", "L", "XL", "2XL", "3XL", "4XL"]
+  },
+  {
+    id: "G15", series: "G — Human Builder Stories", tribe: "cross", tribeLabel: "Cross-Tribe",
+    title: "Nothing Fits First Time", slogan: "Nothing Fits First Time. Every Builder Knows.", sub: "",
+    desc: "Vintage engraved top-down view of a builder's workbench after a long night in the garage — tools, fasteners, and the honest chaos of restoration work. Comfort Colors 1717, garment-dyed heavyweight.",
+    image: "https://files.cdn.printful.com/files/01c/01c590b2f0ef8ddabc856d661f96d262_preview.png",
+    images: {
+      "Black": "https://files.cdn.printful.com/files/01c/01c590b2f0ef8ddabc856d661f96d262_preview.png",
+      "True Navy": "https://files.cdn.printful.com/files/81d/81df2f403050625b953817d7cd6e34b3_preview.png",
+      "Red": "https://files.cdn.printful.com/files/4dc/4dced2b8eddc4e0ece5f86aa673d720e_preview.png",
+      "Pepper": "https://files.cdn.printful.com/files/004/004f510fc55e8ac703c7d3ffeb2f8c6e_preview.png",
+      "Crimson": "https://files.cdn.printful.com/files/b94/b9417749c307520ceef118e9102fcb3b_preview.png",
+      "Flo Blue": "https://files.cdn.printful.com/files/c61/c6163698440de7e38dda963976e598a5_preview.png",
+      "Light Green": "https://files.cdn.printful.com/files/c26/c26de221fbd3aa08deb4684a6b82d904_preview.png",
+      "Crunchberry": "https://files.cdn.printful.com/files/e43/e43b5ed4edf6deb92412635d1dfa6b5d_preview.png",
+      "Mustard": "https://files.cdn.printful.com/files/0d9/0d92220f6d51d98ec7916e5a94f8ea28_preview.png",
+      "White": "https://files.cdn.printful.com/files/2f3/2f3710854e02fa4cb96ea40d05b877b1_preview.png"
+    },
+    price: 34.99,
+    colors: ["Black", "True Navy", "Red", "Pepper", "Crimson", "Flo Blue", "Light Green", "Crunchberry", "Mustard", "White"],
+    sizes: ["S", "M", "L", "XL", "2XL", "3XL", "4XL"]
+  },
+  {
+    id: "D6", series: "D — Engine Heroes", tribe: "ford", tribeLabel: "Ford",
+    title: "Cobra Jet Redemption", slogan: "428 Cobra Jet. Built to Embarrass Insurance Adjusters.", sub: "",
+    desc: "Old-school tattoo flash illustration of a coiled cobra wrapped around a 428 Cobra Jet V8 engine block, bold vintage American traditional style. Comfort Colors 1717, garment-dyed heavyweight.",
+    image: "https://files.cdn.printful.com/files/2bf/2bfe7ce012844eca9e5896f036dd7ae2_preview.png",
+    images: {
+      "Black": "https://files.cdn.printful.com/files/2bf/2bfe7ce012844eca9e5896f036dd7ae2_preview.png",
+      "True Navy": "https://files.cdn.printful.com/files/6d3/6d31ac4d0b13bf88df63374a9f441510_preview.png",
+      "Sage": "https://files.cdn.printful.com/files/b18/b1896f5e72c1ca7ed23ef84bb3c42ea6_preview.png",
+      "Midnight": "https://files.cdn.printful.com/files/d20/d20c3155d3b022d9fe370f4c7e0a3cbd_preview.png",
+      "Pepper": "https://files.cdn.printful.com/files/2ed/2ed899aabcf9da98adadbd7d6604575b_preview.png",
+      "Denim": "https://files.cdn.printful.com/files/4aa/4aa20eff779f862905fa30af11d469fc_preview.png",
+      "Flo Blue": "https://files.cdn.printful.com/files/22f/22fd34afa1e49b3ac04ed9b5fec06596_preview.png",
+      "Blue Jean": "https://files.cdn.printful.com/files/bca/bca93d3eb38c87d073602105978ad727_preview.png",
+      "Seafoam": "https://files.cdn.printful.com/files/966/96680da3400f6402523ac871150e6b90_preview.png",
+      "Washed Denim": "https://files.cdn.printful.com/files/379/37906b372207a2049df136d9553fc1ac_preview.png",
+      "White": "https://files.cdn.printful.com/files/0db/0dbfe9e6d032b274cf1c14537abe7a98_preview.png"
+    },
+    price: 34.99,
+    colors: ["Black", "True Navy", "Sage", "Midnight", "Pepper", "Denim", "Flo Blue", "Blue Jean", "Seafoam", "Washed Denim", "White"],
+    sizes: ["S", "M", "L", "XL", "2XL", "3XL", "4XL"]
   }
 ];
