@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
+:root{
+  --bronze:#9c7a3e;
+  --font-display:'Bebas Neue', sans-serif;
+}
+
+/* Typography: display font on key headings */
+.page-hero h1{
+  font-family:var(--font-display);
+  letter-spacing:0.02em;
+  font-size:46px;
+}
+.footer-col h4{
+  font-family:var(--font-display);
+  font-size:16px;
+  letter-spacing:0.1em;
+}
+.stat b{
+  font-family:var(--font-display);
+  font-size:30px;
+}
+
+/* Legal blocks: stay dark instead of switching to the cream/light panel,
+   with a riveted "data plate" signature at the 4 corners (pure CSS,
+   no markup change — same visual language as index2.html/shop.html) */
+.legal-block{
+  position:relative;
+  background:
+    radial-gradient(circle 3.5px at 14px 14px, #d8c98a, var(--bronze) 60%, #5c481f 100%),
+    radial-gradient(circle 3.5px at calc(100% - 14px) 14px, #d8c98a, var(--bronze) 60%, #5c481f 100%),
+    radial-gradient(circle 3.5px at 14px calc(100% - 14px), #d8c98a, var(--bronze) 60%, #5c481f 100%),
+    radial-gradient(circle 3.5px at calc(100% - 14px) calc(100% - 14px), #d8c98a, var(--bronze) 60%, #5c481f 100%),
+    #211e15;
+  background-repeat:no-repeat;
+  color:var(--paper);
+  border:1px solid var(--line-dark);
+}
+.legal-block h2{color:var(--paper);}
+.legal-block p, .legal-block li{color:var(--paper-dim);}
+
+.faq-item summary{color:var(--paper);}
+.faq-item p{color:var(--paper-dim);}
+
+/* Form fields inside dark legal-blocks (contact form) need dark inputs
+   instead of the light/cream default so they read correctly on the
+   new dark panel */
+.legal-block .form-field label{color:var(--paper-dim);}
+.legal-block .form-field input,
+.legal-block .form-field textarea{
+  background:#171510;
+  border-color:var(--line-dark);
+  color:var(--paper);
+}
+.legal-block .form-field input:focus,
+.legal-block .form-field textarea:focus{
+  outline:2px solid var(--bronze);
+}
+
+/* Small stamped bolt-head mark in the footer bottom line — same
+   "Born on Asphalt" signature used on index2.html and shop.html */
+.footer-bottom::before{
+  content:"";
+  display:inline-block;
+  width:16px;
+  height:16px;
+  margin-right:8px;
+  vertical-align:middle;
+  background-repeat:no-repeat;
+  background-size:contain;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'><polygon points='20,3 35,11.5 35,28.5 20,37 5,28.5 5,11.5' fill='none' stroke='%239c7a3e' stroke-width='2'/><circle cx='20' cy='20' r='7' fill='none' stroke='%23ece5d3' stroke-width='2'/></svg>");
+}
