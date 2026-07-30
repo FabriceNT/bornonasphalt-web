@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Born on Asphalt — Nothing Fits First Time</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0b0b0a;
+    --charcoal:#19170f;
+    --panel:#211e15;
+    --ivory:#ece5d3;
+    --ivory-dim:#b8ae97;
+    --blood:#7c1f16;
+    --blood-bright:#a52a1c;
+    --burnt:#b5551f;
+    --bronze:#9c7a3e;
+    --line: rgba(236,229,211,0.14);
+    --ford:#2c5aa0;
+    --mopar:#a5333b;
+    --gm:#c9a227;
+    --cross:#ece5d3;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation:none !important; transition:none !important;}
+  }
+
+  body{
+    background:var(--ink);
+    color:var(--ivory);
+    font-family:'Oswald', sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  a{color:inherit;text-decoration:none;}
+
+  .display{
+    font-family:'Bebas Neue', sans-serif;
+    letter-spacing:0.02em;
+    line-height:0.92;
+    text-transform:uppercase;
+  }
+  .mono{
+    font-family:'IBM Plex Mono', monospace;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+  }
+
+  .container{
+    max-width:1180px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  :focus-visible{
+    outline:2px solid var(--burnt);
+    outline-offset:3px;
+  }
+
+  /* ============ SIGNATURE COMPONENT: stamped plate ============ */
+  .plate{
+    position:relative;
+    background:var(--panel);
+    border:1px solid var(--line);
+    padding:22px 24px;
+  }
+  .plate::before, .plate::after{
+    content:"";
+    position:absolute;
+    width:7px;height:7px;
+    border-radius:50%;
+    background:radial-gradient(circle at 35% 35%, #d8c98a, var(--bronze) 60%, #5c481f 100%);
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.4);
+    top:8px;
+  }
+  .plate::before{left:8px;}
+  .plate::after{right:8px;}
+  .plate .rivet-b{
+    position:absolute;bottom:8px;
+    width:7px;height:7px;border-radius:50%;
+    background:radial-gradient(circle at 35% 35%, #d8c98a, var(--bronze) 60%, #5c481f 100%);
+  }
+  .plate .rivet-bl{left:8px;}
+  .plate .rivet-br{right:8px;}
+
+  /* ============ NAV ============ */
+  .nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(11,11,10,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:16px 32px;
+    max-width:1180px;margin:0 auto;
+  }
+  .brand{
+    display:flex;align-items:center;gap:12px;
+    font-family:'Bebas Neue',sans-serif;
+    font-size:1.35rem;letter-spacing:0.06em;
+  }
+  .bolt-mark{width:30px;height:30px;flex-shrink:0;}
+  .nav-links{
+    display:flex;gap:24px;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.68rem;letter-spacing:0.1em;
+    text-transform:uppercase;
+  }
+  .nav-links a{color:var(--ivory-dim);border-bottom:1px solid transparent;padding-bottom:4px;white-space:nowrap;}
+  .nav-links a:hover{color:var(--ivory);border-color:var(--burnt);}
+  .nav-cta{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.7rem;letter-spacing:0.1em;
+    padding:9px 18px;
+    border:1px solid var(--burnt);
+    color:var(--burnt);
+    text-transform:uppercase;
+    white-space:nowrap;
+  }
+  .nav-cta:hover{background:var(--burnt);color:var(--ink);}
+  @media (max-width:960px){ .nav-links{display:none;} }
+
+  /* ============ HERO ============ */
+  .hero{
+    position:relative;
+    min-height:92vh;
+    display:flex;
+    align-items:center;
+    overflow:hidden;
+    background:
+      radial-gradient(ellipse 900px 500px at 20% 0%, rgba(124,31,22,0.16), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 90% 90%, rgba(156,122,62,0.10), transparent 60%),
+      repeating-linear-gradient(115deg, rgba(255,255,255,0.015) 0px, rgba(255,255,255,0.015) 1px, transparent 1px, transparent 3px),
+      var(--ink);
+  }
+  .hero::after{
+    content:"";
+    position:absolute; inset:0;
+    background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.55) 100%);
+    pointer-events:none;
+  }
+  .hero-inner{
+    position:relative;z-index:2;
+    max-width:1180px;margin:0 auto;padding:0 32px;
+    width:100%;
+  }
+  .eyebrow{
+    font-size:0.78rem;
+    color:var(--burnt);
+    margin-bottom:22px;
+    display:flex;align-items:center;gap:12px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:34px;height:1px;background:var(--burnt);
+    display:inline-block;
+  }
+  .hero h1{
+    font-size:clamp(3.4rem, 9vw, 7.2rem);
+    color:var(--ivory);
+    max-width:14ch;
+  }
+  .hero h1 span{color:var(--blood-bright);}
+  .hero-sub{
+    margin-top:26px;
+    max-width:46ch;
+    font-size:1.08rem;
+    color:var(--ivory-dim);
+    font-weight:300;
+  }
+  .hero-ctas{
+    margin-top:38px;
+    display:flex;gap:18px;flex-wrap:wrap;
+    align-items:center;
+  }
+  .btn-primary{
+    background:var(--blood);
+    color:var(--ivory);
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.82rem;letter-spacing:0.1em;text-transform:uppercase;
+    padding:16px 30px;
+    border:1px solid var(--blood-bright);
+  }
+  .btn-primary:hover{background:var(--blood-bright);}
+  .btn-ghost{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.82rem;letter-spacing:0.1em;text-transform:uppercase;
+    color:var(--ivory-dim);
+    padding:16px 6px;
+    border-bottom:1px solid var(--line);
+  }
+  .btn-ghost:hover{color:var(--ivory);border-color:var(--ivory-dim);}
+
+  .hero-plate{
+    position:absolute;
+    right:32px; bottom:52px;
+    z-index:2;
+    width:230px;
+    display:none;
+  }
+  @media (min-width:1000px){ .hero-plate{display:block;} }
+  .hero-plate .mono{font-size:0.68rem;color:var(--ivory-dim);}
+  .hero-plate .row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--line);}
+  .hero-plate .row:last-child{border-bottom:none;}
+  .hero-plate .row b{color:var(--bronze);font-weight:500;}
+
+  /* ============ SECTION HEADERS ============ */
+  section{padding:120px 0;}
+  .sec-head{margin-bottom:64px;max-width:640px;}
+  .sec-eyebrow{font-size:0.72rem;color:var(--burnt);margin-bottom:14px;}
+  .sec-head h2{font-size:clamp(2.4rem,5vw,3.6rem);color:var(--ivory);}
+  .sec-head p{margin-top:16px;color:var(--ivory-dim);font-size:1rem;max-width:52ch;font-weight:300;}
+
+  /* ============ ETHOS ============ */
+  .ethos{background:var(--charcoal);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .ethos-grid{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap:2px;
+    background:var(--line);
+    border:1px solid var(--line);
+  }
+  .ethos-item{
+    background:var(--charcoal);
+    padding:38px 30px;
+  }
+  .ethos-item .torque{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.68rem;
+    color:var(--bronze);
+    margin-bottom:16px;
+  }
+  .ethos-item h3{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:1.7rem;
+    letter-spacing:0.02em;
+    color:var(--ivory);
+    margin-bottom:12px;
+  }
+  .ethos-item p{color:var(--ivory-dim);font-size:0.92rem;font-weight:300;}
+  @media (max-width:820px){ .ethos-grid{grid-template-columns:1fr;} }
+
+  /* ============ ARSENAL ============ */
+  .tribe-filters{
+    display:flex;gap:10px;margin-bottom:44px;flex-wrap:wrap;
+  }
+  .tribe-chip{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;
+    padding:8px 16px;
+    border:1px solid var(--line);
+    color:var(--ivory-dim);
+    display:flex;align-items:center;gap:8px;
+  }
+  .tribe-chip .dot{width:8px;height:8px;border-radius:50%;}
+
+  .arsenal-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:24px;
+  }
+  @media (max-width:920px){ .arsenal-grid{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:600px){ .arsenal-grid{grid-template-columns:1fr;} }
+
+  .product-card{
+    background:var(--panel);
+    border:1px solid var(--line);
+    position:relative;
+    display:flex;flex-direction:column;
+  }
+  .card-flag{
+    position:absolute;top:0;left:0;
+    width:0;height:0;
+    border-style:solid;
+    border-width:0 46px 46px 0;
+    border-color:transparent var(--flag-color, var(--bronze)) transparent transparent;
+  }
+  .card-flag span{
+    position:absolute;top:-42px;left:2px;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.55rem;
+    color:var(--ink);
+    font-weight:600;
+    transform:rotate(45deg);
+  }
+  .card-art{
+    aspect-ratio:4/3;
+    display:flex;align-items:center;justify-content:center;
+    border-bottom:1px solid var(--line);
+    background:
+      repeating-linear-gradient(135deg, rgba(255,255,255,0.02) 0 2px, transparent 2px 14px);
+  }
+  .card-art svg{width:56%;opacity:0.9;}
+  .card-body{padding:26px 24px 28px;flex:1;display:flex;flex-direction:column;}
+  .card-series{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.62rem;color:var(--bronze);
+    margin-bottom:10px;
+  }
+  .card-body h3{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:1.7rem;color:var(--ivory);margin-bottom:10px;
+  }
+  .card-body .slogan{
+    color:var(--ivory-dim);font-size:0.9rem;font-style:italic;font-weight:300;
+    margin-bottom:20px;flex:1;
+  }
+  .card-foot{
+    display:flex;justify-content:space-between;align-items:center;
+    padding-top:16px;border-top:1px solid var(--line);
+    font-family:'IBM Plex Mono',monospace;font-size:0.75rem;
+  }
+  .card-price{color:var(--ivory);}
+  .card-link{color:var(--burnt);letter-spacing:0.08em;}
+  .card-link:hover{color:var(--ivory);}
+
+  /* ============ HARDWARE SPECS ============ */
+  .specs{background:var(--charcoal);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .specs-inner{
+    display:grid;grid-template-columns: 1fr 1.1fr; gap:60px; align-items:center;
+  }
+  @media (max-width:820px){ .specs-inner{grid-template-columns:1fr;} }
+  .specs-visual{
+    aspect-ratio:1/1;
+    border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;
+    background:radial-gradient(circle at 30% 30%, rgba(156,122,62,0.10), transparent 60%);
+  }
+  .specs-visual svg{width:62%;}
+  .spec-row{display:flex;justify-content:space-between;padding:16px 0;border-bottom:1px solid var(--line);}
+  .spec-row:last-of-type{border-bottom:none;}
+  .spec-label{font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:var(--burnt);}
+  .spec-value{font-family:'Oswald',sans-serif;font-size:1rem;color:var(--ivory);}
+  .spec-warning{
+    margin-top:26px;font-family:'IBM Plex Mono',monospace;font-size:0.72rem;
+    color:var(--ivory-dim);line-height:1.7;
+    padding-top:20px;border-top:1px dashed var(--line);
+  }
+  .spec-warning b{color:var(--bronze);}
+
+  /* ============ FOOTER ============ */
+  footer{padding:70px 0 40px;text-align:center;}
+  .foot-mark{width:44px;height:44px;margin:0 auto 22px;}
+  .foot-tag{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:0.03em;color:var(--ivory-dim);}
+  .foot-social{display:flex;gap:18px;justify-content:center;margin:26px 0;}
+  .foot-social a{
+    width:38px;height:38px;border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;
+    color:var(--ivory-dim);
+  }
+  .foot-social a:hover{border-color:var(--burnt);color:var(--burnt);}
+  .foot-legal{font-family:'IBM Plex Mono',monospace;font-size:0.65rem;color:#5a5648;margin-top:30px;}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="brand">
+      <svg class="bolt-mark" viewBox="0 0 40 40" fill="none">
+        <polygon points="20,3 35,11.5 35,28.5 20,37 5,28.5 5,11.5" stroke="#9c7a3e" stroke-width="1.4"/>
+        <circle cx="20" cy="20" r="7" stroke="#ece5d3" stroke-width="1.4"/>
+      </svg>
+      BORN ON ASPHALT
+    </div>
+    <div class="nav-links">
+      <a href="#arsenal">Shop</a>
+      <a href="about.html">Our Story</a>
+      <a href="faq.html">FAQ</a>
+      <a href="shipping.html">Shipping</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <a href="#arsenal" class="nav-cta">Shop the Tribe</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow mono">1960–1975 · FORD // MOPAR // GM</div>
+    <h1 class="display">NOTHING FITS <span>FIRST TIME</span></h1>
+    <p class="hero-sub">Apparel for the ones who built it, not the ones who bought it. Garment-dyed heavyweight tees for builders, restorers, and collectors who still smell like brake cleaner.</p>
+    <div class="hero-ctas">
+      <a href="#arsenal" class="btn-primary">View The Gear</a>
+      <a href="#ethos" class="btn-ghost">Read The Ethos →</a>
+    </div>
+  </div>
+  <div class="hero-plate plate">
+    <div class="rivet-b rivet-bl"></div><div class="rivet-b rivet-br"></div>
+    <div class="row"><span class="mono">Chassis</span><b class="mono">CC 1717</b></div>
+    <div class="row"><span class="mono">Weight</span><b class="mono">Heavy</b></div>
+    <div class="row"><span class="mono">Finish</span><b class="mono">Garment-Dyed</b></div>
+    <div class="row"><span class="mono">Batch</span><b class="mono">Made in USA</b></div>
+  </div>
+</section>
+
+<section class="ethos" id="ethos">
+  <div class="container">
+    <div class="sec-head">
+      <div class="sec-eyebrow mono">// The Ethos</div>
+      <h2 class="display">Garage Credibility.<br>Tribal Authenticity.</h2>
+      <p>We don't manufacture culture, we wear what we wrench. Three tribes, one era, zero apologies.</p>
+    </div>
+    <div class="ethos-grid">
+      <div class="ethos-item">
+        <div class="torque">TORQUE SPEC · BUILT NOT BOUGHT</div>
+        <h3>Sweat Equity</h3>
+        <p>Every design earns its place the way a rebuild earns its badge — skinned knuckles first, bragging rights after.</p>
+      </div>
+      <div class="ethos-item">
+        <div class="torque">TORQUE SPEC · PEER PROOF</div>
+        <h3>Earned, Not Sold</h3>
+        <p>Respect crosses tribes by osmosis, never by ad spend. Ford, Mopar, and GM builders validate this — nobody else.</p>
+      </div>
+      <div class="ethos-item">
+        <div class="torque">TORQUE SPEC · 1960–1975</div>
+        <h3>The Golden Era</h3>
+        <p>Mechanical brutality before the lawyers showed up. If it doesn't reference a real year, engine, or model — it doesn't ship.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="arsenal">
+  <div class="container">
+    <div class="sec-head">
+      <div class="sec-eyebrow mono">// The Arsenal</div>
+      <h2 class="display">Heavyweight Garments.<br>Choose Your Tribe.</h2>
+      <p>Comfort Colors 1717, garment-dyed. Built to take the friction of the garage, not the gym.</p>
+    </div>
+
+    <div class="tribe-filters">
+      <div class="tribe-chip"><span class="dot" style="background:var(--ford)"></span>Ford</div>
+      <div class="tribe-chip"><span class="dot" style="background:var(--mopar)"></span>Mopar</div>
+      <div class="tribe-chip"><span class="dot" style="background:var(--gm)"></span>GM</div>
+      <div class="tribe-chip"><span class="dot" style="background:var(--cross)"></span>Cross-Tribe</div>
+    </div>
+
+    <div class="arsenal-grid">
+
+      <div class="product-card">
+        <div class="card-flag" style="--flag-color:var(--mopar)"><span>MOP</span></div>
+        <div class="card-art">
+          <svg viewBox="0 0 100 100" fill="none"><path d="M20 70 L28 40 Q30 32 40 32 H60 Q70 32 72 40 L80 70" stroke="#9c7a3e" stroke-width="1.2"/><circle cx="35" cy="70" r="6" stroke="#9c7a3e" stroke-width="1.2"/><circle cx="65" cy="70" r="6" stroke="#9c7a3e" stroke-width="1.2"/><line x1="42" y1="45" x2="58" y2="45" stroke="#9c7a3e" stroke-width="1"/></svg>
+        </div>
+        <div class="card-body">
+          <div class="card-series mono">SERIES D — ENGINE AS HERO</div>
+          <h3>426 Hemi</h3>
+          <p class="slogan">"426 Hemi. Born to Terrorize."</p>
+          <div class="card-foot">
+            <span class="card-price">From $34.99</span>
+            <a href="#" class="card-link">VIEW →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="card-flag" style="--flag-color:var(--cross)"><span>XTB</span></div>
+        <div class="card-art">
+          <svg viewBox="0 0 100 100" fill="none"><path d="M20 70 L28 40 Q30 32 40 32 H60 Q70 32 72 40 L80 70" stroke="#9c7a3e" stroke-width="1.2"/><text x="50" y="58" font-family="IBM Plex Mono" font-size="10" fill="#9c7a3e" text-anchor="middle">3X</text></svg>
+        </div>
+        <div class="card-body">
+          <div class="card-series mono">SERIES C — TRIBAL RIVALRY</div>
+          <h3>Three Tribes</h3>
+          <p class="slogan">"Ford guys wave. Mopar guys nod. Chevy guys just stare."</p>
+          <div class="card-foot">
+            <span class="card-price">From $34.99</span>
+            <a href="#" class="card-link">VIEW →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="card-flag" style="--flag-color:var(--mopar)"><span>MOP</span></div>
+        <div class="card-art">
+          <svg viewBox="0 0 100 100" fill="none"><path d="M20 70 L28 40 Q30 32 40 32 H60 Q70 32 72 40 L80 70" stroke="#9c7a3e" stroke-width="1.2"/><path d="M40 55 L60 55 L55 65 L65 65" stroke="#9c7a3e" stroke-width="1"/></svg>
+        </div>
+        <div class="card-body">
+          <div class="card-series mono">SERIES C — TRIBAL RIVALRY</div>
+          <h3>I Have a Charger</h3>
+          <p class="slogan">"I don't have a favorite. I have a Charger."</p>
+          <div class="card-foot">
+            <span class="card-price">From $34.99</span>
+            <a href="#" class="card-link">VIEW →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="card-flag" style="--flag-color:var(--gm)"><span>GM</span></div>
+        <div class="card-art">
+          <svg viewBox="0 0 100 100" fill="none"><path d="M20 70 L28 40 Q30 32 40 32 H60 Q70 32 72 40 L80 70" stroke="#9c7a3e" stroke-width="1.2"/><text x="50" y="58" font-family="IBM Plex Mono" font-size="9" fill="#9c7a3e" text-anchor="middle">LS6</text></svg>
+        </div>
+        <div class="card-body">
+          <div class="card-series mono">SERIES D — ENGINE AS HERO</div>
+          <h3>LS6</h3>
+          <p class="slogan">"LS6. The engine that ends the argument."</p>
+          <div class="card-foot">
+            <span class="card-price">From $34.99</span>
+            <a href="#" class="card-link">VIEW →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="card-flag" style="--flag-color:var(--cross)"><span>XTB</span></div>
+        <div class="card-art">
+          <svg viewBox="0 0 100 100" fill="none"><path d="M20 70 L28 40 Q30 32 40 32 H60 Q70 32 72 40 L80 70" stroke="#9c7a3e" stroke-width="1.2"/><text x="50" y="58" font-family="IBM Plex Mono" font-size="11" fill="#9c7a3e" text-anchor="middle">69</text></svg>
+        </div>
+        <div class="card-body">
+          <div class="card-series mono">SERIES A — STORYTELLING ERA</div>
+          <h3>1969</h3>
+          <p class="slogan">"1969. Detroit at its most dangerous."</p>
+          <div class="card-foot">
+            <span class="card-price">From $34.99</span>
+            <a href="#" class="card-link">VIEW →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="card-flag" style="--flag-color:var(--ford)"><span>FRD</span></div>
+        <div class="card-art">
+          <svg viewBox="0 0 100 100" fill="none"><path d="M20 70 L28 40 Q30 32 40 32 H60 Q70 32 72 40 L80 70" stroke="#9c7a3e" stroke-width="1.2"/><text x="50" y="58" font-family="IBM Plex Mono" font-size="9" fill="#9c7a3e" text-anchor="middle">429</text></svg>
+        </div>
+        <div class="card-body">
+          <div class="card-series mono">SERIES D — ENGINE AS HERO</div>
+          <h3>Boss 429</h3>
+          <p class="slogan">"Boss 429. NASA couldn't stop it either."</p>
+          <div class="card-foot">
+            <span class="card-price">From $34.99</span>
+            <a href="#" class="card-link">VIEW →</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="specs" id="specs">
+  <div class="container specs-inner">
+    <div class="specs-visual">
+      <svg viewBox="0 0 200 200" fill="none">
+        <rect x="30" y="30" width="140" height="140" stroke="#9c7a3e" stroke-width="1"/>
+        <line x1="30" y1="30" x2="170" y2="170" stroke="#9c7a3e" stroke-width="0.6"/>
+        <line x1="170" y1="30" x2="30" y2="170" stroke="#9c7a3e" stroke-width="0.6"/>
+        <circle cx="100" cy="100" r="46" stroke="#ece5d3" stroke-width="1"/>
+        <circle cx="100" cy="100" r="6" fill="#ece5d3"/>
+      </svg>
+    </div>
+    <div>
+      <div class="sec-eyebrow mono">// Hardware Specs</div>
+      <h2 class="display" style="font-size:clamp(2.2rem,4vw,3.2rem);margin-bottom:30px;">Data Plate</h2>
+      <div class="spec-row"><span class="spec-label">CHASSIS</span><span class="spec-value">Comfort Colors 1717</span></div>
+      <div class="spec-row"><span class="spec-label">WEIGHT</span><span class="spec-value">Heavyweight Cotton</span></div>
+      <div class="spec-row"><span class="spec-label">FINISH</span><span class="spec-value">Garment-Dyed for Vintage Fade</span></div>
+      <div class="spec-row"><span class="spec-label">APPLICATION</span><span class="spec-value">Garage Builds, Restorations, Asphalt</span></div>
+      <div class="spec-warning">// <b>WARNING:</b> constructed to endure the friction of mechanical labor. Will develop a unique patina based on individual oil stains and wear patterns.</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <svg class="foot-mark" viewBox="0 0 40 40" fill="none">
+      <polygon points="20,3 35,11.5 35,28.5 20,37 5,28.5 5,11.5" stroke="#9c7a3e" stroke-width="1.2"/>
+      <circle cx="20" cy="20" r="7" stroke="#ece5d3" stroke-width="1.2"/>
+      <text x="20" y="23" font-family="IBM Plex Mono" font-size="4.5" fill="#9c7a3e" text-anchor="middle">BOA</text>
+    </svg>
+    <div class="foot-tag display">BORN ON ASPHALT. BUILT NOT BOUGHT.</div>
+    <div class="foot-social">
+      <a href="#" aria-label="Facebook">f</a>
+      <a href="#" aria-label="Instagram">◎</a>
+    </div>
+    <div class="foot-legal">© 2026 Born on Asphalt. Nominative use of vehicle names for descriptive purposes only. No OEM affiliation.</div>
+  </div>
+</footer>
+
+</body>
+</html>
