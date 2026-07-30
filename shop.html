@@ -251,7 +251,10 @@ src="https://www.facebook.com/tr?id=1315795703870249&ev=PageView&noscript=1"/></
 
   function cardHtml(p){
     var primaryColor = p.colors && p.colors[0];
-    var secondaryColor = p.colors && p.colors.find(function(c){ return c !== primaryColor; });
+    var otherColors = p.colors ? p.colors.filter(function(c){ return c !== primaryColor; }) : [];
+    var secondaryColor = otherColors.length > 0
+      ? otherColors[Math.floor(Math.random() * otherColors.length)]
+      : null;
     var primaryImg = (p.images && primaryColor && p.images[primaryColor]) || p.image;
     var secondaryImg = (secondaryColor && p.images && p.images[secondaryColor]) || null;
     var flagVar = TRIBE_COLOR_VAR[p.tribe] || '--bronze';
