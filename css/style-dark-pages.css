@@ -129,4 +129,15 @@
 /* Nav hover accent — bronze instead of legacy stamp-red */
 .nav-links a:hover{border-color:var(--bronze);}
 
+/* Nav icon buttons (Account / Cart) — bordered style matching
+   index2.html / shop.html instead of the plain borderless legacy look */
+.nav-icon-btn{
+  border:1px solid var(--line-dark);
+  padding:8px 14px;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11px;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+}
+.nav-icon-btn:hover{border-color:var(--bronze);}
 
