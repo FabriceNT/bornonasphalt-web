@@ -159,3 +159,35 @@
 .hero .stamp{color:var(--blood-bright, #a52a1c); border-color:var(--blood-bright, #a52a1c);}
 .hero .btn{background:var(--paper); color:var(--ink); border-color:var(--paper);}
 
+/* ============================================================
+   Footer full alignment with shop.html/index2.html reference
+   ============================================================ */
+.footer{
+  background:#19170f;
+  border-top:1px solid rgba(236,229,211,0.14);
+  padding:60px 0 30px;
+}
+.footer-col h4{
+  color:#b5551f;
+  letter-spacing:0.02em;
+}
+.footer-col p{
+  font-size:11.2px;
+  color:#b8ae97;
+}
+.footer-col a{
+  font-family:'Oswald', sans-serif;
+  font-size:13.6px;
+  color:#b8ae97;
+}
+.footer-col a:hover{color:#ece5d3;}
+.payment-icons span{
+  border-color:rgba(236,229,211,0.14);
+  color:#b8ae97;
+}
+.footer-bottom{
+  border-top-color:rgba(236,229,211,0.14);
+  color:#b8ae97;
+  font-size:10.4px;
+}
+
