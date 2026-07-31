@@ -141,3 +141,17 @@
 }
 .nav-icon-btn:hover{border-color:var(--bronze);}
 
+/* Nav link text — match shop.html/index2.html exactly: color, size,
+   letter-spacing (legacy style.css had brighter, larger, tighter text) */
+.nav-links a{
+  color:#b8ae97;
+  font-size:0.68rem;
+  letter-spacing:0.1em;
+}
+.nav-links a:hover{color:#ece5d3;}
+
+/* Announcement bar + cart badge — match shop.html/index2.html's blood
+   red tone instead of the legacy brighter stamp-red */
+.announce{background:#7c1f16;}
+.cart-count{background:#a52a1c;}
+
