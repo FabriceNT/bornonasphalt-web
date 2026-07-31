@@ -26,12 +26,12 @@
    no markup change — same visual language as index2.html/shop.html) */
 .legal-block{
   position:relative;
-  background:
-    radial-gradient(circle 3.5px at 14px 14px, #d8c98a, var(--bronze) 60%, #5c481f 100%),
-    radial-gradient(circle 3.5px at calc(100% - 14px) 14px, #d8c98a, var(--bronze) 60%, #5c481f 100%),
-    radial-gradient(circle 3.5px at 14px calc(100% - 14px), #d8c98a, var(--bronze) 60%, #5c481f 100%),
-    radial-gradient(circle 3.5px at calc(100% - 14px) calc(100% - 14px), #d8c98a, var(--bronze) 60%, #5c481f 100%),
-    #211e15;
+  background-color:#19170f;
+  background-image:
+    radial-gradient(circle at 14px 14px, #d8c98a 0px, var(--bronze) 2px, transparent 3px),
+    radial-gradient(circle at calc(100% - 14px) 14px, #d8c98a 0px, var(--bronze) 2px, transparent 3px),
+    radial-gradient(circle at 14px calc(100% - 14px), #d8c98a 0px, var(--bronze) 2px, transparent 3px),
+    radial-gradient(circle at calc(100% - 14px) calc(100% - 14px), #d8c98a 0px, var(--bronze) 2px, transparent 3px);
   background-repeat:no-repeat;
   color:var(--paper);
   border:1px solid var(--line-dark);
