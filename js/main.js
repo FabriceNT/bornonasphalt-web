@@ -878,9 +878,9 @@ function renderAccountPanel(container){
     container.innerHTML = `
     <div class="legal-block" style="max-width:600px;">
       <div class="section-label">// Driver record</div>
-      <h1 class="pd-title" style="font-size:28px; color:var(--ink);">Your account</h1>
+      <h1 class="pd-title" style="font-size:28px; color:var(--paper);">Your account</h1>
       <p style="font-size:13px; color:var(--ink-faded); margin-bottom:4px;">Signed in as</p>
-      <p style="font-family:'Oswald', sans-serif; font-size:18px; margin:0 0 4px; color:var(--ink);">${currentUser.name}</p>
+      <p style="font-family:'Oswald', sans-serif; font-size:18px; margin:0 0 4px; color:var(--paper);">${currentUser.name}</p>
       <p style="font-size:12.5px; color:var(--ink-faded); margin:0 0 20px;">${currentUser.email}</p>
       <button class="btn ghost" id="logoutBtn" style="width:100%; max-width:320px; margin-bottom:22px;">Sign out</button>
 
@@ -918,7 +918,7 @@ function renderAccountPanel(container){
     container.innerHTML = `
     <div class="legal-block" style="max-width:440px;">
       <div class="section-label">// Driver record</div>
-      <h1 class="pd-title" style="font-size:28px; color:var(--ink);">Your account</h1>
+      <h1 class="pd-title" style="font-size:28px; color:var(--paper);">Your account</h1>
       <div class="tab-row">
         <button class="tab-btn active" data-tab="signInPanel">Sign in</button>
         <button class="tab-btn" data-tab="signUpPanel">Create account</button>
