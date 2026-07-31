@@ -126,3 +126,7 @@
 .add-btn{background:#211e15; color:var(--paper); border-color:var(--line-dark);}
 .add-btn:hover{background:var(--blood, #7c1f16);}
 
+/* Nav hover accent — bronze instead of legacy stamp-red */
+.nav-links a:hover{border-color:var(--bronze);}
+
+
