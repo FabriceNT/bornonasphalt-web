@@ -155,3 +155,20 @@
 .announce{background:#7c1f16;}
 .cart-count{background:#a52a1c;}
 
+/* Checkout-success "stamped receipt" sheet — darkened version,
+   keeps the stamp concept but matches the dark design system */
+.hero .sheet{
+  background:#19170f;
+  color:var(--paper);
+  border:1px solid var(--line-dark);
+  background-image:repeating-linear-gradient(transparent, transparent 27px, rgba(236,229,211,0.03) 28px);
+}
+.hero .carbon-shadow{background:#0d0c08;}
+.hero .doc-id{color:var(--paper-dim);}
+.hero .doc-id b{color:var(--paper);}
+.hero h1{color:var(--paper);}
+.hero .tagline{color:var(--bronze);}
+.hero p{color:var(--paper-dim);}
+.hero .stamp{color:var(--blood-bright, #a52a1c); border-color:var(--blood-bright, #a52a1c);}
+.hero .btn{background:var(--paper); color:var(--ink); border-color:var(--paper);}
+
