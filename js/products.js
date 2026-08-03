@@ -349,5 +349,109 @@ const PRODUCTS = [
     price: 34.99,
     colors: ["Black", "True Navy", "Sage", "Midnight", "Pepper", "Denim", "Flo Blue", "Blue Jean", "Seafoam", "Washed Denim", "White"],
     sizes: ["S", "M", "L", "XL", "2XL", "3XL", "4XL"]
-  }
+  },
+{
+  id: "D4", series: "D — Engine Heroes", tribe: "gm", tribeLabel: "GM",
+  title: "LS6 Doesn't Ask Permission", slogan: "LS6 454. 450 Horses. Zero Apologies.", sub: "",
+  desc: "Pure typography design built around the LS6 454 engine code — bold military stencil lettering, no illustration needed. Comfort Colors 1717, garment-dyed heavyweight.",
+  image: "https://files.cdn.printful.com/files/7e2/7e291e06462e3846e40ab96aaa9a8bf5_preview.png",
+  images: {
+      "Black": "https://files.cdn.printful.com/files/7e2/7e291e06462e3846e40ab96aaa9a8bf5_preview.png",
+      "True Navy": "https://files.cdn.printful.com/files/bc2/bc22acd483fd0c07d64c7f3dcc4e6665_preview.png",
+      "Graphite": "https://files.cdn.printful.com/files/e95/e95fd893e1c299206cf855eb79a89837_preview.png",
+      "Sage": "https://files.cdn.printful.com/files/4a8/4a841c2ee7d6b3d6d64c2adf0e73cfb6_preview.png",
+      "Berry": "https://files.cdn.printful.com/files/ff0/ff002984610f2c15ec2a32408b133dcf_preview.png",
+      "Mystic Blue": "https://files.cdn.printful.com/files/35b/35b56d4f67ba261de85bbcfcc8e43dd4_preview.png",
+      "Flo Blue": "https://files.cdn.printful.com/files/12b/12b72e1be1cb56ca9ce102a74e6e4f8e_preview.png",
+      "Moss": "https://files.cdn.printful.com/files/b2c/b2ce7e13c7e4896fd65b5fc12880f760_preview.png",
+      "Yam": "https://files.cdn.printful.com/files/45c/45c4521bce1682b35f2b3c8a2adcf812_preview.png",
+      "Seafoam": "https://files.cdn.printful.com/files/3a0/3a0619022b9f3e27b6c86a958f0d6dcd_preview.png"
+  },
+  price: 34.99,
+  colors: ["Black", "True Navy", "Graphite", "Sage", "Berry", "Mystic Blue", "Flo Blue", "Moss", "Yam", "Seafoam"],
+  sizes: ["S", "M", "L", "XL", "2XL", "3XL", "4XL"]
+},
+{
+  id: "G16", series: "G — Human Builder Stories", tribe: "cross", tribeLabel: "Cross-Tribe",
+  title: "Ask Me How I Know", slogan: "Ask Me How I Know. Third Time Replacing This Bolt.", sub: "",
+  desc: "Tattoo flash-style broken bolt illustration — the universal builder joke about the fastener that never survives the job. Comfort Colors 1717, garment-dyed heavyweight.",
+  image: "https://files.cdn.printful.com/files/983/983bef73ce0063a1fc24da88fa8bcdfc_preview.png",
+  images: {
+      "Black": "https://files.cdn.printful.com/files/983/983bef73ce0063a1fc24da88fa8bcdfc_preview.png",
+      "True Navy": "https://files.cdn.printful.com/files/0fc/0fc17f4c73dae734bc5947035da22537_preview.png",
+      "Graphite": "https://files.cdn.printful.com/files/b06/b06accf877738a9d50baf57b9e2d95a4_preview.png",
+      "Brick": "https://files.cdn.printful.com/files/46e/46ec13b3e8b7d8b5c48796aad2b9e131_preview.png",
+      "Yam": "https://files.cdn.printful.com/files/043/043a25824f68008284d5d91215213f3c_preview.png",
+      "Crunchberry": "https://files.cdn.printful.com/files/48d/48d21e2b366d22e7f6ff42f652b11c1b_preview.png",
+      "Seafoam": "https://files.cdn.printful.com/files/203/20377863d87969fe050356ab5b48c301_preview.png",
+      "Washed Denim": "https://files.cdn.printful.com/files/620/620e0e03dc952cfb4956a52681b771e7_preview.png",
+      "White": "https://files.cdn.printful.com/files/1a0/1a0d948b9769b56a3e0d5f97b793a711_preview.png"
+  },
+  price: 34.99,
+  colors: ["Black", "True Navy", "Graphite", "Brick", "Yam", "Crunchberry", "Seafoam", "Washed Denim", "White"],
+  sizes: ["S", "M", "L", "XL", "2XL", "3XL", "4XL"]
+},
+{
+  id: "G17", series: "G — Human Builder Stories", tribe: "cross", tribeLabel: "Cross-Tribe",
+  title: "Not Stock Anymore. Better.", slogan: "Not Stock Anymore. Better.", sub: "",
+  desc: "Pure typography design celebrating the builder's mindset — original is a starting point, not the destination. Comfort Colors 1717, garment-dyed heavyweight.",
+  image: "https://files.cdn.printful.com/files/6b6/6b67cc4c4b852cef0f3d195e6f6f78a7_preview.png",
+  images: {
+      "Black": "https://files.cdn.printful.com/files/6b6/6b67cc4c4b852cef0f3d195e6f6f78a7_preview.png",
+      "True Navy": "https://files.cdn.printful.com/files/b55/b555b85649fb566b14a91fdc18aa2946_preview.png",
+      "Graphite": "https://files.cdn.printful.com/files/d0e/d0ecf894ee4be5c9e030b72f9b9e4478_preview.png",
+      "Navy": "https://files.cdn.printful.com/files/7ff/7ffd06bf47cc74f6a4bece367edf5298_preview.png",
+      "Sage": "https://files.cdn.printful.com/files/b27/b27a13dcf33191f46806d3cc3715ee76_preview.png",
+      "Mystic Blue": "https://files.cdn.printful.com/files/374/374132b7f5426160ffcc015d50260fcd_preview.png",
+      "Espresso": "https://files.cdn.printful.com/files/6ad/6ad2efa7f92e8a35df3c0284da17d759_preview.png",
+      "Blue Jean": "https://files.cdn.printful.com/files/803/803629f1cab0ff4021ce78c36ddae8f5_preview.png",
+      "Grey": "https://files.cdn.printful.com/files/890/8900edf1e5bbd4e68f42a3a44c08ab78_preview.png",
+      "White": "https://files.cdn.printful.com/files/c92/c928657cd384649c706768e87559c5e2_preview.png"
+  },
+  price: 34.99,
+  colors: ["Black", "True Navy", "Graphite", "Navy", "Sage", "Mystic Blue", "Espresso", "Blue Jean", "Grey", "White"],
+  sizes: ["S", "M", "L", "XL", "2XL", "3XL", "4XL"]
+},
+{
+  id: "B5", series: "B — Voice of the Mechanic", tribe: "mopar", tribeLabel: "Mopar",
+  title: "Torque Never Lies", slogan: "440 Six Pack. Torque Specs or Broken Studs.", sub: "",
+  desc: "Blueprint-style exploded view of a 440 Six Pack triple-carburetor block — a reminder that under-torqued studs don't forgive. Comfort Colors 1717, garment-dyed heavyweight.",
+  image: "https://files.cdn.printful.com/files/0ba/0ba4a194f4f438ba7dde110b8b066061_preview.png",
+  images: {
+      "Black": "https://files.cdn.printful.com/files/0ba/0ba4a194f4f438ba7dde110b8b066061_preview.png",
+      "True Navy": "https://files.cdn.printful.com/files/8ed/8ed04c002a78e3854ea1e8b21277f08e_preview.png",
+      "Navy": "https://files.cdn.printful.com/files/8c2/8c2077d1395f61d7acbc1c22f3c9e685_preview.png",
+      "Sage": "https://files.cdn.printful.com/files/f12/f1286d234150f15ad8014df328c1b4c3_preview.png",
+      "Midnight": "https://files.cdn.printful.com/files/711/711ee47d26438323615e4e391e924084_preview.png",
+      "Denim": "https://files.cdn.printful.com/files/d95/d95471563bb81ae2314048c470a9c0f5_preview.png",
+      "Blue Spruce": "https://files.cdn.printful.com/files/795/795645a6c28a3962b412e9660498c4ad_preview.png",
+      "Blue Jean": "https://files.cdn.printful.com/files/85b/85bd1664d8afe6d106589a3af15c24f6_preview.png",
+      "Seafoam": "https://files.cdn.printful.com/files/72e/72e9cefce051ceb8da6a3ca9542f0b85_preview.png",
+      "White": "https://files.cdn.printful.com/files/fbd/fbd3d57460c11a76486189d5b293597c_preview.png"
+  },
+  price: 34.99,
+  colors: ["Black", "True Navy", "Navy", "Sage", "Midnight", "Denim", "Blue Spruce", "Blue Jean", "Seafoam", "White"],
+  sizes: ["S", "M", "L", "XL", "2XL", "3XL", "4XL"]
+},
+{
+  id: "C4", series: "C — Tribal Rivalry", tribe: "ford", tribeLabel: "Ford",
+  title: "The Line Was Drawn in 1969", slogan: "Boss 302. 1969. Pick a Side.", sub: "",
+  desc: "Vintage tattoo flash-style Boss 302 silhouette with a curved ribbon banner — 1969 as the year camps were drawn for good. Comfort Colors 1717, garment-dyed heavyweight.",
+  image: "https://files.cdn.printful.com/files/418/41866f1aa9667b57eb8975de82a0dae4_preview.png",
+  images: {
+      "Black": "https://files.cdn.printful.com/files/418/41866f1aa9667b57eb8975de82a0dae4_preview.png",
+      "True Navy": "https://files.cdn.printful.com/files/0d9/0d91b7a7e0061fcf34ff5f290739e5d5_preview.png",
+      "Graphite": "https://files.cdn.printful.com/files/5d5/5d568d299994a91796892867fba79396_preview.png",
+      "Navy": "https://files.cdn.printful.com/files/dbe/dbe022dfab23681398491f6efff66b20_preview.png",
+      "Midnight": "https://files.cdn.printful.com/files/6a0/6a0c6d81a849fa8af065398a413952de_preview.png",
+      "Blue Jean": "https://files.cdn.printful.com/files/da7/da74a17f2f05eebb5a0b0d196cbc8272_preview.png",
+      "Ice Blue": "https://files.cdn.printful.com/files/683/683f8b2bb174dbfeb8819757efb54997_preview.png",
+      "Granite": "https://files.cdn.printful.com/files/25d/25dbf1c63ac7b7c761bc00e62bbfc33e_preview.png",
+      "White": "https://files.cdn.printful.com/files/c95/c9547591196955261421715efe370f79_preview.png"
+  },
+  price: 34.99,
+  colors: ["Black", "True Navy", "Graphite", "Navy", "Midnight", "Blue Jean", "Ice Blue", "Granite", "White"],
+  sizes: ["S", "M", "L", "XL", "2XL", "3XL", "4XL"]
+},
+
 ];
