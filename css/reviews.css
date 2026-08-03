@@ -157,3 +157,46 @@
 .boa-lightbox-next:hover { opacity:1; }
 .boa-lightbox-counter    { position:absolute; bottom:-32px; left:50%; transform:translateX(-50%);
                            font-family:var(--font-mono); font-size:12px; color:rgba(255,255,255,.6); }
+
+/* ============================================================
+   Dark theme override — aligns reviews section with the new
+   design system (bronze accent instead of legacy stamp-red,
+   dark cards instead of cream/paper backgrounds)
+   ============================================================ */
+:root{
+  --rust: #9c7a3e;
+  --paper-dark: #211e15;
+}
+
+.boa-review-card{
+  background:#19170f;
+  border-color:#3a372f;
+}
+.boa-review-title,
+.boa-review-author{
+  color:#ece5d3;
+}
+.boa-review-body{
+  color:#b8ae97;
+}
+.boa-review-form-wrap{
+  background:#19170f;
+  border-color:#3a372f;
+}
+.boa-form-row label{
+  color:#b8ae97;
+}
+.boa-review-form input,
+.boa-review-form textarea,
+.boa-review-form select{
+  background:#171510;
+  color:#ece5d3;
+  border-color:#3a372f;
+}
+.boa-review-submit-btn{
+  background:#7c1f16;
+  color:#ece5d3;
+}
+.boa-review-submit-btn:hover{
+  background:#a52a1c;
+}
