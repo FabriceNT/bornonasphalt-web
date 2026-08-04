@@ -190,13 +190,13 @@ function boa_stripe_create_promo_code(string $code): array {
     // puis le promotion code associé avec le code lisible choisi.
 
     // Vérifie si le promo code existe déjà (idempotence)
-    $existing = boa_stripe_request('GET', '/v1/promotion_codes?code=' . urlencode($code) . '&limit=1');
+    $existing = boa_stripe_request('GET', '/promotion_codes?code=' . urlencode($code) . '&limit=1');
     if (!empty($existing['data'])) {
         return $existing['data'][0];
     }
 
     // Crée le coupon
-    $coupon = boa_stripe_request('POST', '/v1/coupons', [
+    $coupon = boa_stripe_request('POST', '/coupons', [
         'percent_off'       => '10',
         'duration'          => 'once',
         'redeem_by'         => (string)(time() + 60 * 86400), // 60 jours
@@ -204,7 +204,7 @@ function boa_stripe_create_promo_code(string $code): array {
     ]);
 
     // Crée le promotion code lisible
-    $promo = boa_stripe_request('POST', '/v1/promotion_codes', [
+    $promo = boa_stripe_request('POST', '/promotion_codes', [
         'coupon'            => $coupon['id'],
         'code'              => $code,
         'max_redemptions'   => '1',
