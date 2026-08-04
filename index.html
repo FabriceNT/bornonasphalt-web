@@ -541,6 +541,27 @@
     color:var(--blood-bright); margin-top:16px;
   }
   .welcome-code.show{display:block;}
+
+  /* ============ FEATURED REVIEWS (customer telemetry) ============ */
+  .boa-featured-review-card{
+    flex:1; min-width:220px; max-width:300px;
+    background:#19170f;
+    border:1px solid var(--line-dark, #3a372f);
+    padding:20px;
+  }
+  .boa-review-header{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+  .boa-verified-badge{
+    font-size:0.6rem; letter-spacing:0.06em; text-transform:uppercase;
+    color:var(--bronze); border:1px solid var(--bronze); padding:2px 8px;
+  }
+  .boa-review-title{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:var(--ivory);margin-bottom:8px;}
+  .boa-review-body{font-size:0.85rem;color:var(--ivory-dim);line-height:1.6;margin-bottom:14px;}
+  .boa-review-meta{display:flex;flex-direction:column;gap:2px;font-size:0.72rem;}
+  .boa-review-author{color:var(--ivory);font-weight:600;}
+  .boa-review-color{color:var(--ivory-dim);}
+  .boa-global-avg{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--ivory);margin:0 8px;}
+  .boa-global-count{font-size:0.8rem;color:var(--ivory-dim);}
+  .boa-stars{color:var(--bronze);letter-spacing:2px;}
 </style>
 </head>
 <body>
@@ -656,9 +677,20 @@
       <div class="spec-warning">// <b>WARNING:</b> constructed to endure the friction of mechanical labor. Will develop a unique patina based on individual oil stains and wear patterns.</div>
     </div>
   </div>
+  </section>
+
+<section class="section boa-reviews-section" style="padding:60px 0;border-top:1px solid var(--line);">
+  <div class="container">
+    <div class="sec-eyebrow mono">// Customer telemetry</div>
+    <h2 class="display" style="font-size:clamp(2.2rem,4vw,3.2rem);margin-bottom:24px;">Reviews</h2>
+    <div class="boa-global-score-wrap" style="display:flex;align-items:center;gap:10px;margin-bottom:32px;">
+      <div id="boa-global-score"></div>
+    </div>
+    <div id="boa-featured-reviews" style="display:flex;gap:16px;flex-wrap:wrap;"></div>
+  </div>
 </section>
 
-    <footer style="padding:60px 0 30px;border-top:1px solid var(--line);background:var(--charcoal);">
+<footer style="padding:60px 0 30px;border-top:1px solid var(--line);background:var(--charcoal);">
       <div class="container">
         <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:30px;padding-bottom:30px;">
           <div>
