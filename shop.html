@@ -99,7 +99,8 @@ src="https://www.facebook.com/tr?id=1315795703870249&ev=PageView&noscript=1"/></
     position:absolute;top:-7px;right:-7px;background:var(--blood-bright);color:var(--ivory);
     font-size:9px;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;
   }
-  @media (max-width:960px){ .nav-links{display:none;} }
+  .burger{background:none;border:none;color:var(--ivory);font-size:1.4rem;cursor:pointer;padding:4px 8px;line-height:1;display:none;}
+  @media (max-width:960px){ .nav-links{display:none;} .burger{display:block;} }
 
   /* ---- page hero ---- */
   .page-hero{padding:64px 0 40px;border-bottom:1px solid var(--line);}
@@ -177,7 +178,7 @@ src="https://www.facebook.com/tr?id=1315795703870249&ev=PageView&noscript=1"/></
       <img src="img/logo-nav.png" alt="Born on Asphalt" style="height:36px;width:36px;object-fit:contain;display:block;">
       BORN ON ASPHALT
     </a>
-    <div class="nav-links">
+    <div class="nav-links" id="navLinks">
       <a href="shop.html" class="active">Shop</a>
       <a href="about.html">Our Story</a>
       <a href="faq.html">FAQ</a>
@@ -187,6 +188,7 @@ src="https://www.facebook.com/tr?id=1315795703870249&ev=PageView&noscript=1"/></
     <div class="nav-actions">
       <a href="account.html" class="nav-icon-btn" aria-label="Account" style="text-decoration:none;display:inline-block;">☰ ACCOUNT</a>
       <button class="nav-icon-btn" aria-label="Cart">CART <span class="cart-count" id="cartCount">0</span></button>
+      <button class="burger" id="burgerBtn" aria-label="Menu">≡</button>
     </div>
   </div>
 </nav>
@@ -379,6 +381,15 @@ src="https://www.facebook.com/tr?id=1315795703870249&ev=PageView&noscript=1"/></
   }
 
   render();
+
+  // Mobile burger menu toggle
+  var burgerBtn = document.getElementById('burgerBtn');
+  var navLinksEl = document.getElementById('navLinks');
+  if (burgerBtn && navLinksEl) {
+    burgerBtn.addEventListener('click', function(){
+      navLinksEl.style.display = navLinksEl.style.display === 'flex' ? 'none' : 'flex';
+    });
+  }
 
   // Cart badge — reads the same localStorage key used elsewhere on the site,
   // if present, so the count stays in sync without re-implementing the cart.
