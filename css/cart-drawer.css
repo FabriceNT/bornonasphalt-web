@@ -10,6 +10,26 @@
 }
 .drawer-overlay.open { display: block; }
 
+/* Base button structure for buttons inside the cart drawer — scoped
+   to .drawer-foot so it never conflicts with .btn rules that pages
+   loading style.css may already define elsewhere on the page. */
+.drawer-foot .btn{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:0.75rem;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  padding:12px 22px;
+  border:1px solid #ece5d3;
+  background:#ece5d3;
+  color:#0b0b0a;
+  cursor:pointer;
+  width:100%;
+  display:block;
+  text-align:center;
+  box-sizing:border-box;
+}
+.drawer-foot .btn:hover{opacity:0.85;}
+
 .drawer {
   position: fixed; top: 0; right: -420px; bottom: 0;
   width: 100%; max-width: 400px;
