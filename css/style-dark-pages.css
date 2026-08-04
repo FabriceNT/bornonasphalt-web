@@ -82,22 +82,7 @@
 .modal .form-field input:focus,
 .modal .form-field textarea:focus{outline:2px solid var(--bronze);}
 
-.drawer{
-  background:#19170f;
-  color:var(--paper);
-  border-left:1px solid var(--line-dark);
-}
-.drawer-head{border-color:var(--ink);}
-.drawer-head h3{color:var(--paper);}
-.drawer-head .modal-close{color:var(--paper);}
-.cart-line{border-color:var(--line-dark);}
-.cart-line-info h4{color:var(--paper);}
-.cart-line-info .meta{color:var(--paper-dim);}
-.cart-qty-row button{background:#211e15; border-color:var(--line-dark); color:var(--paper);}
-.remove-btn{color:var(--bronze);}
-.drawer-foot{border-color:var(--ink);}
-.subtotal-row{color:var(--paper);}
-.empty-cart{color:var(--paper-dim);}
+
 
 /* Product cards (grid / "You Might Also Like") — dark theme */
 .product-card{

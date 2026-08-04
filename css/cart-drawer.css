@@ -1,0 +1,142 @@
+/* ============================================================
+   Born on Asphalt — Centralized Cart Drawer Component
+   ============================================================ */
+
+.drawer-overlay {
+  position: fixed; inset: 0;
+  background: rgba(11, 11, 10, 0.75);
+  display: none; z-index: 200;
+  backdrop-filter: blur(4px);
+}
+.drawer-overlay.open { display: block; }
+
+.drawer {
+  position: fixed; top: 0; right: -420px; bottom: 0;
+  width: 100%; max-width: 400px;
+  background: #19170f;
+  color: #ece5d3;
+  border-left: 1px solid rgba(236, 229, 211, 0.14);
+  z-index: 201;
+  display: flex; flex-direction: column;
+  transition: right 0.25s ease;
+  font-family: 'IBM Plex Mono', monospace;
+}
+.drawer.open { right: 0; }
+
+.drawer-head {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 20px 22px;
+  border-bottom: 2px solid rgba(236, 229, 211, 0.14);
+}
+.drawer-head h3 {
+  font-family: 'Bebas Neue', sans-serif;
+  text-transform: uppercase; margin: 0;
+  font-size: 1.5rem; letter-spacing: 0.04em;
+  color: #ece5d3;
+}
+.drawer-head .modal-close {
+  background: none; border: none;
+  font-size: 18px; color: #ece5d3;
+  cursor: pointer; padding: 4px;
+}
+
+.drawer-items { flex: 1; overflow-y: auto; padding: 16px 22px; }
+
+.cart-line {
+  display: flex; gap: 12px;
+  padding: 14px 0;
+  border-bottom: 1px dotted rgba(236, 229, 211, 0.14);
+}
+.cart-line .sw {
+  width: 56px; height: 66px;
+  background: #0b0b0a;
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+  border: 1px solid rgba(236, 229, 211, 0.14);
+}
+.cart-line .sw img {
+  width: 100%; height: 100%;
+  object-fit: cover; display: block;
+}
+.cart-line .sw span {
+  color: #ece5d3;
+  font-family: 'Oswald', sans-serif;
+  font-size: 12px; font-weight: 700;
+}
+
+.cart-line-info { flex: 1; }
+.cart-line-info h4 {
+  margin: 0 0 4px;
+  font-size: 0.95rem;
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 0.03em;
+  color: #ece5d3;
+}
+.cart-line-info .meta {
+  font-size: 0.68rem;
+  color: #b8ae97;
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+.cart-line-actions {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: 8px;
+}
+.cart-qty-row { display: flex; align-items: center; gap: 8px; }
+.cart-qty-row button {
+  width: 24px; height: 24px;
+  border: 1px solid rgba(236, 229, 211, 0.18);
+  background: #211e15;
+  color: #ece5d3;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px; line-height: 1;
+  padding: 0; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: border-color 0.15s, background 0.15s;
+}
+.cart-qty-row button:hover {
+  border-color: #b5551f;
+  background: #2a261c;
+}
+.cart-qty-row span {
+  font-size: 0.78rem; min-width: 16px; text-align: center;
+}
+
+.remove-btn {
+  background: none; border: none;
+  font-size: 0.65rem; color: #9c7a3e;
+  letter-spacing: 0.05em; text-transform: uppercase;
+  margin-top: 6px; cursor: pointer; padding: 0;
+  transition: color 0.15s;
+}
+.remove-btn:hover { color: #a52a1c; }
+
+.drawer-foot {
+  border-top: 2px solid rgba(236, 229, 211, 0.14);
+  padding: 18px 22px 24px;
+  background: #14130c;
+}
+.subtotal-row {
+  display: flex; justify-content: space-between;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.25rem; letter-spacing: 0.03em;
+  margin-bottom: 14px; color: #ece5d3;
+}
+.empty-cart {
+  font-size: 0.8rem; color: #b8ae97;
+  text-align: center; padding: 40px 0;
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+/* Red primary action button for Checkout in cart drawer */
+.drawer-foot #checkoutBtn {
+  background: #7c1f16;
+  border-color: #a52a1c;
+  color: #ece5d3;
+  font-weight: 600;
+  transition: background 0.15s;
+}
+.drawer-foot #checkoutBtn:hover {
+  background: #a52a1c;
+}

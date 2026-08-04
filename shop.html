@@ -21,6 +21,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
 <link rel="apple-touch-icon" sizes="180x180" href="img/favicon-180.png">
 <link rel="canonical" href="https://bornonasphalt.com/shop.html">
+<link rel="stylesheet" href="css/cart-drawer.css?v=1">
 
 <!-- Meta Pixel -->
 <script>
@@ -168,29 +169,7 @@ src="https://www.facebook.com/tr?id=1315795703870249&ev=PageView&noscript=1"/></
   .foot-social a:hover{border-color:var(--burnt);color:var(--burnt);}
   .foot-legal{font-family:'IBM Plex Mono',monospace;font-size:0.65rem;color:#5a5648;margin-top:30px;}
 
-  /* ============ CART DRAWER ============ */
-  .drawer-overlay{position:fixed;inset:0;background:rgba(11,11,10,0.7);display:none;z-index:200;}
-  .drawer-overlay.open{display:block;}
-  .drawer{position:fixed;top:0;right:-420px;bottom:0;width:100%;max-width:400px;background:#19170f;color:var(--ivory);z-index:201;display:flex;flex-direction:column;transition:right .25s ease;}
-  .drawer.open{right:0;}
-  .drawer-head{display:flex;justify-content:space-between;align-items:center;padding:20px 22px;border-bottom:2px solid var(--line);}
-  .drawer-head h3{font-family:'Bebas Neue',sans-serif;text-transform:uppercase;margin:0;font-size:1.4rem;color:var(--ivory);}
-  .modal-close{background:none;border:none;font-size:18px;color:var(--ivory);cursor:pointer;}
-  .drawer-items{flex:1;overflow-y:auto;padding:16px 22px;}
-  .drawer-foot{border-top:2px solid var(--line);padding:18px 22px 24px;}
-  .subtotal-row{display:flex;justify-content:space-between;font-family:'Bebas Neue',sans-serif;font-size:1.1rem;margin-bottom:14px;color:var(--ivory);}
-  .empty-cart{font-size:0.8rem;color:var(--ivory-dim);text-align:center;padding:40px 0;}
-  .cart-line{display:flex;gap:12px;padding:12px 0;border-bottom:1px dotted var(--line);}
-  .cart-line .sw{width:56px;height:66px;background:var(--ink);flex-shrink:0;display:flex;align-items:center;justify-content:center;overflow:hidden;}
-  .cart-line .sw img{width:100%;height:100%;object-fit:cover;display:block;}
-  .cart-line-info{flex:1;}
-  .cart-line-info h4{margin:0 0 4px;font-size:0.85rem;font-family:'Bebas Neue',sans-serif;color:var(--ivory);}
-  .cart-line-info .meta{font-size:0.68rem;color:var(--ivory-dim);}
-  .cart-line-actions{display:flex;justify-content:space-between;align-items:center;margin-top:6px;}
-  .cart-qty-row{display:flex;align-items:center;gap:8px;}
-  .cart-qty-row button{width:22px;height:22px;border:1px solid var(--line);background:#171510;color:var(--ivory);font-family:'IBM Plex Mono',monospace;font-size:12px;line-height:1;padding:0;cursor:pointer;}
-  .cart-qty-row span{font-size:0.78rem;min-width:14px;text-align:center;}
-  .remove-btn{background:none;border:none;font-size:0.62rem;color:var(--bronze);letter-spacing:0.05em;text-transform:uppercase;margin-top:6px;}
+
 </style>
 </head>
 <body>

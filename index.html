@@ -26,6 +26,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/cart-drawer.css?v=1">
 <style>
   :root{
     --ink:#0b0b0a;
@@ -476,35 +477,7 @@
   .section-label{font-family:'IBM Plex Mono',monospace; font-size:0.65rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--bronze);}
   .boa-checkbox-label{color:var(--ivory-dim);}
 
-  .drawer-overlay{
-    position:fixed; inset:0;
-    background:rgba(11,11,10,0.7);
-    display:none; z-index:200;
-  }
-  .drawer-overlay.open{display:block;}
-  .drawer{
-    position:fixed; top:0; right:-420px; bottom:0;
-    width:100%; max-width:400px;
-    background:#19170f; color:var(--ivory);
-    z-index:201;
-    display:flex; flex-direction:column;
-    transition:right .25s ease;
-  }
-  .drawer.open{right:0;}
-  .drawer-head{
-    display:flex; justify-content:space-between; align-items:center;
-    padding:20px 22px; border-bottom:2px solid var(--line);
-  }
-  .drawer-head h3{font-family:'Bebas Neue',sans-serif; text-transform:uppercase; margin:0; font-size:1.4rem; color:var(--ivory);}
-  .drawer-items{flex:1; overflow-y:auto; padding:16px 22px;}
-  .drawer-foot{border-top:2px solid var(--line); padding:18px 22px 24px;}
-  .subtotal-row{display:flex; justify-content:space-between; font-family:'Bebas Neue',sans-serif; font-size:1.1rem; margin-bottom:14px; color:var(--ivory);}
-  .empty-cart{font-size:0.8rem; color:var(--ivory-dim); text-align:center; padding:40px 0;}
-  .cart-line{display:flex; gap:12px; padding:12px 0; border-bottom:1px dotted var(--line);}
-  .cart-line .sw{width:56px; height:66px; background:var(--ink); flex-shrink:0; display:flex; align-items:center; justify-content:center; overflow:hidden;}
-  .cart-line .sw img{width:100%; height:100%; object-fit:cover; display:block;}
-  .cart-line-info h4{margin:0 0 4px; font-size:0.85rem; font-family:'Bebas Neue',sans-serif; color:var(--ivory);}
-  .cart-line-info .meta{font-size:0.68rem; color:var(--ivory-dim);}
+
 
   .welcome-overlay{
     position:fixed; inset:0;
