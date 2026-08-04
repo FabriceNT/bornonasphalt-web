@@ -140,3 +140,15 @@
 .drawer-foot #checkoutBtn:hover {
   background: #a52a1c;
 }
+
+/* Continue Shopping button (.btn.ghost used inside .drawer-foot) —
+   must be light text on the dark drawer background, matching the
+   ivory tone used everywhere else in the cart drawer */
+.drawer-foot .btn.ghost{
+  background:transparent;
+  color:#ece5d3;
+  border:1px solid rgba(236,229,211,0.14);
+}
+.drawer-foot .btn.ghost:hover{
+  border-color:#9c7a3e;
+}
