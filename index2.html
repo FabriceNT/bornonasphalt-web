@@ -877,6 +877,18 @@
     }).filter(Boolean);
     grid.innerHTML = featured.map(cardHtml).join('');
   }
+
+  // Auto-open cart drawer if arriving from a cart link (e.g. shop.html)
+  if (window.location.search.includes('openCart=1')) {
+    window.addEventListener('load', function(){
+      var drawer = document.getElementById('cartDrawer');
+      var overlay = document.getElementById('drawerOverlay');
+      if (drawer && overlay) {
+        drawer.classList.add('open');
+        overlay.classList.add('open');
+      }
+    });
+  }
 })();
 </script>
 
