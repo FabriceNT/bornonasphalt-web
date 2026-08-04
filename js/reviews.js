@@ -17,6 +17,15 @@ function boaTimeAgo(dateStr) {
   return Math.floor(diff / 31536000) + ' years ago';
 }
 
+function boaAbbreviateName(fullName) {
+  if (!fullName) return 'Anonymous';
+  var parts = fullName.trim().split(/\s+/);
+  if (parts.length === 1) return parts[0];
+  var firstName = parts[0];
+  var lastInitial = parts[parts.length - 1].charAt(0).toUpperCase();
+  return firstName + ' ' + lastInitial + '.';
+}
+
 // ---- Lightbox ----
 
 function boaOpenLightbox(photos, startIndex) {
@@ -98,7 +107,7 @@ function boaRenderReviews(reviews, container) {
       <p class="boa-review-body">${r.body}</p>
       ${boaReviewPhotos(r.photos)}
       <div class="boa-review-meta">
-        <span class="boa-review-author">${r.display_name}</span>
+        <span class="boa-review-author">${boaAbbreviateName(r.display_name)}</span>
         ${r.color ? `<span class="boa-review-color">${r.color}${r.size ? ' · ' + r.size : ''}</span>` : ''}
         <span class="boa-review-date">${boaTimeAgo(r.created_at)}</span>
       </div>
@@ -514,7 +523,7 @@ async function boaLoadFeaturedReviews() {
         <p class="boa-review-body">${r.body}</p>
         ${boaReviewPhotos(r.photos)}
         <div class="boa-review-meta">
-          <span class="boa-review-author">${r.display_name}</span>
+          <span class="boa-review-author">${boaAbbreviateName(r.display_name)}</span>
           ${r.color ? `<span class="boa-review-color">${r.color}${r.size ? ' · ' + r.size : ''}</span>` : ''}
         </div>
       </div>`).join('');
