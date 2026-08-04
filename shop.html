@@ -190,7 +190,7 @@ src="https://www.facebook.com/tr?id=1315795703870249&ev=PageView&noscript=1"/></
       <a href="contact.html">Contact</a>
     </div>
     <div class="nav-actions">
-      <a href="account.html" class="nav-icon-btn" aria-label="Account" style="text-decoration:none;display:inline-block;">☰ ACCOUNT</a>
+      <button class="nav-icon-btn" id="accountIconBtn" aria-label="Account">☰ ACCOUNT</button>
       <button class="nav-icon-btn" id="cartIconBtn" aria-label="Cart">CART <span class="cart-count" id="cartCount">0</span></button>
       <button class="burger" id="burgerBtn" aria-label="Menu">≡</button>
     </div>
@@ -512,6 +512,127 @@ src="https://www.facebook.com/tr?id=1315795703870249&ev=PageView&noscript=1"/></
   renderCart();
 })();
 </script>
+
+<!-- ===================== PRODUCT MODAL ===================== -->
+<div class="overlay" id="productModal">
+  <div class="modal">
+    <button class="modal-close" data-close-modal="productModal">✕</button>
+    <div class="section-label">// Product detail</div>
+    <div id="pdBody"></div>
+  </div>
+</div>
+
+<!-- ===================== ACCOUNT MODAL ===================== -->
+<div class="overlay" id="accountModal">
+  <div class="modal">
+    <button class="modal-close" data-close-modal="accountModal">✕</button>
+    <div class="section-label">// Driver record</div>
+    <h2>Your account</h2>
+    <div class="tab-row">
+      <button class="tab-btn active" data-tab="signInPanel">Sign in</button>
+      <button class="tab-btn" data-tab="signUpPanel">Create account</button>
+    </div>
+    <div class="tab-panel active" id="signInPanel">
+      <form id="signInForm">
+        <div class="form-field">
+          <label>Email</label>
+          <input type="email" required placeholder="you@email.com" />
+        </div>
+        <div class="form-field">
+          <label>Password</label>
+          <input type="password" required placeholder="••••••••" />
+        </div>
+        <button type="submit" class="btn" style="width:100%;">Sign in</button>
+      </form>
+    </div>
+    <div class="tab-panel" id="signUpPanel">
+      <form id="signUpForm">
+        <div class="form-field">
+          <label>Name</label>
+          <input type="text" required placeholder="Full name" />
+        </div>
+        <div class="form-field">
+          <label>Email</label>
+          <input type="email" required placeholder="you@email.com" />
+        </div>
+        <div class="form-field">
+          <label>Password</label>
+          <input type="password" required placeholder="Minimum 8 characters" />
+        </div>
+        <div class="form-field">
+          <label>Confirm password</label>
+          <input type="password" name="confirm_password" required placeholder="Repeat your password" />
+        </div>
+        <label class="boa-checkbox-label" style="display:flex;align-items:center;gap:10px;margin:12px 0;font-size:0.85rem;cursor:pointer;">
+          <input type="checkbox" id="registerNewsletter" name="newsletter" checked
+                 style="accent-color:#8B0000;width:16px;height:16px;cursor:pointer;">
+          Get 10% off my first order — join the BOA newsletter
+        </label>
+        <button type="submit" class="btn" style="width:100%;">Create account</button>
+      </form>
+    </div>
+    <p class="modal-note">Accounts, order history and saved addresses require a backend service — this is a front-end placeholder. See README-integrations.md for what to connect.</p>
+  </div>
+</div>
+
+<!-- ===================== CHECKOUT MODAL ===================== -->
+<div class="overlay" id="checkoutModal">
+  <div class="modal">
+    <button class="modal-close" data-close-modal="checkoutModal">✕</button>
+    <div class="section-label">// Final line item</div>
+    <h2>Checkout</h2>
+    <div id="checkoutSummary" style="margin-bottom:18px;"></div>
+    <div class="form-field">
+      <label>Email</label>
+      <input type="email" id="checkoutEmail" placeholder="you@email.com" />
+    </div>
+    <div class="form-field">
+      <label>Full name</label>
+      <input type="text" id="checkoutFullName" placeholder="Full name" />
+    </div>
+    <div class="form-field">
+      <label>Shipping address</label>
+      <input type="text" id="checkoutAddress1" placeholder="Street address" />
+    </div>
+    <div style="display:flex; gap:10px;">
+      <div class="form-field" style="flex:1;"><label>City</label><input type="text" id="checkoutCity" /></div>
+      <div class="form-field" style="flex:0 0 70px;"><label>State</label><input type="text" id="checkoutState" maxlength="2" placeholder="NY" /></div>
+      <div class="form-field" style="flex:1;"><label>ZIP</label><input type="text" id="checkoutZip" /></div>
+    </div>
+    <div class="form-field">
+      <label>Payment</label>
+      <div id="paymentElementContainer" style="padding:12px; border:1px solid var(--line); background:var(--paper-dim); min-height:44px;">
+        <p style="font-size:12px; color:var(--ink-faded); margin:0;">Loading payment form...</p>
+      </div>
+    </div>
+    <p id="checkoutPayError" style="display:none; color:var(--stamp-red); font-size:12px; margin-bottom:10px;"></p>
+    <button class="btn" id="stripePayBtn" style="width:100%; margin-bottom:10px;">Pay <span id="payBtnAmount"></span></button>
+    <div id="paypalButtonContainer" style="margin-top:10px; min-height:45px;"></div>
+    <p class="modal-note">Card payment via Stripe and PayPal are both fully connected.</p>
+  </div>
+</div>
+
+<!-- ===================== WELCOME / DISCOUNT POPUP ===================== -->
+<div class="welcome-overlay" id="welcomeOverlay">
+  <div class="welcome-card">
+    <div class="welcome-top">
+      <span class="doc-id">DOC NO. BOA-000 · FIRST VISIT</span>
+      <button class="welcome-close" id="welcomeCloseBtn">✕</button>
+    </div>
+    <div class="welcome-body">
+      <div class="stamp">10% OFF</div>
+      <h2>Welcome to the sheet.</h2>
+      <p>Leave your email and get 10% off your first order — plus first look at new series before they launch.</p>
+      <form class="welcome-form" id="welcomeForm">
+        <input type="email" id="welcomeEmail" required placeholder="you@email.com" />
+        <button type="submit" class="btn" style="width:100%;">Get my code</button>
+      </form>
+      <div class="welcome-code" id="welcomeCode">
+        <p id="welcomeCodeValue" style="font-size:1.4rem;font-weight:700;letter-spacing:0.1em;text-align:center;margin:16px 0;"></p>
+      </div>
+    </div>
+  </div>
+</div>
 
 </body>
 </html>
