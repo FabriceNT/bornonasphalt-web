@@ -171,8 +171,23 @@
   color:#b8ae97;
 }
 .footer-bottom{
-  border-top-color:rgba(236,229,211,0.14);
-  color:#b8ae97;
-  font-size:10.4px;
+   border-top-color:rgba(236,229,211,0.14);
+   color:#b8ae97;
+   font-size:10.4px;
+ }
+
+/* Nav logo wordmark — match index.html/shop.html's .brand styling
+   (Bebas Neue) instead of the inline Oswald 15px used on classic pages */
+.logo{
+  font-family:'Bebas Neue', sans-serif;
+  font-size:1.35rem;
+  letter-spacing:0.06em;
+}
+.logo span{
+  font-family:'Bebas Neue', sans-serif !important;
+  font-size:1em !important;
+  font-weight:400 !important;
+  letter-spacing:inherit !important;
+  color:inherit !important;
 }
 
