@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /boa-panel/
+Sitemap: https://bornonasphalt.com/sitemap.xml
