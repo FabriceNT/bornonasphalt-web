@@ -19,6 +19,12 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     exit;
 }
 
+$rl_key_ip = 'forgot-password-ip:' . ($_SERVER['REMOTE_ADDR'] ?? '');
+boa_rate_limit($rl_key_ip, 5, 3600); // 5 demandes max / heure par IP
+
+$rl_key_email = 'forgot-password-email:' . $email;
+boa_rate_limit($rl_key_email, 3, 3600); // 3 demandes max / heure par email
+
 try {
     $db = boa_db();
     $stmt = $db->prepare('SELECT id, name FROM users WHERE email = ?');

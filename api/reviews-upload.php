@@ -19,6 +19,9 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') { http_response_code(405); exit; }
 
 header('Content-Type: application/json');
 
+$rl_key = 'reviews-upload:' . ($_SERVER['REMOTE_ADDR'] ?? '');
+boa_rate_limit($rl_key, 10, 3600); // 10 uploads max / heure par IP
+
 const MAX_FILE_SIZE  = 8 * 1024 * 1024; // 8 MB
 const MAX_DIMENSION  = 1200;             // px, côté le plus long
 const ALLOWED_TYPES  = [IMAGETYPE_JPEG, IMAGETYPE_PNG, IMAGETYPE_WEBP];

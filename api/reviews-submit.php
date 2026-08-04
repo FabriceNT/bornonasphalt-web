@@ -8,6 +8,9 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') { http_response_code(405); exit; }
 
 header('Content-Type: application/json');
 
+$rl_key = 'reviews-submit:' . ($_SERVER['REMOTE_ADDR'] ?? '');
+boa_rate_limit($rl_key, 15, 3600); // 15 soumissions max / heure par IP
+
 $input = json_decode(file_get_contents('php://input'), true);
 if (!$input) { http_response_code(400); echo json_encode(['error' => 'Invalid JSON.']); exit; }
 
