@@ -23,7 +23,7 @@
 
 /* Legal blocks: stay dark instead of switching to the cream/light panel,
    with a riveted "data plate" signature at the 4 corners (pure CSS,
-   no markup change — same visual language as index2.html/shop.html) */
+   no markup change — same visual language as index.html/shop.html) */
 .legal-block{
   position:relative;
   background-color:#19170f;
@@ -117,7 +117,7 @@
 .nav-links a:hover{border-color:var(--bronze);}
 
 /* Nav icon buttons (Account / Cart) — bordered style matching
-   index2.html / shop.html instead of the plain borderless legacy look */
+   index.html / shop.html instead of the plain borderless legacy look */
 .nav-icon-btn{
   border:1px solid var(--line-dark);
   padding:8px 14px;
@@ -128,7 +128,7 @@
 }
 .nav-icon-btn:hover{border-color:var(--bronze);}
 
-/* Nav link text — match shop.html/index2.html exactly: color, size,
+/* Nav link text — match shop.html/index.html exactly: color, size,
    letter-spacing (legacy style.css had brighter, larger, tighter text) */
 .nav-links a{
   color:#b8ae97;
@@ -137,7 +137,7 @@
 }
 .nav-links a:hover{color:#ece5d3;}
 
-/* Announcement bar + cart badge — match shop.html/index2.html's blood
+/* Announcement bar + cart badge — match shop.html/index.html's blood
    red tone instead of the legacy brighter stamp-red */
 .announce{background:#7c1f16;}
 .cart-count{background:#a52a1c;}
@@ -160,7 +160,7 @@
 .hero .btn{background:var(--paper); color:var(--ink); border-color:var(--paper);}
 
 /* ============================================================
-   Footer full alignment with shop.html/index2.html reference
+   Footer full alignment with shop.html/index.html reference
    ============================================================ */
 .footer{
   background:#19170f;

@@ -9,34 +9,553 @@
   gtag('js', new Date());
   gtag('config', 'G-RNXPTM443X');
 </script>
-
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Born on Asphalt — American Muscle Car Apparel</title>
-<meta name="description" content="Apparel for those who built it, drove it, and never forgot it. Ford, Mopar, GM — printed on demand, shipped from the US." />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Caveat:wght@500;600&display=swap" rel="stylesheet" />
-<link rel="icon" type="image/x-icon" href="img/favicon.ico" />
-<link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png" />
-<link rel="apple-touch-icon" sizes="180x180" href="img/favicon-180.png" />
-<link rel="stylesheet" href="css/style.css?v=7" />
-<link rel="stylesheet" href="css/reviews.css?v=3" />
+<meta name="description" content="Apparel for those who built it, drove it, and never forgot it. Ford, Mopar, GM — printed on demand, shipped from the US.">
+<meta property="og:site_name" content="Born on Asphalt">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Born on Asphalt — American Muscle Car Apparel">
+<meta property="og:description" content="Apparel for those who built it, drove it, and never forgot it. Ford, Mopar, GM — printed on demand, shipped from the US.">
+<meta property="og:image" content="https://bornonasphalt.com/img/logo-nav.png">
+<meta property="og:url" content="https://bornonasphalt.com/index.html">
+<link rel="icon" type="image/x-icon" href="img/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="img/favicon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0b0b0a;
+    --charcoal:#19170f;
+    --panel:#211e15;
+    --ivory:#ece5d3;
+    --ivory-dim:#b8ae97;
+    --blood:#7c1f16;
+    --blood-bright:#a52a1c;
+    --burnt:#b5551f;
+    --bronze:#9c7a3e;
+    --line: rgba(236,229,211,0.14);
+    --ford:#2c5aa0;
+    --mopar:#a5333b;
+    --gm:#c9a227;
+    --cross:#9c7a3e;
+  }
 
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation:none !important; transition:none !important;}
+  }
+
+  body{
+    background:var(--ink);
+    color:var(--ivory);
+    font-family:'Oswald', sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  a{color:inherit;text-decoration:none;}
+
+  .display{
+    font-family:'Bebas Neue', sans-serif;
+    letter-spacing:0.02em;
+    line-height:0.92;
+    text-transform:uppercase;
+  }
+  .mono{
+    font-family:'IBM Plex Mono', monospace;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+  }
+
+  .container{
+    max-width:1180px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  :focus-visible{
+    outline:2px solid var(--burnt);
+    outline-offset:3px;
+  }
+
+  /* ============ SIGNATURE COMPONENT: stamped plate ============ */
+  .plate{
+    position:relative;
+    background:var(--panel);
+    border:1px solid var(--line);
+    padding:22px 24px;
+  }
+  .plate::before, .plate::after{
+    content:"";
+    position:absolute;
+    width:7px;height:7px;
+    border-radius:50%;
+    background:radial-gradient(circle at 35% 35%, #d8c98a, var(--bronze) 60%, #5c481f 100%);
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.4);
+    top:8px;
+  }
+  .plate::before{left:8px;}
+  .plate::after{right:8px;}
+  .plate .rivet-b{
+    position:absolute;bottom:8px;
+    width:7px;height:7px;border-radius:50%;
+    background:radial-gradient(circle at 35% 35%, #d8c98a, var(--bronze) 60%, #5c481f 100%);
+  }
+  .plate .rivet-bl{left:8px;}
+  .plate .rivet-br{right:8px;}
+
+  /* ============ NAV ============ */
+  .nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(11,11,10,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:16px 32px;
+    max-width:1180px;margin:0 auto;
+  }
+  .brand{
+    display:flex;align-items:center;gap:12px;
+    font-family:'Bebas Neue',sans-serif;
+    font-size:1.35rem;letter-spacing:0.06em;
+  }
+  .bolt-mark{width:30px;height:30px;flex-shrink:0;}
+  .nav-links{
+    display:flex;gap:24px;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.68rem;letter-spacing:0.1em;
+    text-transform:uppercase;
+  }
+  .nav-links a{color:var(--ivory-dim);border-bottom:1px solid transparent;padding-bottom:4px;white-space:nowrap;}
+  .nav-links a:hover{color:var(--ivory);border-color:var(--burnt);}
+  .nav-cta{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.7rem;letter-spacing:0.1em;
+    padding:9px 18px;
+    border:1px solid var(--burnt);
+    color:var(--burnt);
+    text-transform:uppercase;
+    white-space:nowrap;
+  }
+  .nav-cta:hover{background:var(--burnt);color:var(--ink);}
+  .nav-actions{display:flex;align-items:center;gap:14px;}
+  .nav-icon-btn{
+    background:none;border:1px solid var(--line);color:var(--ivory-dim);
+    font-family:'IBM Plex Mono',monospace;font-size:0.65rem;letter-spacing:0.08em;
+    padding:8px 12px;position:relative;text-transform:uppercase;cursor:pointer;
+  }
+  .nav-icon-btn:hover{color:var(--ivory);border-color:var(--burnt);}
+  .cart-count{
+    position:absolute;top:-7px;right:-7px;background:var(--blood-bright);color:var(--ivory);
+    font-size:9px;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  }
+  .burger{background:none;border:none;color:var(--ivory);font-size:1.4rem;cursor:pointer;padding:4px 8px;line-height:1;display:none;}
+  @media (max-width:960px){ .nav-links{display:none;} .burger{display:block;} }
+
+  /* ============ HERO ============ */
+  .hero{
+    position:relative;
+    min-height:92vh;
+    display:flex;
+    align-items:center;
+    overflow:hidden;
+    background:
+      radial-gradient(ellipse 900px 500px at 20% 0%, rgba(124,31,22,0.16), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 90% 90%, rgba(156,122,62,0.10), transparent 60%),
+      var(--ink);
+  }
+  .hero-garage-bg{
+    position:absolute;
+    inset:0;
+    background-image:url('img/bg/hero-garage-bg.jpeg');
+    background-size:cover;
+    background-position:center 30%;
+    background-repeat:no-repeat;
+    opacity:0.5;
+    filter:blur(2px) grayscale(15%) brightness(0.55);
+    z-index:0;
+    pointer-events:none;
+  }
+  .hero::after{
+    content:"";
+    position:absolute; inset:0;
+    background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.55) 100%);
+    pointer-events:none;
+  }
+  .hero-inner{
+    position:relative;z-index:2;
+    max-width:1180px;margin:0 auto;padding:0 32px;
+    width:100%;
+  }
+  .eyebrow{
+    font-size:0.78rem;
+    color:var(--burnt);
+    margin-bottom:22px;
+    display:flex;align-items:center;gap:12px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:34px;height:1px;background:var(--burnt);
+    display:inline-block;
+  }
+  .hero h1{
+    font-size:clamp(3.4rem, 9vw, 7.2rem);
+    color:var(--ivory);
+    max-width:14ch;
+  }
+  .hero h1 span{color:var(--blood-bright);}
+  .hero-sub{
+    margin-top:26px;
+    max-width:46ch;
+    font-size:1.08rem;
+    color:var(--ivory-dim);
+    font-weight:300;
+  }
+  .hero-ctas{
+    margin-top:38px;
+    display:flex;gap:18px;flex-wrap:wrap;
+    align-items:center;
+  }
+  .btn-primary{
+    background:var(--blood);
+    color:var(--ivory);
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.82rem;letter-spacing:0.1em;text-transform:uppercase;
+    padding:16px 30px;
+    border:1px solid var(--blood-bright);
+  }
+  .btn-primary:hover{background:var(--blood-bright);}
+  .btn-ghost{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.82rem;letter-spacing:0.1em;text-transform:uppercase;
+    color:var(--ivory-dim);
+    padding:16px 6px;
+    border-bottom:1px solid var(--line);
+  }
+  .btn-ghost:hover{color:var(--ivory);border-color:var(--ivory-dim);}
+
+  .hero-plate{
+    position:absolute;
+    right:32px; bottom:52px;
+    z-index:2;
+    width:230px;
+    display:none;
+  }
+  @media (min-width:1000px){ .hero-plate{display:block;} }
+  .hero-plate .mono{font-size:0.68rem;color:var(--ivory-dim);}
+  .hero-plate .row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--line);}
+  .hero-plate .row:last-child{border-bottom:none;}
+  .hero-plate .row b{color:var(--bronze);font-weight:500;}
+
+  /* ============ SECTION HEADERS ============ */
+  section{padding:120px 0;}
+  .sec-head{margin-bottom:64px;max-width:640px;}
+  .sec-eyebrow{font-size:0.72rem;color:var(--burnt);margin-bottom:14px;}
+  .sec-head h2{font-size:clamp(2.4rem,5vw,3.6rem);color:var(--ivory);}
+  .sec-head p{margin-top:16px;color:var(--ivory-dim);font-size:1rem;max-width:52ch;font-weight:300;}
+
+  /* ============ ETHOS ============ */
+  .ethos{background:var(--charcoal);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .ethos-grid{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap:2px;
+    background:var(--line);
+    border:1px solid var(--line);
+  }
+  .ethos-item{
+    background:var(--charcoal);
+    padding:38px 30px;
+  }
+  .ethos-item .torque{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.68rem;
+    color:var(--bronze);
+    margin-bottom:16px;
+  }
+  .ethos-item h3{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:1.7rem;
+    letter-spacing:0.02em;
+    color:var(--ivory);
+    margin-bottom:12px;
+  }
+  .ethos-item p{color:var(--ivory-dim);font-size:0.92rem;font-weight:300;}
+  @media (max-width:820px){ .ethos-grid{grid-template-columns:1fr;} }
+
+  /* ============ ARSENAL ============ */
+  .tribe-filters{
+    display:flex;gap:10px;margin-bottom:44px;flex-wrap:wrap;
+  }
+  .tribe-chip{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;
+    padding:8px 16px;
+    border:1px solid var(--line);
+    color:var(--ivory-dim);
+    display:flex;align-items:center;gap:8px;
+  }
+  .tribe-chip .dot{width:8px;height:8px;border-radius:50%;}
+
+  .arsenal-grid{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:22px;
+    padding-bottom:30px;
+  }
+  @media (max-width:1080px){ .arsenal-grid{grid-template-columns:repeat(3,1fr);} }
+  @media (max-width:780px){ .arsenal-grid{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:480px){ .arsenal-grid{grid-template-columns:1fr;} }
+
+  .product-card{
+    background:var(--panel);
+    border:1px solid var(--line);
+    position:relative;
+    display:flex;flex-direction:column;
+  }
+  .card-flag{
+    position:absolute;top:0;left:0;
+    width:0;height:0;
+    border-style:solid;
+    border-width:0 46px 46px 0;
+    border-color:transparent var(--flag-color, var(--bronze)) transparent transparent;
+    z-index:2;
+  }
+  .card-flag span{
+    position:absolute;top:-42px;left:2px;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.55rem;
+    color:var(--ink);
+    font-weight:600;
+    transform:rotate(45deg);
+  }
+  .card-art{
+    aspect-ratio:4/5;
+    border-bottom:1px solid var(--line);
+    background:var(--ink);
+    position:relative;
+    overflow:hidden;
+  }
+  .card-art img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:opacity 0.35s ease;}
+  .card-art img.img-secondary{opacity:0;}
+  .product-card:hover .card-art img.img-primary{opacity:0;}
+  .product-card:hover .card-art img.img-secondary{opacity:1;}
+  .card-art svg{width:56%;opacity:0.9;}
+  .card-body{padding:26px 24px 28px;flex:1;display:flex;flex-direction:column;}
+  .card-series{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.62rem;color:var(--bronze);
+    margin-bottom:10px;
+  }
+  .card-body h3{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:1.7rem;color:var(--ivory);margin-bottom:10px;
+  }
+  .card-body .slogan{
+    color:var(--ivory-dim);font-size:0.9rem;font-style:italic;font-weight:300;
+    margin-bottom:20px;flex:1;
+  }
+  .card-foot{
+    display:flex;justify-content:space-between;align-items:center;
+    padding-top:16px;border-top:1px solid var(--line);
+    font-family:'IBM Plex Mono',monospace;font-size:0.75rem;
+  }
+  .card-price{color:var(--ivory);}
+  .card-link{color:var(--burnt);letter-spacing:0.08em;}
+  .card-link:hover{color:var(--ivory);}
+
+  /* ============ HARDWARE SPECS ============ */
+  .specs{background:var(--charcoal);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .specs-inner{
+    display:grid;grid-template-columns: 1fr 1.1fr; gap:60px; align-items:center;
+  }
+  @media (max-width:820px){ .specs-inner{grid-template-columns:1fr;} }
+  .specs-visual{
+    aspect-ratio:1/1;
+    border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;
+    background:radial-gradient(circle at 30% 30%, rgba(156,122,62,0.10), transparent 60%);
+  }
+  .specs-visual svg{width:62%;}
+  .spec-row{display:flex;justify-content:space-between;padding:16px 0;border-bottom:1px solid var(--line);}
+  .spec-row:last-of-type{border-bottom:none;}
+  .spec-label{font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:var(--burnt);}
+  .spec-value{font-family:'Oswald',sans-serif;font-size:1rem;color:var(--ivory);}
+  .spec-warning{
+    margin-top:26px;font-family:'IBM Plex Mono',monospace;font-size:0.72rem;
+    color:var(--ivory-dim);line-height:1.7;
+    padding-top:20px;border-top:1px dashed var(--line);
+  }
+  .spec-warning b{color:var(--bronze);}
+
+  /* ============ FOOTER ============ */
+  footer{padding:70px 0 40px;text-align:center;}
+  .foot-mark{width:44px;height:44px;margin:0 auto 22px;}
+  .foot-tag{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:0.03em;color:var(--ivory-dim);}
+  .foot-social{display:flex;gap:18px;justify-content:center;margin:26px 0;}
+  .foot-social a{
+    width:38px;height:38px;border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;
+    color:var(--ivory-dim);
+  }
+  .foot-social a:hover{border-color:var(--burnt);color:var(--burnt);}
+  .foot-legal{font-family:'IBM Plex Mono',monospace;font-size:0.65rem;color:#5a5648;margin-top:30px;}
+
+  /* ============ MODALS / DRAWER / WELCOME POPUP ============ */
+  .overlay{
+    position:fixed; inset:0;
+    background:rgba(11,11,10,0.85);
+    display:none;
+    align-items:center; justify-content:center;
+    z-index:200;
+    padding:20px;
+  }
+  .overlay.open{display:flex;}
+  .modal{
+    background:#19170f;
+    color:var(--ivory);
+    max-width:460px; width:100%;
+    max-height:90vh; overflow-y:auto;
+    position:relative;
+    padding:30px 28px 32px;
+    border:1px solid var(--line);
+  }
+  .modal-close{
+    position:absolute; top:14px; right:14px;
+    background:none; border:none;
+    font-size:18px; color:var(--ivory);
+    cursor:pointer;
+  }
+  .modal h2{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:1.6rem; text-transform:uppercase;
+    margin:6px 0 18px; color:var(--ivory);
+  }
+  .modal-note{font-size:0.68rem; color:var(--ivory-dim); margin-top:16px; line-height:1.6;}
+  .tab-row{display:flex; gap:0; margin-bottom:18px; border-bottom:1px solid var(--line);}
+  .tab-btn{
+    flex:1; background:none; border:none; padding:10px;
+    font-family:'IBM Plex Mono',monospace; font-size:0.7rem;
+    letter-spacing:0.06em; text-transform:uppercase;
+    color:var(--ivory-dim); border-bottom:2px solid transparent;
+    cursor:pointer;
+  }
+  .tab-btn.active{color:var(--ivory); border-color:var(--bronze);}
+  .tab-panel{display:none;}
+  .tab-panel.active{display:block;}
+  .form-field{margin-bottom:14px;}
+  .form-field label{
+    display:block; font-size:0.68rem; letter-spacing:0.06em;
+    text-transform:uppercase; color:var(--ivory-dim); margin-bottom:6px;
+  }
+  .form-field input, .form-field textarea, .form-field select{
+    width:100%; padding:10px 12px;
+    border:1px solid var(--line);
+    background:#171510; color:var(--ivory);
+    font-family:'IBM Plex Mono',monospace; font-size:0.85rem;
+  }
+  .form-field input:focus, .form-field textarea:focus{outline:2px solid var(--bronze);}
+  .btn{
+    font-family:'IBM Plex Mono',monospace; font-size:0.75rem;
+    letter-spacing:0.08em; text-transform:uppercase;
+    padding:12px 22px; border:1px solid var(--ivory);
+    background:var(--ivory); color:var(--ink);
+    cursor:pointer;
+  }
+  .btn.ghost{background:transparent; color:var(--ivory);}
+  .btn:hover{opacity:0.85;}
+  .section-label{font-family:'IBM Plex Mono',monospace; font-size:0.65rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--bronze);}
+  .boa-checkbox-label{color:var(--ivory-dim);}
+
+  .drawer-overlay{
+    position:fixed; inset:0;
+    background:rgba(11,11,10,0.7);
+    display:none; z-index:200;
+  }
+  .drawer-overlay.open{display:block;}
+  .drawer{
+    position:fixed; top:0; right:-420px; bottom:0;
+    width:100%; max-width:400px;
+    background:#19170f; color:var(--ivory);
+    z-index:201;
+    display:flex; flex-direction:column;
+    transition:right .25s ease;
+  }
+  .drawer.open{right:0;}
+  .drawer-head{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:20px 22px; border-bottom:2px solid var(--line);
+  }
+  .drawer-head h3{font-family:'Bebas Neue',sans-serif; text-transform:uppercase; margin:0; font-size:1.4rem; color:var(--ivory);}
+  .drawer-items{flex:1; overflow-y:auto; padding:16px 22px;}
+  .drawer-foot{border-top:2px solid var(--line); padding:18px 22px 24px;}
+  .subtotal-row{display:flex; justify-content:space-between; font-family:'Bebas Neue',sans-serif; font-size:1.1rem; margin-bottom:14px; color:var(--ivory);}
+  .empty-cart{font-size:0.8rem; color:var(--ivory-dim); text-align:center; padding:40px 0;}
+  .cart-line{display:flex; gap:12px; padding:12px 0; border-bottom:1px dotted var(--line);}
+  .cart-line .sw{width:56px; height:66px; background:var(--ink); flex-shrink:0;}
+  .cart-line-info h4{margin:0 0 4px; font-size:0.85rem; font-family:'Bebas Neue',sans-serif; color:var(--ivory);}
+  .cart-line-info .meta{font-size:0.68rem; color:var(--ivory-dim);}
+
+  .welcome-overlay{
+    position:fixed; inset:0;
+    background:rgba(11,11,10,0.85);
+    display:none;
+    align-items:center; justify-content:center;
+    z-index:210;
+    padding:20px;
+  }
+  .welcome-overlay.open{display:flex;}
+  .welcome-card{
+    max-width:420px; width:100%;
+    background:#19170f; color:var(--ivory);
+    border:1px solid var(--line);
+    position:relative;
+  }
+  .welcome-top{
+    background:var(--ink); color:var(--ivory);
+    padding:16px 24px; display:flex; justify-content:space-between; align-items:center;
+  }
+  .welcome-top .doc-id{color:var(--ivory-dim); font-size:0.6rem; font-family:'IBM Plex Mono',monospace;}
+  .welcome-close{background:none; border:none; color:var(--ivory); font-size:18px; cursor:pointer;}
+  .welcome-body{padding:26px 26px 30px; text-align:center;}
+  .stamp{
+    font-family:'Bebas Neue',sans-serif; font-size:0.9rem; letter-spacing:0.1em;
+    color:var(--blood-bright); border:2.5px solid var(--blood-bright);
+    padding:6px 12px; transform:rotate(-7deg); display:inline-block;
+    margin-bottom:10px;
+  }
+  .welcome-body h2{font-family:'Bebas Neue',sans-serif; font-size:1.6rem; text-transform:uppercase; margin:6px 0; color:var(--ivory);}
+  .welcome-body p{font-size:0.78rem; color:var(--ivory-dim); margin:0 0 20px; line-height:1.6;}
+  .welcome-form{display:flex; flex-direction:column; gap:10px;}
+  .welcome-code{
+    display:none; border:2px dashed var(--blood-bright); padding:14px;
+    font-family:'Bebas Neue',sans-serif; font-size:1.3rem; letter-spacing:0.1em;
+    color:var(--blood-bright); margin-top:16px;
+  }
+  .welcome-code.show{display:block;}
+</style>
 </head>
 <body>
 
-<div class="announce">Free shipping on orders $85+ · US domestic only</div>
+<div class="announce" style="background:var(--blood);color:var(--ivory);text-align:center;font-family:'IBM Plex Mono',monospace;font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;padding:9px 12px;">Free shipping on orders $85+ · US domestic only</div>
 
 <nav class="nav">
   <div class="nav-inner">
-    <a href="index.html" class="logo">
-      <img src="img/logo-nav.png"
-           alt="Born on Asphalt"
-           style="height:52px; width:52px; object-fit:contain; display:block;" />
+    <a href="index.html" class="brand">
+      <img src="img/logo-nav.png" alt="Born on Asphalt" style="height:36px;width:36px;object-fit:contain;display:block;">
+      BORN ON ASPHALT
     </a>
     <div class="nav-links" id="navLinks">
-      <a href="index.html#shop">Shop</a>
-      <a href="about.html">About</a>
+      <a href="shop.html">Shop</a>
+      <a href="about.html">Our Story</a>
       <a href="faq.html">FAQ</a>
       <a href="shipping.html">Shipping</a>
       <a href="contact.html">Contact</a>
@@ -51,135 +570,142 @@
   </div>
 </nav>
 
-<!-- ===================== HERO ===================== -->
 <section class="hero">
-  <div class="sheet-wrap">
-    <div class="carbon-shadow"></div>
-    <div class="sheet">
-      <div class="sheet-top">
-        <div class="doc-id">
-          DOC NO. <b>BOA-001</b><br/>
-          FORM TYPE: BROADCAST SHEET<br/>
-          PLANT: ASPHALT / GERMANY→USA
-        </div>
-        <div class="stamp">AUTHENTIC</div>
+  <div class="hero-garage-bg"></div>
+  <div class="hero-inner">
+    <div class="eyebrow mono">1960–1975 · FORD // MOPAR // GM</div>
+    <h1 class="display">NOTHING FITS <span>FIRST TIME</span></h1>
+    <p class="hero-sub">Apparel for the ones who built it, not the ones who bought it. Garment-dyed heavyweight tees for builders, restorers, and collectors who still smell like brake cleaner.</p>
+    <div class="hero-ctas">
+      <a href="#arsenal" class="btn-primary">View The Gear</a>
+      <a href="#ethos" class="btn-ghost">Read The Ethos →</a>
+    </div>
+  </div>
+  <div class="hero-plate plate">
+    <div class="rivet-b rivet-bl"></div><div class="rivet-b rivet-br"></div>
+    <div class="row"><span class="mono">Chassis</span><b class="mono">CC 1717</b></div>
+    <div class="row"><span class="mono">Weight</span><b class="mono">Heavy</b></div>
+    <div class="row"><span class="mono">Finish</span><b class="mono">Garment-Dyed</b></div>
+    <div class="row"><span class="mono">Batch</span><b class="mono">Made in USA</b></div>
+  </div>
+</section>
+
+<section class="ethos" id="ethos">
+  <div class="container">
+    <div class="sec-head">
+      <div class="sec-eyebrow mono">// The Ethos</div>
+      <h2 class="display">Garage Credibility.<br>Tribal Authenticity.</h2>
+      <p>We don't manufacture culture, we wear what we wrench. Three tribes, one era, zero apologies.</p>
+    </div>
+    <div class="ethos-grid">
+      <div class="ethos-item">
+        <div class="torque">TORQUE SPEC · BUILT NOT BOUGHT</div>
+        <h3>Sweat Equity</h3>
+        <p>Every design earns its place the way a rebuild earns its badge — skinned knuckles first, bragging rights after.</p>
       </div>
-
-      <div class="field-row">VEHICLE / BUILT FOR:</div>
-      <h1>Born on Asphalt</h1>
-      <p class="tagline">not a brand — a build sheet for people who never let it die.</p>
-
-      <div class="options">
-        <div class="option-line"><span class="box">☑</span><span class="code">ENG</span><span class="desc">V8 soul, no substitutes</span></div>
-        <div class="option-line"><span class="box">☑</span><span class="code">TRIM</span><span class="desc">raw, unapologetic, garage-built</span></div>
-        <div class="option-line"><span class="box">☑</span><span class="code">PAINT</span><span class="desc">asphalt black, no metallic flake</span></div>
-        <div class="option-line"><span class="box">☐</span><span class="code">COMP.</span><span class="desc">factory rules, insurance, lawyers</span></div>
+      <div class="ethos-item">
+        <div class="torque">TORQUE SPEC · PEER PROOF</div>
+        <h3>Earned, Not Sold</h3>
+        <p>Respect crosses tribes by osmosis, never by ad spend. Ford, Mopar, and GM builders validate this — nobody else.</p>
       </div>
-
-      <div class="hero-cta">
-        <a href="#shop" class="btn">Shop the collection</a>
-        <a href="about.html" class="btn ghost">Our story</a>
+      <div class="ethos-item">
+        <div class="torque">TORQUE SPEC · 1960–1975</div>
+        <h3>The Golden Era</h3>
+        <p>Mechanical brutality before the lawyers showed up. If it doesn't reference a real year, engine, or model — it doesn't ship.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ===================== SHOP ===================== -->
-<section class="section" id="shop">
+<section id="arsenal">
   <div class="container">
-    <div class="section-head">
-      <div>
-        <div class="section-label">// Line items</div>
-        <h2 class="section-title">The catalog</h2>
-      </div>
+    <div class="sec-head">
+      <div class="sec-eyebrow mono">// The Arsenal</div>
+      <h2 class="display">Heavyweight Garments.<br>Choose Your Tribe.</h2>
+      <p>Comfort Colors 1717, garment-dyed. Built to take the friction of the garage, not the gym.</p>
     </div>
 
-    <div class="filter-row">
-      <button class="filter-btn active" data-tribe="all">All tribes</button>
-      <button class="filter-btn" data-tribe="ford">Ford</button>
-      <button class="filter-btn" data-tribe="mopar">Mopar</button>
-      <button class="filter-btn" data-tribe="gm">GM</button>
-      <button class="filter-btn" data-tribe="cross">Cross-tribe</button>
+    <div class="tribe-filters">
+      <div class="tribe-chip"><span class="dot" style="background:var(--ford)"></span>Ford</div>
+      <div class="tribe-chip"><span class="dot" style="background:var(--mopar)"></span>Mopar</div>
+      <div class="tribe-chip"><span class="dot" style="background:var(--gm)"></span>GM</div>
+      <div class="tribe-chip"><span class="dot" style="background:var(--cross)"></span>Cross-Tribe</div>
     </div>
 
-    <div class="grid" id="productGrid"></div>
+    <div class="arsenal-grid" id="arsenalGrid"></div>
+
+    <div style="text-align:center; margin-top:56px;">
+      <a href="shop.html" class="btn-primary" style="display:inline-block;">See the Full Arsenal →</a>
+    </div>
+
   </div>
 </section>
 
-<!-- ===================== NARRATIVE ===================== -->
-<section class="narrative">
-  <div class="container">
-    <div class="section-label">// About the sheet</div>
-    <h2>Not a t-shirt with a car on it.</h2>
-    <p>There are a thousand brands doing that. Born on Asphalt speaks to the ones who built it, not just the ones who drove it — the garage, the torque wrench, the year the lawyers hadn't shown up yet. Every design is a line item on a build sheet: honest, specific, non-negotiable.</p>
-    <div class="stats-row">
-      <div class="stat"><b>1960–75</b><span>Era covered</span></div>
-      <div class="stat"><b>3</b><span>Tribes</span></div>
-      <div class="stat"><b>V8</b><span>Non-negotiable</span></div>
-      <div class="stat"><b>US</b><span>Made & shipped</span></div>
+<section class="specs" id="specs">
+  <div class="container specs-inner">
+    <div class="specs-visual" style="padding:20px;">
+      <img src="img/data-plate-engine.png" alt="V8 engine cutaway technical illustration" style="width:100%;height:100%;object-fit:contain;opacity:0.9;">
     </div>
-  </div>
-</section>
-
-<!-- ===================== REVIEWS ===================== -->
-<section class="section boa-reviews-section">
-  <div class="container">
-    <div class="section-label">// Customer telemetry</div>
-    <h2 class="section-title" style="margin-bottom: 24px;">Reviews</h2>
-
-    <!-- Score global des avis -->
-    <div class="boa-global-score-wrap">
-      <div id="boa-global-score">
-        <!-- Rempli dynamiquement par boaLoadFeaturedReviews() -->
-      </div>
-    </div>
-
-    <!-- Grille des reviews à la Une -->
-    <div id="boa-featured-reviews">
-      <!-- Rempli dynamiquement par boaLoadFeaturedReviews() -->
+    <div>
+      <div class="sec-eyebrow mono">// Hardware Specs</div>
+      <h2 class="display" style="font-size:clamp(2.2rem,4vw,3.2rem);margin-bottom:30px;">Data Plate</h2>
+      <div class="spec-row"><span class="spec-label">CHASSIS</span><span class="spec-value">Comfort Colors 1717</span></div>
+      <div class="spec-row"><span class="spec-label">WEIGHT</span><span class="spec-value">Heavyweight Cotton</span></div>
+      <div class="spec-row"><span class="spec-label">FINISH</span><span class="spec-value">Garment-Dyed for Vintage Fade</span></div>
+      <div class="spec-row"><span class="spec-label">APPLICATION</span><span class="spec-value">Garage Builds, Restorations, Asphalt</span></div>
+      <div class="spec-warning">// <b>WARNING:</b> constructed to endure the friction of mechanical labor. Will develop a unique patina based on individual oil stains and wear patterns.</div>
     </div>
   </div>
 </section>
 
-<!-- ===================== FOOTER ===================== -->
-<footer class="footer">
-  <div class="container">
-    <div class="footer-grid">
-      <div class="footer-col">
-        <h4>Born on Asphalt</h4>
-        <p>Apparel for Ford, Mopar and GM builders. Printed on demand, shipped from the US. Comfort Colors 1717, garment-dyed heavyweight.</p>
-        <div class="payment-icons">
-          <span>Stripe</span><span>PayPal</span><span>Visa</span><span>Mastercard</span>
+    <footer style="padding:60px 0 30px;border-top:1px solid var(--line);background:var(--charcoal);">
+      <div class="container">
+        <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:30px;padding-bottom:30px;">
+          <div>
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+              <svg width="28" height="28" viewBox="0 0 40 40" fill="none">
+                <polygon points="20,3 35,11.5 35,28.5 20,37 5,28.5 5,11.5" stroke="#9c7a3e" stroke-width="1.4"/>
+                <circle cx="20" cy="20" r="7" stroke="#ece5d3" stroke-width="1.4"/>
+              </svg>
+              <span class="display" style="font-size:1.1rem;color:var(--ivory);">BORN ON ASPHALT</span>
+            </div>
+            <p class="mono" style="font-size:0.7rem;color:var(--ivory-dim);line-height:1.7;text-transform:none;letter-spacing:normal;">Apparel for Ford, Mopar and GM builders. Printed on demand, shipped from the US. Comfort Colors 1717, garment-dyed heavyweight.</p>
+            <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;">
+              <span class="mono" style="border:1px solid var(--line);padding:5px 9px;font-size:0.6rem;color:var(--ivory-dim);">Stripe</span>
+              <span class="mono" style="border:1px solid var(--line);padding:5px 9px;font-size:0.6rem;color:var(--ivory-dim);">PayPal</span>
+              <span class="mono" style="border:1px solid var(--line);padding:5px 9px;font-size:0.6rem;color:var(--ivory-dim);">Visa</span>
+              <span class="mono" style="border:1px solid var(--line);padding:5px 9px;font-size:0.6rem;color:var(--ivory-dim);">Mastercard</span>
+            </div>
+          </div>
+          <div>
+            <h4 class="display" style="font-size:1rem;color:var(--burnt);margin-bottom:14px;">SHOP</h4>
+            <a href="shop.html" style="display:block;color:var(--ivory-dim);margin-bottom:9px;font-size:0.85rem;">All designs</a>
+            <a href="shop.html?tribe=ford" style="display:block;color:var(--ivory-dim);margin-bottom:9px;font-size:0.85rem;">Ford</a>
+            <a href="shop.html?tribe=mopar" style="display:block;color:var(--ivory-dim);margin-bottom:9px;font-size:0.85rem;">Mopar</a>
+            <a href="shop.html?tribe=gm" style="display:block;color:var(--ivory-dim);font-size:0.85rem;">GM</a>
+          </div>
+          <div>
+            <h4 class="display" style="font-size:1rem;color:var(--burnt);margin-bottom:14px;">SUPPORT</h4>
+            <a href="faq.html" style="display:block;color:var(--ivory-dim);margin-bottom:9px;font-size:0.85rem;">FAQ</a>
+            <a href="shipping.html" style="display:block;color:var(--ivory-dim);margin-bottom:9px;font-size:0.85rem;">Shipping</a>
+            <a href="returns.html" style="display:block;color:var(--ivory-dim);margin-bottom:9px;font-size:0.85rem;">Returns & refunds</a>
+            <a href="contact.html" style="display:block;color:var(--ivory-dim);font-size:0.85rem;">Contact us</a>
+          </div>
+          <div>
+            <h4 class="display" style="font-size:1rem;color:var(--burnt);margin-bottom:14px;">COMPANY</h4>
+            <a href="about.html" style="display:block;color:var(--ivory-dim);margin-bottom:9px;font-size:0.85rem;">Our story</a>
+            <a href="contact.html" style="display:block;color:var(--ivory-dim);margin-bottom:9px;font-size:0.85rem;">Get in touch</a>
+            <a href="privacy.html" style="display:block;color:var(--ivory-dim);margin-bottom:9px;font-size:0.85rem;">Privacy policy</a>
+            <a href="terms.html" style="display:block;color:var(--ivory-dim);font-size:0.85rem;">Terms of sale</a>
+          </div>
+        </div>
+        <div style="border-top:1px solid var(--line);padding-top:18px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+          <svg width="14" height="14" viewBox="0 0 40 40" fill="none"><polygon points="20,3 35,11.5 35,28.5 20,37 5,28.5 5,11.5" stroke="#9c7a3e" stroke-width="2"/><circle cx="20" cy="20" r="7" stroke="#ece5d3" stroke-width="2"/></svg>
+          <span class="mono" style="font-size:0.65rem;color:var(--ivory-dim);flex:1;text-align:center;">© 2026 BORN ON ASPHALT. ALL RIGHTS RESERVED.</span>
+          <span class="mono" style="font-size:0.65rem;color:var(--ivory-dim);">BORNONASPHALT.COM</span>
         </div>
       </div>
-      <div class="footer-col">
-        <h4>Shop</h4>
-        <a href="index.html#shop">All designs</a>
-        <a href="index.html#shop">Ford</a>
-        <a href="index.html#shop">Mopar</a>
-        <a href="index.html#shop">GM</a>
-      </div>
-        <div class="footer-col">
-          <h4>Support</h4>
-          <a href="faq.html">FAQ</a>
-          <a href="shipping.html">Shipping</a>
-          <a href="returns.html">Returns &amp; refunds</a>
-          <a href="contact.html">Contact us</a>
-        </div>
-        <div class="footer-col">
-          <h4>Company</h4>
-          <a href="about.html">Our story</a>
-          <a href="contact.html">Get in touch</a>
-          <a href="privacy.html">Privacy policy</a>
-          <a href="terms.html">Terms of sale</a>
-        </div>
-    </div>
-    <div class="footer-bottom">
-      <span>© 2026 Born on Asphalt. All rights reserved.</span>
-      <span>bornonasphalt.com</span>
-    </div>
-  </div>
-</footer>
+    </footer>
 
 <!-- ===================== PRODUCT MODAL ===================== -->
 <div class="overlay" id="productModal">
@@ -294,7 +820,7 @@
     <div class="subtotal-row" style="font-size:13px;"><span>Shipping</span><span id="shippingAmount">$0.00</span></div>
     <div class="subtotal-row"><span>Total</span><span id="cartTotalAmount">$0.00</span></div>
     <button class="btn" style="width:100%; margin-bottom:10px;" id="checkoutBtn">Checkout</button>
-    <a href="index.html#shop" class="btn ghost" style="width:100%; display:block; text-align:center;">Continue shopping</a>
+    <a href="index.html#arsenal" class="btn ghost" style="width:100%; display:block; text-align:center;">Continue shopping</a>
   </div>
 </div>
 
@@ -324,5 +850,65 @@
 <script src="js/products.js?v=15"></script>
 <script src="js/reviews.js?v=8"></script>
 <script src="js/main.js?v=35"></script>
+<script>
+/* ===================== ARSENAL GRID — 6 featured products ===================== */
+(function(){
+  var FEATURED_IDS = ['D1','C1','C2','D2','A1','D3','G14','G15'];
+  var TRIBE_COLOR_VAR = { ford: '--ford', mopar: '--mopar', gm: '--gm', cross: '--cross' };
+  var TRIBE_FLAG_LABEL = { ford: 'FRD', mopar: 'MOP', gm: 'GM', cross: 'XTB' };
+
+  function cardHtml(p){
+    var primaryColor = p.colors && p.colors[0];
+    var otherColors = p.colors ? p.colors.filter(function(c){ return c !== primaryColor; }) : [];
+    var secondaryColor = otherColors.length > 0
+      ? otherColors[Math.floor(Math.random() * otherColors.length)]
+      : null;
+    var primaryImg = (p.images && primaryColor && p.images[primaryColor]) || p.image;
+    var secondaryImg = (secondaryColor && p.images && p.images[secondaryColor]) || null;
+    var flagVar = TRIBE_COLOR_VAR[p.tribe] || '--bronze';
+    var flagLabel = TRIBE_FLAG_LABEL[p.tribe] || 'BOA';
+    var artHtml = primaryImg
+      ? '<img class="img-primary" src="' + primaryImg + '" alt="' + p.title + '" loading="lazy">' +
+        (secondaryImg ? '<img class="img-secondary" src="' + secondaryImg + '" alt="' + p.title + ' — alternate color" loading="lazy">' : '')
+      : '<span class="fallback">' + (p.swatch || p.id) + '</span>';
+    return (
+      '<div class="product-card">' +
+        '<div class="card-flag" style="--flag-color:var(' + flagVar + ')"><span>' + flagLabel + '</span></div>' +
+        '<div class="card-art">' + artHtml + '</div>' +
+        '<div class="card-body">' +
+          '<div class="card-series mono">' + (p.series || '') + '</div>' +
+          '<h3>' + p.title + '</h3>' +
+          '<p class="slogan">"' + p.slogan + '"</p>' +
+          '<div class="card-foot">' +
+            '<span class="card-price">From $' + p.price.toFixed(2) + '</span>' +
+            '<a href="product.html?id=' + encodeURIComponent(p.id) + '" class="card-link">VIEW \u2192</a>' +
+          '</div>' +
+        '</div>' +
+      '</div>'
+    );
+  }
+
+  var grid = document.getElementById('arsenalGrid');
+  if (grid && typeof PRODUCTS !== 'undefined') {
+    var featured = FEATURED_IDS.map(function(id){
+      return PRODUCTS.find(function(p){ return p.id === id; });
+    }).filter(Boolean);
+    grid.innerHTML = featured.map(cardHtml).join('');
+  }
+
+  // Auto-open cart drawer if arriving from a cart link (e.g. shop.html)
+  if (window.location.search.includes('openCart=1')) {
+    window.addEventListener('load', function(){
+      var drawer = document.getElementById('cartDrawer');
+      var overlay = document.getElementById('drawerOverlay');
+      if (drawer && overlay) {
+        drawer.classList.add('open');
+        overlay.classList.add('open');
+      }
+    });
+  }
+})();
+</script>
+
 </body>
 </html>
