@@ -8,3 +8,22 @@ RewriteRule ^link$ link.html [L]
   Header set X-Robots-Tag "noindex, nofollow" env=IS_ADMIN_PANEL
 </IfModule>
 
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "DENY"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains" env=HTTPS
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://js.stripe.com https://www.paypal.com https://connect.facebook.net; frame-src https://js.stripe.com https://www.paypal.com; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; connect-src 'self' https://api.stripe.com https://www.paypal.com https://www.facebook.com;"
+</IfModule>
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json text/plain
+</IfModule>
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/png  "access plus 1 year"
+    ExpiresByType image/webp "access plus 1 year"
+    ExpiresByType text/css               "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+</IfModule>
+

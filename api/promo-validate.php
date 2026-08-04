@@ -3,6 +3,9 @@ require_once __DIR__ . '/config.php';
 header('Content-Type: application/json');
 boa_send_cors_headers();
 
+$rl_key = 'promo:' . ($_SERVER['REMOTE_ADDR'] ?? '');
+boa_rate_limit($rl_key, 10, 60); // 10 attempts / 60s per IP
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
     echo json_encode(['valid' => false, 'error' => 'Method not allowed']);

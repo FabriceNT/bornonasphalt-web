@@ -105,7 +105,7 @@ try {
             $nameStmt->execute([strtolower($order['email'])]);
             $userRow = $nameStmt->fetch();
             $firstName = $userRow
-                ? explode(' ', trim($userRow['name']))[0]
+                ? (explode(' ', trim($userRow['name']))[0] ?: 'there')
                 : 'there';
 
             // Crée un coupon Stripe unique 10% pour cette commande
@@ -138,7 +138,9 @@ try {
             $errors++;
             error_log("Follow-up failed for order #{$order['id']}: " . $e->getMessage());
         }
-    // Abandon de panier — emails 24h après
+    } // ferme le foreach
+
+    // Abandon de panier — 1x/jour, pas par commande
     boa_check_cart_abandonments();
 
 } catch (Exception $e) {

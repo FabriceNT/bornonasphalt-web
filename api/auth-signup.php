@@ -9,6 +9,9 @@ header('Content-Type: application/json');
 boa_send_cors_headers();
 boa_start_session();
 
+$rl_key = 'signup:' . ($_SERVER['REMOTE_ADDR'] ?? '');
+boa_rate_limit($rl_key, 10, 900); // 10 attempts / 15 min
+
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(204);
     exit;
