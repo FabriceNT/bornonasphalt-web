@@ -273,3 +273,55 @@
   color:#b8ae97;width:56px;flex-shrink:0;
 }
 .overlay .option-line .desc{flex:1;}
+
+.welcome-overlay{
+  position:fixed;inset:0;
+  background:rgba(11,11,10,0.85);
+  display:none;
+  align-items:center;justify-content:center;
+  z-index:210;
+  padding:20px;
+}
+.welcome-overlay.open{display:flex;}
+.welcome-card{
+  max-width:420px;width:100%;
+  background:#19170f;color:#ece5d3;
+  border:1px solid rgba(236,229,211,0.14);
+  position:relative;
+}
+.welcome-top{
+  background:#0b0b0a;color:#ece5d3;
+  padding:16px 24px;display:flex;justify-content:space-between;align-items:center;
+}
+.welcome-top .doc-id{color:#b8ae97;font-size:0.6rem;font-family:'IBM Plex Mono',monospace;letter-spacing:0.06em;text-align:left;}
+.welcome-close{background:none;border:none;color:#ece5d3;font-size:18px;cursor:pointer;}
+.welcome-body{padding:26px 26px 30px;text-align:center;}
+.welcome-body .stamp{
+  font-family:'Bebas Neue',sans-serif;font-size:0.9rem;letter-spacing:0.1em;
+  color:#a52a1c;border:2.5px solid #a52a1c;
+  padding:6px 12px;transform:rotate(-7deg);display:inline-block;
+  margin-bottom:10px;
+}
+.welcome-body h2{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;text-transform:uppercase;margin:6px 0;color:#ece5d3;}
+.welcome-body p{font-size:0.78rem;color:#b8ae97;margin:0 0 20px;line-height:1.6;font-family:'IBM Plex Mono',monospace;}
+.welcome-form{display:flex;flex-direction:column;gap:10px;}
+.welcome-form input{
+  width:100%;padding:10px 12px;
+  border:1px solid rgba(236,229,211,0.14);
+  background:#211e15;color:#ece5d3;
+  font-family:'IBM Plex Mono',monospace;font-size:13px;
+  box-sizing:border-box;
+}
+.welcome-form input:focus{outline:2px solid #b5551f;}
+.welcome-body .btn{
+  font-family:'IBM Plex Mono',monospace;font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;
+  padding:12px 22px;border:1px solid #ece5d3;background:#ece5d3;color:#0b0b0a;cursor:pointer;width:100%;
+  box-sizing:border-box;
+}
+.welcome-body .btn:hover{opacity:0.85;}
+.welcome-code{
+  display:none;border:2px dashed #a52a1c;padding:14px;
+  font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:0.1em;
+  color:#a52a1c;margin-top:16px;
+}
+.welcome-code.show{display:block;}
