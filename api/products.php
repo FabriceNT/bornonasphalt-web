@@ -1356,7 +1356,7 @@ function boa_products(): array
             ],
         ],
         [
-            'id' => 'C2-gm', 'title' => 'I have a Chevelle t-shirt',
+            'id' => 'C2-gm', 'title' => 'I Have a Chevelle',
             'printful_sync_product_id' => 445253357,
             'printify_product_id' => '6a4e15d72ce7cf6d500f8236',
             'variants' => [
@@ -1622,7 +1622,7 @@ function boa_products(): array
             ],
         ],
         [
-            'id' => 'G5', 'title' => 'Every time this starts, a Tesla cries.',
+            'id' => 'G5', 'title' => 'Every Time This Starts, a Tesla Cries',
             'printful_sync_product_id' => 452584857,
             'printify_product_id' => '6a6930d39ac1836da10a6742',
             'variants' => [
@@ -1937,7 +1937,7 @@ function boa_products(): array
     ],
 ],
 [
-    'id' => 'G16', 'title' => 'Broken Bolt',
+    'id' => 'G16', 'title' => 'Ask Me How I Know',
     'printful_sync_product_id' => 453902439,
     'printify_product_id' => '6a70b26427b11c64c709cfa3',
     'variants' => [
