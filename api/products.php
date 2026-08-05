@@ -1993,7 +1993,6 @@ function boa_products(): array
         ['color' => 'White', 'size' => 'L', 'printful_sync_variant_id' => 5425131860, 'printify_variant_id' => 73207],
         ['color' => 'White', 'size' => 'XL', 'printful_sync_variant_id' => 5425131861, 'printify_variant_id' => 73211],
         ['color' => 'White', 'size' => '2XL', 'printful_sync_variant_id' => 5425131862, 'printify_variant_id' => 73215],
-        ['color' => 'White', 'size' => '2XL', 'printful_sync_variant_id' => 5410190823, 'printify_variant_id' => 73216],
         ['color' => 'White', 'size' => '3XL', 'printful_sync_variant_id' => 5410190824, 'printify_variant_id' => 79174],
         ['color' => 'White', 'size' => '4XL', 'printful_sync_variant_id' => 5410190825, 'printify_variant_id' => 101481],
     ],
