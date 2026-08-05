@@ -51,9 +51,18 @@ function boa_shipping_cents(int $subtotalCents): int
     return $subtotalCents >= BOA_FREE_SHIPPING_THRESHOLD_CENTS ? 0 : BOA_SHIPPING_FLAT_CENTS;
 }
 
+require_once __DIR__ . '/boa_products_from_db.php';
+
 function boa_products(): array
 {
-    return [
+    return boa_products_from_db();
+}
+
+/* LEGACY — tableau PHP en dur, conservé pour rollback d'urgence
+   Pour restaurer : décommenter ce bloc et supprimer le require_once
+   et la délégation ci-dessus.
+
+   return [
         [
             'id' => 'A1', 'title' => '1969',
             'printful_sync_product_id' => 443587184,
@@ -2332,32 +2341,18 @@ function boa_products(): array
         ['color' => 'White', 'size' => '3XL', 'printful_sync_variant_id' => 5425506632, 'printify_variant_id' => 79169],
         ['color' => 'White', 'size' => '4XL', 'printful_sync_variant_id' => 5425506633, 'printify_variant_id' => 101476],
     ],
-],
-    ];
-}
+];
+/* END LEGACY — décommenter le bloc ci-dessus et supprimer le require_once
+   et la délégation pour restaurer l'ancien tableau PHP en dur. */
 
 function boa_find_product(string $id): ?array
 {
-    foreach (boa_products() as $p) {
-        if ($p['id'] === $id) {
-            return $p;
-        }
-    }
-    return null;
+    return boa_find_product_from_db($id);
 }
 
 // Resolves a specific color+size to its variant record, or null if that
 // combination isn't sellable (wrong color/size, or product not yet synced).
 function boa_find_variant(string $productId, string $color, string $size): ?array
 {
-    $product = boa_find_product($productId);
-    if ($product === null) {
-        return null;
-    }
-    foreach ($product['variants'] as $v) {
-        if ($v['color'] === $color && $v['size'] === $size) {
-            return $v;
-        }
-    }
-    return null;
+    return boa_find_variant_from_db($productId, $color, $size);
 }
