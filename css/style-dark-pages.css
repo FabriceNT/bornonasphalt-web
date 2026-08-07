@@ -39,6 +39,15 @@
 .legal-block h2{color:var(--paper);}
 .legal-block p, .legal-block li{color:var(--paper-dim);}
 
+.btn.ghost{
+  color:var(--paper);
+  border:1px solid var(--line-dark);
+}
+.btn.ghost:hover{
+  border-color:var(--bronze);
+  color:var(--bronze);
+}
+
 .faq-item summary{color:var(--paper);}
 .faq-item p{color:var(--paper-dim);}
 
