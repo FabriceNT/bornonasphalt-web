@@ -48,6 +48,13 @@
   color:var(--bronze);
 }
 
+.pd-accordion-item summary{
+  color:var(--paper);
+}
+.pd-accordion-item summary::after{
+  color:var(--bronze);
+}
+
 .faq-item summary{color:var(--paper);}
 .faq-item p{color:var(--paper-dim);}
 
